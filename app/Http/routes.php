@@ -9,9 +9,14 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
-*/
+ */
+
+use DB;
 
 Route::get('/', function () {
+    $users = DB::connection('k9homes')->select("select * from users");
+    dd($users);
+
     return view('welcome');
 });
 
