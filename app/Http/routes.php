@@ -11,10 +11,8 @@
 |
  */
 
-use DB;
-
 Route::get('/', function () {
-    $users = DB::connection('k9homes')->select("select * from users");
+    $users = \DB::connection('k9homes')->select("select * from users");
     dd($users);
 
     return view('welcome');
