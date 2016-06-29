@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-class HomeController extends Controller
+use DB;
+
+class OrderController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -21,9 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $users = DB::connection('k9homes')->select("select * from type");
+        $orders = DB::connection('k9homes')->table("system_orders")
+            ->where('status', '=', 'printed')
+            ->orderBy('id', 'asc')
+            ->simplePaginate(15);
         // dd($users);
 
-        return view('home');
+        return view('admin/sales/index')->with('orders', $orders);
     }
 }

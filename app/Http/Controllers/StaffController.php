@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-class HomeController extends Controller
+use DB;
+
+class StaffController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -21,9 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $users = DB::connection('k9homes')->select("select * from type");
+        $staff = DB::connection('k9homes')->select("select * from users");
         // dd($users);
 
-        return view('home');
+        return view('admin/staff/index')->with('staff', $staff);
     }
 }

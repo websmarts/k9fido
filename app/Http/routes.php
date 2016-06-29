@@ -1,5 +1,13 @@
 <?php
 
+// \Event::listen('Illuminate\Database\Events\QueryExecuted', function ($query) {
+//     echo '<pre>';
+//     var_dump($query->sql);
+//     echo '</pre>';
+//     // var_dump($query->bindings);
+//     // var_dump($query->time);
+// });
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,12 +20,20 @@
  */
 
 Route::get('/', function () {
-    $users = \DB::connection('k9homes')->select("select * from users");
-    dd($users);
-
     return view('welcome');
 });
 
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/staff', 'StaffController@index');
+Route::get('/clients', 'ClientController@index');
+Route::get('/sales', 'OrderController@index');
+
+Route::resource('type', 'TypeController');
+
+Route::resource('typeoption', 'TypeOptionController');
+
+Route::resource('product', 'ProductController');
+
+Route::resource('category', 'CategoryController');
