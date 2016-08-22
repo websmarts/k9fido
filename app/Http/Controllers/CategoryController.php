@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 
 class CategoryController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::topLevel()->with('children')->orderBy('display_order', 'desc')->get();
+
+        return view('admin.category.index')->with('categories', $categories);
     }
 
     /**
@@ -23,9 +34,13 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $category = new Category;
+
+        $category->parent_id = (int) $request->input('parent_id', 0);
+
+        return view('admin.category.create', ['category' => $category, 'parentOptions' => $this->_parentOptions()]);
     }
 
     /**
@@ -36,7 +51,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate
+        $this->validate($request, ['name' => 'required', 'description' => 'required']);
+
+        Category::create($request->all());
+
+        return back();
     }
 
     /**
@@ -58,7 +78,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::with('children')->find($id);
+
+        return view('admin.category.edit', ['category' => $category, 'parentOptions' => $this->_parentOptions()]);
     }
 
     /**
@@ -70,7 +92,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+
+        $category->update($request->all());
+
+        flash('Category updated', 'success');
+
+        return redirect()->route('category.index');
     }
 
     /**
@@ -82,5 +110,13 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function _parentOptions()
+    {
+        return Category::where('parent_id', '=', 0)
+            ->orderBy('name', 'asc')
+            ->lists('name', 'id')
+            ->toArray();
     }
 }

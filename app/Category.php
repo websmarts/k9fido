@@ -27,6 +27,14 @@ class Category extends Model
      */
     protected $table = 'category';
 
+    /**
+     * @var mixed
+     */
+    public $timestamps = false;
+
+    /**
+     * @var array
+     */
     protected $fillable = [
         'name',
         'description',
@@ -34,4 +42,31 @@ class Category extends Model
         'display_order',
 
     ];
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'parent_id' => 'integer',
+    ];
+
+    /**
+     * Scope a query to only return top level categories
+     *
+     * @param $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeTopLevel($query)
+    {
+        return $query->where('parent_id', '=', 0);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function children()
+    {
+        return $this->hasMany('App\Category', 'parent_id', 'id');
+    }
+
 }

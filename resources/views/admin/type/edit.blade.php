@@ -13,9 +13,19 @@
                     {!! Form::model($type, array('route' => array('type.update', $type->typeid ), 'method' => 'patch' )) !!}
 
                      @include('admin.type.partials.form')
+                     <div class="form-horizontal">
+                         <div class="form-group">
+                             {!! Form::label('_delete', 'Delete type', array('class' => 'col-md-4 control-label')) !!}
+                             <div class="col-md-6">
+                             {!! Form::checkbox('_delete', $type->typeid  ) !!}
 
-                     <div class="col-md-12">
-                     <button type="submit"  value="Save" class="btn btn-primary" >Save</button>
+                             </div>
+                         </div>
+
+                         <div class="col-md-12">
+                         <button type="submit"  value="Save" class="btn btn-primary" >Save</button>
+                         </div>
+
                      </div>
 
                      {!! Form::close() !!}

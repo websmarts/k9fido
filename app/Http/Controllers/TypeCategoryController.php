@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\ProductType;
+use DB;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-
-class OrderController extends Controller
+class TypeCategoryController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +48,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -58,7 +70,15 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::topLevel()->with('children')->orderBy('display_order', 'desc')->get();
+
+        $type = ProductType::with('categories')->find($id);
+
+        return view('admin.type.type_categories', [
+            'categories' => $categories,
+            'type' => $type,
+        ]);
+
     }
 
     /**
@@ -70,7 +90,24 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        // dd($request->all());
+
+        DB::connection('k9homes')->table('type_category')->where('typeid', '=', $id)->delete();
+
+        $categories = collect($request->categories);
+
+        if ($categories->count()) {
+            foreach ($categories as $catId) {
+
+                DB::connection('k9homes')
+                    ->insert('insert into type_category (catid, typeid) values (?, ?)', [$catId, $id]);
+            }
+        }
+
+        flash('Updated');
+        return redirect()->route('typecategory.edit', $id);
+
     }
 
     /**

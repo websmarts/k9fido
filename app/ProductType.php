@@ -2,10 +2,14 @@
 
 namespace App;
 
+use App\Http\Controllers\FilterController as Filter;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductType extends Model
 {
+
+    use Traits\QueryFilter;
+
     /**
      * The connection name for the model.
      *
@@ -35,6 +39,17 @@ class ProductType extends Model
     ];
 
     public $timestamps = false;
+
+    /**
+     * Scope a query to only include filtered results.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFiltered($query)
+    {
+        return $this->applyFilter($query, 'type');
+
+    }
 
     public function options()
     {

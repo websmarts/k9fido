@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\K9Homes\Products\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -21,9 +22,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $products = Product::filtered($request)->select('id', 'description', 'product_code')->orderBy('product_code', 'asc')->simplePaginate(15);
+
+        return view('admin.product.index')->with('products', $products);
+
     }
 
     /**
@@ -33,7 +37,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $product = new Product;
+
+        return view('admin.product.create')->with('product', $product);
     }
 
     /**
@@ -44,7 +50,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'product_code' => 'required',
+            'typeid' => 'required',
+            'description' => 'required',
+
+        ]);
+
+        Product::create($request->all());
+
+        flash('Product saved', 'success');
+
+        return redirect()->route('type.index');
     }
 
     /**
@@ -66,7 +83,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('admin.product.edit')->with('product', $product);
     }
 
     /**
@@ -78,7 +97,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        // check if delete is being called for
+        if ($request->_delete == $id) {
+
+            // Delete the product itself
+            $product->delete();
+
+            return redirect()->route('product.index');
+        }
+
+        $this->validate($request, ['description' => 'required']);
+
+        $product->update($request->all());
+
+        return redirect()->route('product.edit', $id);
     }
 
     /**

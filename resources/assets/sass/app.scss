@@ -1,2 +1,12 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+body {
+    font-family: 'arial';
+}
+
+.fa-btn {
+    margin-right: 6px;
+}
+
+@import "components/alert"
+

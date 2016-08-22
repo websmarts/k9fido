@@ -5,19 +5,37 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Products</div>
+                <div class="panel-heading">Product Types
+                <form method="POST" action="/filter/type" class="form-inline">
+                    <div class="form-group">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').'_type'),true)['fkey']['or'] }}" />
+                        <button type="submit" name="Filter" class="btn btn-default"><i class="fa fa-filter fa-1x"></i> Filter list</button>
+
+                        @if( session( env('USER_FILTER_KEY').'_type') )
+                        <button type="submit" name="remove_filter" value="1" class="btn btn-default"><i class="fa fa-eraser fa-1x"></i> Remove filter</button>
+                        @endif
+
+                    </div>
+                </form>
+                </div>
 
                 <div class="panel-body">
-                    <h3>Product Type list</h3>
 
-                    <p><a href="{{ route('type.create') }}">Create a new product type</a></p>
+                    <div class="row">
+                        <div class="col-md-6"><h3>Product Type list</h3></div>
+                        <div class="col-md-6"><a href="{{ route('type.create') }}"><button class="btn btn-primary pull-right"><i class="fa fa-plus-square-o fa-1x"></i> Create a new product type</button></a></div>
+                    </div>
+
+
+
 
                     <table class="table table-striped">
                     <tbody>
                     @foreach($types as $type)
                     <tr>
                     	<td>{{ $type->name }}</td>
-                    	<td width="20"><a href="{{ route('type.show', ['id' => $type->typeid] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
+                    	<td width="20"><a href="{{ route('type.edit', ['id' => $type->typeid] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
                     </tr>
                     @endforeach
 

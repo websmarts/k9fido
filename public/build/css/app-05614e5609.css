@@ -1,0 +1,21 @@
+body {
+  font-family: 'arial'; }
+
+.fa-btn {
+  margin-right: 6px; }
+
+.Alert {
+  padding: 5px;
+  margin-bottom: 5px; }
+
+.Alert--Info {
+  background: #eeeeee; }
+
+.Alert--Success {
+  background: #8ac48a; }
+
+.Alert--Error {
+  background: red;
+  color: #ffffff; }
+
+/*# sourceMappingURL=app.css.map */

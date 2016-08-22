@@ -22,17 +22,11 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
-    <style>
-        body {
-            font-family: 'arial';
-        }
+    <!-- Application Styles -->
+    <link href="{{ elixir('css/app.css') }}" rel="stylesheet">
 
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
+
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-static-top">
@@ -58,10 +52,12 @@
                 @if (Auth::user())
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ route('category.index') }}">Categories</a></li>
                     <li><a href="{{ route('type.index') }}">Types</a></li>
-                    <li><a href="{{ url('/sales') }}">Sales</a></li>
-                    <li><a href="{{ url('/clients') }}">Clients</a></li>
-                    <li><a href="{{ url('/staff') }}">Staff</a></li>
+                    <li><a href="{{ route('product.index') }}">Products</a></li>
+                    <li><a href="{{ route('order.index') }}">Orders</a></li>
+                    <li><a href="{{ route('client.index')}}">Clients</a></li>
+                    <li><a href="{{ route('staff.index')}}">Staff</a></li>
                 </ul>
                 @endif
 
@@ -87,11 +83,18 @@
         </div>
     </nav>
 
+    @include('flash')
+
     @yield('content')
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+
+    <script>
+    $('.Alert').delay( 3000 ).fadeOut( 400 );
+    </script>
+
 </body>
 </html>

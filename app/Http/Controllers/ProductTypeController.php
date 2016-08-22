@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\ProductType;
+use DB;
 use Illuminate\Http\Request;
 
-class TypeController extends Controller
+class ProductTypeController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,9 +25,11 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types = ProductType::orderBy('typeid', 'desc')->simplePaginate(15);
+
+        $types = ProductType::filtered()->orderBy('typeid', 'desc')->simplePaginate(15);
 
         return view('admin.type.index')->with('types', $types);
+
     }
 
     /**
@@ -54,6 +57,8 @@ class TypeController extends Controller
 
         ProductType::create($request->all());
 
+        flash('Type saved', 'success');
+
         return redirect()->route('type.index');
     }
 
@@ -64,6 +69,17 @@ class TypeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
+    {
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
         // products closure adds the orderBy to the eager load
         $type = ProductType::with(['categories', 'options' => function ($query) {
@@ -80,17 +96,6 @@ class TypeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -99,12 +104,36 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $type = ProductType::find($id);
+
+        // check if delete is being called for
+        if ($request->_delete == $id) {
+            // TODO
+            // Delete Products of this type
+            DB::connection('k9homes')->table('products')->where('typeid', '=', $id)->delete();
+
+            // Delete Type Category entries
+            DB::connection('k9homes')->table('type_category')->where('typeid', '=', $id)->delete();
+
+            // Delete type options for this type
+            DB::connection('k9homes')->table('type_options')->where('typeid', '=', $id)->delete();
+
+            // Delete the type itself
+            $type->delete();
+
+            flash('Type deleted', 'success');
+
+            return redirect()->route('type.index');
+        }
+
         $this->validate($request, ['display_format' => 'required']);
 
-        ProductType::find($id)->update($request->all());
+        $type->update($request->all());
 
-        return redirect()->route('type.show', $id);
+        flash('Type updated', 'success');
+
+        return redirect()->route('type.index', $id);
     }
 
     /**
@@ -116,5 +145,15 @@ class TypeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function filter()
+    {
+        if ($fd = session('__FILTER__type')) {
+            $where = ['name', 'like', '%' . $fd . '%'];
+        } else {
+            $where = ['typeid', '>', 0];
+        }
+        return [$where];
     }
 }

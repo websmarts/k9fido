@@ -20,20 +20,30 @@
  */
 
 Route::get('/', function () {
+
+    //return \Auth::guard('web')->user();
     return view('welcome');
 });
 
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/staff', 'StaffController@index');
-Route::get('/clients', 'ClientController@index');
-Route::get('/sales', 'OrderController@index');
+// Route::get('/staff', 'StaffController@index');
+// Route::get('/clients', 'ClientController@index');
+// Route::get('/sales', 'OrderController@index');
 
-Route::resource('type', 'TypeController');
-
-Route::resource('typeoption', 'TypeOptionController');
+Route::post('filter/{name}', 'FilterController@index');
 
 Route::resource('product', 'ProductController');
 
+Route::resource('type', 'ProductTypeController');
+
+Route::resource('typeoption', 'ProductTypeOptionController');
+
 Route::resource('category', 'CategoryController');
+
+Route::resource('typecategory', 'TypeCategoryController');
+
+Route::resource('order', 'OrderController');
+Route::resource('client', 'ClientController');
+Route::resource('staff', 'StaffController');

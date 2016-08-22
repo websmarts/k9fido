@@ -6,7 +6,7 @@ use App\ProductType;
 use App\ProductTypeOption;
 use Illuminate\Http\Request;
 
-class TypeOptionController extends Controller
+class ProductTypeOptionController extends Controller
 {
 
     /**
@@ -57,6 +57,9 @@ class TypeOptionController extends Controller
             'opt_class' => ['required', 'regex:/^opt_([a-f0-9]{3}){1,2}$/i'],
         ]);
 
+        // should really check if the opt_code exists and do an update if it does
+        // and only create if it doesn't
+
         ProductTypeOption::create($request->all());
 
         return redirect()->route('type.show', $request->typeid);
@@ -81,7 +84,9 @@ class TypeOptionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $typeOption = ProductTypeOption::find($id);
+
+        return view('admin.type.edit_option')->with('typeOption', $typeOption);
     }
 
     /**
@@ -93,7 +98,27 @@ class TypeOptionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $option = ProductTypeOption::find($id);
+        $typeId = $option->typeid;
+
+        // check if delete is being called for
+        if ($request->_delete == $id) {
+            // TODO do we delete products that match this option
+            // NO verticals can have extension and we dont want to delete them
+            // as they are not really related to this option notion
+            $option->delete();
+            return redirect()->route('type.show', $typeId);
+        }
+
+        $this->validate($request, [
+            'opt_code' => ['required', 'regex:/^[a-z]{3}$/i'],
+            'opt_desc' => 'required',
+            'opt_class' => ['required', 'regex:/^opt_([a-f0-9]{3}){1,2}$/i'],
+        ]);
+
+        $option->update($request->all());
+
+        return redirect()->route('type.show', $typeId);
     }
 
     /**
