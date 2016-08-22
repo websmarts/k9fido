@@ -3,12 +3,13 @@
 namespace App;
 
 use App\Http\Controllers\FilterController as Filter;
+use App\K9Homes\Traits\QueryFilter;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductType extends Model
 {
 
-    use Traits\QueryFilter;
+    use QueryFilter;
 
     /**
      * The connection name for the model.
