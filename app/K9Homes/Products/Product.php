@@ -1,9 +1,9 @@
 <?php
 
-namespace App\K9homes\Products;
+namespace App\K9Homes\Products;
 
 //use App\Http\Controllers\FilterController as Filter;
-use App\K9homes\Traits\QueryFilter;
+use App\K9Homes\Traits\QueryFilter;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
