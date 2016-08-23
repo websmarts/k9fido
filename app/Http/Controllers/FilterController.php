@@ -40,19 +40,11 @@ class FilterController extends Controller
     public function index(Request $request, $name)
     {
         $this->request = $request;
-        $this->sessionKey = env('USER_FILTER_KEY');
 
-        $this->filterKey = $this->sessionKey . '_' . $name;
+        $this->registerFilter($name);
 
-        if (method_exists($this, $name)) {
-            $this->$name();
+        return $this->redirect();
 
-            // remove query string to remove ?page from return uri when we change filters
-            $referer = preg_replace('/\?.*/', '', $this->request->headers->get('referer'));
-
-            return redirect($referer);
-
-        }
     }
 
 /**
@@ -61,8 +53,6 @@ class FilterController extends Controller
  */
     private function product()
     {
-
-        $whereArray = [];
 
         $filterFields = [
             'or' => [
@@ -86,55 +76,12 @@ class FilterController extends Controller
             ],
         ];
 
-        $filterKeyGroups = $this->request->has('fkey') ? $this->request->input('fkey') : false;
-
-        if ($this->request->has('remove_filter')) {
-            $filterKeyGroups = false;
-        }
-
-        // dd($filterKeyGroups);
-
-        if ($filterKeyGroups) {
-            foreach ($filterKeyGroups as $fgk => $fgv) {
-                if (!empty($fgv)) {
-                    // eg fgv = main
-                    foreach ($filterFields[$fgk] as $fk => $fv) {
-                        $whereArray[$fgk][] = [
-                            $fk,
-
-                            $fv['operater'],
-
-                            $fv['value_prefix'] .
-                            $fgv .
-                            $fv['value_postfix'],
-                        ];
-
-                    }
-                }
-
-            }
-
-        }
-
-        $data = [
-            'filters' => $whereArray,
-            'fkey' => $this->request->input('fkey'),
-        ];
-
-        if (count($whereArray)) {
-            $this->request->session()->put($this->filterKey, json_encode($data));
-        } else {
-            $this->request->session()->forget($this->filterKey);
-        }
-
-        //dd($this->request->session($this->filterKey));
+        return $filterFields;
 
     }
 
     private function type()
     {
-
-        $whereArray = [];
 
         $filterFields = [
             'or' => [
@@ -146,13 +93,27 @@ class FilterController extends Controller
             ],
         ];
 
+        return $filterFields;
+
+    }
+
+    private function registerFilter($name)
+    {
+
+        $filterKey = env('USER_FILTER_KEY') . '_' . $name;
+
+        $filterFields = $this->$name();
+
+        $whereArray = [];
+
         $filterKeyGroups = $this->request->has('fkey') ? $this->request->input('fkey') : false;
+        // eg ['or'=>'or key string']
 
         if ($this->request->has('remove_filter')) {
             $filterKeyGroups = false;
         }
 
-        // dd($filterKeyGroups);
+        //dd($filterKeyGroups);
 
         if ($filterKeyGroups) {
             foreach ($filterKeyGroups as $fgk => $fgv) {
@@ -176,19 +137,26 @@ class FilterController extends Controller
 
         }
 
-        $data = [
-            'filters' => $whereArray,
-            'fkey' => $this->request->input('fkey'),
-        ];
-
         if (count($whereArray)) {
-            $this->request->session()->put($this->filterKey, json_encode($data));
+            $data = [
+                'filters' => $whereArray,
+                'fkey' => $this->request->input('fkey'),
+            ];
+            $this->request->session()->put($filterKey, json_encode($data));
         } else {
-            $this->request->session()->forget($this->filterKey);
+            $this->request->session()->forget($filterKey);
         }
 
         //dd($this->request->session($this->filterKey));
+    }
 
+    private function redirect()
+    {
+        // remove query string to remove ?page from return uri when we change filters
+        $referer = preg_replace('/\?.*/', '', $this->request->headers->get('referer'));
+
+        // redo page which will honor any registered filters
+        return redirect($referer);
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\K9Homes\Products\Filters;
+namespace App\Legacy\Product\Filters;
 
 interface Filter
 {

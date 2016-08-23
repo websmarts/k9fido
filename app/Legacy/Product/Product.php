@@ -1,9 +1,8 @@
 <?php
 
-namespace App\K9Homes\Products;
+namespace App\Legacy\Product;
 
-//use App\Http\Controllers\FilterController as Filter;
-use App\K9Homes\Traits\QueryFilter;
+use App\Legacy\Traits\QueryFilter;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -76,32 +75,32 @@ class Product extends Model
      */
     public function scopeFiltered($query, $filters)
     {
-        //return $this->applyFilter($query, 'product');
+        return $this->applyFilter($query, 'product');
         //
         //
         // dd($filters->all());
-        foreach ($filters->all() as $filterName => $value) {
+        // foreach ($filters->all() as $filterName => $value) {
 
-            $decorator = $this->createFilterDecorator($filterName);
+        //     $decorator = $this->createFilterDecorator($filterName);
 
-            if ($this->isValidDecorator($decorator)) {
+        //     if ($this->isValidDecorator($decorator)) {
 
-                $query = $decorator::apply($query, $value);
-            }
+        //         $query = $decorator::apply($query, $value);
+        //     }
 
-        }
+        // }
     }
 
-    public function createFilterDecorator($name)
-    {
-        return __NAMESPACE__ . '\\Filters\\' .
-        str_replace(' ', '', ucwords(
-            str_replace('_', ' ', $name)));
-    }
+    // public function createFilterDecorator($name)
+    // {
+    //     return __NAMESPACE__ . '\\Filters\\' .
+    //     str_replace(' ', '', ucwords(
+    //         str_replace('_', ' ', $name)));
+    // }
 
-    public function isValidDecorator($decorator)
-    {
-        // var_dump($decorator);
-        return class_exists($decorator);
-    }
+    // public function isValidDecorator($decorator)
+    // {
+    //     // var_dump($decorator);
+    //     return class_exists($decorator);
+    // }
 }

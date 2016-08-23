@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\ProductType;
+use App\Legacy\Category\Category;
+use App\Legacy\Procuct\ProductType;
 use DB;
 use Illuminate\Http\Request;
 

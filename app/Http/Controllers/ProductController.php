@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\K9Homes\Products\Product;
+use App\Legacy\Product\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller

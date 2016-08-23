@@ -7,17 +7,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Products
 
-                <form method="GET" action="/product" class="form-inline">
+                <form method="POST" action="/filter/product" class="form-inline">
                     <div class="form-group">
-                        <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}" /> -->
-                        <input class="form-control" type="text" name="wildcard" value="" />
-
-                         <!-- Status: <input class="form-control" type="text" name="fkey[and]" value="{{ json_decode( session( env('USER_FILTER_KEY').'_product'),true)['fkey']['and'] }}" /> -->
-
-
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').'_product'),true)['fkey']['or'] }}" />
                         <button type="submit" name="Filter" class="btn btn-default"><i class="fa fa-filter fa-1x"></i> Filter list</button>
 
-                        @if(session(env('USER_FILTER_KEY').'_product') )
+                        @if( session( env('USER_FILTER_KEY').'_product') )
                         <button type="submit" name="remove_filter" value="1" class="btn btn-default"><i class="fa fa-eraser fa-1x"></i> Remove filter</button>
                         @endif
 

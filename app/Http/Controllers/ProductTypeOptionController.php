@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ProductType;
+use App\Legacy\Procuct\ProductType;
 use App\ProductTypeOption;
 use Illuminate\Http\Request;
 

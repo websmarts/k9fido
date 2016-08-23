@@ -1,5 +1,5 @@
 <?php
-namespace App\K9Homes\Products\Filters;
+namespace App\Legacy\Product\Filters;
 
 class Wildcard implements Filter
 {

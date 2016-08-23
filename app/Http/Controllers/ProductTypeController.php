@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ProductType;
+use App\Legacy\Product\ProductType;
 use DB;
 use Illuminate\Http\Request;
 
@@ -93,6 +93,7 @@ class ProductTypeController extends Controller
         }])->find($id);
 
         return view('admin.type.edit')->with('type', $type);
+
     }
 
     /**
