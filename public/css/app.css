@@ -4,6 +4,9 @@ body {
 .fa-btn {
   margin-right: 6px; }
 
+.navbar-default {
+  background: #FFC600; }
+
 .Alert {
   padding: 5px;
   margin-bottom: 5px; }

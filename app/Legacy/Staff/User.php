@@ -13,6 +13,8 @@ class User extends Model
      */
     protected $connection = 'k9homes';
 
+    public $timestamps = false;
+
     /**
      * The table used by the model.
      *
