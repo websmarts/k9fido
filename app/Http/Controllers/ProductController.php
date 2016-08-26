@@ -24,7 +24,10 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::filtered($request)->select('id', 'description', 'product_code')->orderBy('product_code', 'asc')->simplePaginate(15);
+        $products = Product::applyUserFilter()
+            ->select('id', 'description', 'product_code')
+            ->orderBy('product_code', 'asc')
+            ->paginate(15);
 
         return view('admin.product.index')->with('products', $products);
 

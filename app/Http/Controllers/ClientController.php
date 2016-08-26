@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Legacy\Client\Client;
+use App\Queries\ClientListQuery;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 
 class ClientController extends Controller
 {
@@ -15,7 +15,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+
+        $clients = ClientListQuery::perform(12);
+
+        return view('admin.client.index')->with('clients', $clients);
     }
 
     /**
@@ -58,7 +61,9 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $client = Client::find($id);
+
+        return view('admin.client.edit')->with('client', $client);
     }
 
     /**
@@ -70,17 +75,19 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request, ['name' => 'required']);
+
+        $data = $request->except('_method', '_token');
+        $data['modified'] = date("Y-m-d H:i:s");
+
+        $client = Client::find($id); //->update($data);
+
+        $client->update($data);
+
+        flash('Client updated', 'success');
+        return redirect()->route('client.edit', $id);
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

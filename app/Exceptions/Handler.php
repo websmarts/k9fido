@@ -3,11 +3,11 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,6 +45,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        // if ($e instanceof QueryException) {
+        //     // kill the stored filters
+
+        //     session()->forget(env('USER_FILTER_KEY'));
+
+        //     dd(env('USER_FILTER_KEY'));
+
+        //     dd(session()->get(env('USER_FILTER_KEY')));
+
+        //     return redirect()->back();
+
+        //     // return back to referer
+        // }
+
         return parent::render($request, $e);
     }
 }

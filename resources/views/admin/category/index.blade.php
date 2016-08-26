@@ -5,15 +5,15 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Categories
+                <div class="panel-heading"><h3>Categories</h3>
 
                 </div>
 
                 <div class="panel-body">
 
                     <div class="row">
-                        <div class="col-md-6"><h3>Category list</h3></div>
-                        <div class="col-md-6"><a href="{{ route('category.create') }}"><button class="btn btn-primary pull-right"><i class="fa fa-plus-square-o fa-1x"></i> Create a new category</button></a></div>
+
+                        <div class="col-md-12"><a href="{{ route('category.create') }}"><button class="btn btn-primary pull-right"><i class="fa fa-plus-square-o fa-1x"></i> Create a new category</button></a></div>
                     </div>
 
 

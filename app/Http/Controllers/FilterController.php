@@ -47,10 +47,41 @@ class FilterController extends Controller
 
     }
 
-/**
- * @method product
- * @return [type]
- */
+    /**
+     * filterFields for Client index
+     * @method product
+     * @return [type]  [description]
+     */
+    private function client()
+    {
+
+        $filterFields = [
+            'or' => [
+                'clients.name' => [
+                    'operater' => 'LIKE',
+                    'value_prefix' => '%',
+                    'value_postfix' => '%',
+                ],
+            ],
+            'and' => [
+                'clients.status' => [
+                    'operater' => '=',
+                    'value_prefix' => '',
+                    'value_postfix' => '',
+                    'default_value' => 'active',
+                ],
+            ],
+        ];
+
+        return $filterFields;
+
+    }
+
+    /**
+     * filterFields for Product index
+     * @method product
+     * @return [type]  [description]
+     */
     private function product()
     {
 
@@ -80,6 +111,41 @@ class FilterController extends Controller
 
     }
 
+    /**
+     * FilterFileds for Order Index
+     * @method order
+     * @return [type] [description]
+     */
+    private function order()
+    {
+
+        $filterFields = [
+            'or' => [
+                'clients.name' => [
+                    'operater' => 'LIKE',
+                    'value_prefix' => '%',
+                    'value_postfix' => '%',
+                ],
+            ],
+            'and' => [
+                'system_orders.status' => [
+                    'operater' => '=',
+                    'value_prefix' => '',
+                    'value_postfix' => '',
+                    'default_value' => 'active',
+                ],
+            ],
+        ];
+
+        return $filterFields;
+
+    }
+
+    /**
+     * filterFields for productType
+     * @method type
+     * @return [type] [description]
+     */
     private function type()
     {
 
@@ -113,13 +179,14 @@ class FilterController extends Controller
             $filterKeyGroups = false;
         }
 
-        //dd($filterKeyGroups);
+        // dd($filterKeyGroups);
 
         if ($filterKeyGroups) {
             foreach ($filterKeyGroups as $fgk => $fgv) {
                 if (!empty($fgv)) {
                     // eg fgv = main
                     foreach ($filterFields[$fgk] as $fk => $fv) {
+
                         $whereArray[$fgk][] = [
                             $fk,
 
@@ -142,12 +209,15 @@ class FilterController extends Controller
                 'filters' => $whereArray,
                 'fkey' => $this->request->input('fkey'),
             ];
+
+            // dd($filterKey);
+
             $this->request->session()->put($filterKey, json_encode($data));
         } else {
             $this->request->session()->forget($filterKey);
         }
 
-        //dd($this->request->session($this->filterKey));
+        //dd($this->request->session($filterKey));
     }
 
     private function redirect()

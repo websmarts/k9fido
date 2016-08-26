@@ -2,12 +2,12 @@
 
 namespace App\Legacy\Product;
 
-use App\Legacy\Traits\QueryFilter;
+use App\Legacy\Traits\UsersQueryFilter;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use QueryFilter;
+    use UsersQueryFilter;
 
     /**
      * The connection name for the model.
@@ -73,34 +73,10 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFiltered($query, $filters)
+    public function scopeApplyUserFilter($query)
     {
         return $this->applyFilter($query, 'product');
-        //
-        //
-        // dd($filters->all());
-        // foreach ($filters->all() as $filterName => $value) {
 
-        //     $decorator = $this->createFilterDecorator($filterName);
-
-        //     if ($this->isValidDecorator($decorator)) {
-
-        //         $query = $decorator::apply($query, $value);
-        //     }
-
-        // }
     }
 
-    // public function createFilterDecorator($name)
-    // {
-    //     return __NAMESPACE__ . '\\Filters\\' .
-    //     str_replace(' ', '', ucwords(
-    //         str_replace('_', ' ', $name)));
-    // }
-
-    // public function isValidDecorator($decorator)
-    // {
-    //     // var_dump($decorator);
-    //     return class_exists($decorator);
-    // }
 }

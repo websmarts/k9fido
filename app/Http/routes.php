@@ -45,5 +45,8 @@ Route::resource('category', 'CategoryController');
 Route::resource('typecategory', 'TypeCategoryController');
 
 Route::resource('order', 'OrderController');
+Route::get('orderitem/{orderId}/{productCode}/edit', [
+    'as' => 'order.edititem', 'uses' => 'OrderController@editOrderItem']);
+
 Route::resource('client', 'ClientController');
 Route::resource('staff', 'StaffController');

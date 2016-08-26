@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Http\Request;
+use Validator;
 
 class AuthController extends Controller
 {
@@ -19,7 +20,7 @@ class AuthController extends Controller
     | authentication of existing users. By default, this controller uses
     | a simple trait to add these behaviors. Why don't you explore it?
     |
-    */
+     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
@@ -29,6 +30,8 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+
+    protected $username = 'email'; // default is email so this is redundant
 
     /**
      * Create a new authentication controller instance.
@@ -63,10 +66,36 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        // Default registration is for customer - eg a private end user
+        // role is set to customer
+        //
+        // If client_key is submitted and if
+        // and if key is found  in the found in the clients table then
+        // add the client_id to the user table and also set role to client
+        //
+        // K9 staff will be registered by the system admin
+        // and their role will be set to staff. What staff
+        // can do is restricted by permissions
+        //
+        // System admin is super user and has a role of admin
+        //
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function getCredentials(Request $request)
+    {
+        //dd($this->loginUsername());
+        return $request->only($this->loginUsername(), 'password');
     }
 }

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Legacy\Staff\User as Staff;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 
 class StaffController extends Controller
 {
@@ -15,7 +14,9 @@ class StaffController extends Controller
      */
     public function index()
     {
-        //
+        $staff = Staff::all();
+
+        return view('admin.staff.index')->with('staff', $staff);
     }
 
     /**

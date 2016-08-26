@@ -3,13 +3,13 @@
 namespace App\Legacy\Product;
 
 use App\Http\Controllers\FilterController as Filter;
-use App\Legacy\Traits\QueryFilter;
+use App\Legacy\Traits\UsersQueryFilter;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductType extends Model
 {
 
-    use QueryFilter;
+    use UsersQueryFilter;
 
     /**
      * The connection name for the model.
@@ -46,7 +46,7 @@ class ProductType extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFiltered($query)
+    public function scopeApplyUserFilter($query)
     {
         return $this->applyFilter($query, 'type');
 

@@ -2,13 +2,13 @@
 
 namespace App\Legacy\Traits;
 
-trait QueryFilter
+trait UsersQueryFilter
 {
 
     public function applyFilter($query, $name)
     {
 
-        $data = $this->getQueryFilterData($name);
+        $data = $this->getStoredUsersQueryFilterParams($name);
 
         $query = $this->applyOrFilter($query, $data);
 
@@ -66,7 +66,7 @@ trait QueryFilter
         return $query;
     }
 
-    protected function getQueryFilterData($name)
+    protected function getStoredUsersQueryFilterParams($name)
     {
         $sessionKey = env('USER_FILTER_KEY') . '_' . $name;
         $sessionData = session()->get($sessionKey, false);

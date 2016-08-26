@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Product Types
+                <div class="panel-heading"><h3>Product Types</h3>
                 <form method="POST" action="/filter/type" class="form-inline">
                     <div class="form-group">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -23,14 +23,20 @@
                 <div class="panel-body">
 
                     <div class="row">
-                        <div class="col-md-6"><h3>Product Type list</h3></div>
-                        <div class="col-md-6"><a href="{{ route('type.create') }}"><button class="btn btn-primary pull-right"><i class="fa fa-plus-square-o fa-1x"></i> Create a new product type</button></a></div>
+
+                        <div class="col-md-12"><a href="{{ route('type.create') }}"><button class="btn btn-primary pull-right"><i class="fa fa-plus-square-o fa-1x"></i> Create a new product type</button></a></div>
                     </div>
 
 
 
 
                     <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product type</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
                     <tbody>
                     @foreach($types as $type)
                     <tr>

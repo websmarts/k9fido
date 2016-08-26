@@ -5,17 +5,24 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Products
+                <div class="panel-heading"><h3>Products</h3>
 
                 <form method="POST" action="/filter/product" class="form-inline">
                     <div class="form-group">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <label>Search key</label>
                         <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').'_product'),true)['fkey']['or'] }}" />
+
+                        <label>Status</label>
+                        {!! Form::select('fkey[and]', [''=>'Any', 'active'=>'Active','inactive'=>'Inactive'],json_decode( session( env('USER_FILTER_KEY').'_product'),true)['fkey']['and'],['class'=>'form-control']) !!}
+
+
                         <button type="submit" name="Filter" class="btn btn-default"><i class="fa fa-filter fa-1x"></i> Filter list</button>
 
                         @if( session( env('USER_FILTER_KEY').'_product') )
                         <button type="submit" name="remove_filter" value="1" class="btn btn-default"><i class="fa fa-eraser fa-1x"></i> Remove filter</button>
                         @endif
+
 
                     </div>
                 </form>
@@ -24,19 +31,21 @@
                 <div class="panel-body">
 
                     <div class="row">
-                        <div class="col-md-6"><h3>Product list</h3></div>
-                        <div class="col-md-6"><a href="{{ route('product.create') }}"><button class="btn btn-primary pull-right"><i class="fa fa-plus-square-o fa-1x"></i> Create a new product</button></a></div>
+
+                        <div class="col-md-12" style="padding-bottom: 4px"><a href="{{ route('product.create') }}"><button class="btn btn-primary pull-right"><i class="fa fa-plus-square-o fa-1x"></i> Create a new product</button></a></div>
                     </div>
 
 
 
 
                     <table class="table table-striped">
-                    <tr>
-                        <th>Product code</th>
-                        <th>Description</th>
-                        <th>&nbsp;</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th width="120">Product code</th>
+                            <th>Description</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
                     <tbody>
                     @foreach($products as $product)
                     <tr>

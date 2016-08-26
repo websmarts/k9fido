@@ -26,7 +26,9 @@ class ProductTypeController extends Controller
     public function index()
     {
 
-        $types = ProductType::filtered()->orderBy('typeid', 'desc')->simplePaginate(15);
+        $types = ProductType::applyUserFilter()
+            ->orderBy('typeid', 'desc')
+            ->paginate(15);
 
         return view('admin.type.index')->with('types', $types);
 

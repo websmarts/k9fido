@@ -1,0 +1,4 @@
+The unique index should be removed from clients.myob_client_id 
+
+Delete client records where clients.name ='' - there is around four.
+
