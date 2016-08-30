@@ -39,8 +39,14 @@ Route::resource('product', 'ProductController');
 Route::resource('type', 'ProductTypeController');
 
 Route::resource('typeoption', 'ProductTypeOptionController');
+Route::get('typeoption/{typeid}/{opt}', [
+    'as' => 'typeoption.edit', 'uses' => 'ProductTypeOptionController@edit']);
+Route::post('typeoption/{typeid}/{opt}', [
+    'as' => 'typeoption.update', 'uses' => 'ProductTypeOptionController@update']);
 
 Route::resource('category', 'CategoryController');
+Route::get('category/{id}/delete', [
+    'as' => 'category.delete', 'uses' => 'CategoryController@delete']);
 
 Route::resource('typecategory', 'TypeCategoryController');
 

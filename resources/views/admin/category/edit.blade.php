@@ -14,14 +14,9 @@
 
                     @include('admin.category.partials.form')
 
+
                     <div class="form-horizontal">
-                        <div class="form-group{{ $errors->has('') ? ' has-error' : '' }}">
-                            {!! Form::label('_delete', 'Delete', array('class' => 'col-md-4 control-label')) !!}
-                            <div class="col-md-6">
-                            {!! Form::checkbox('_delete', $category->id ) !!}
-                            </div>
-                        </div>
-                    </div>
+                    <a class="btn btn-warning pull-left" href="{{ route('category.delete',['id'=>$category->id]) }}">Delete</a>
 
                     <div class="form-horizontal">
                     <button type="submit"  value="Save" class="btn btn-primary pull-right" >Save</button>

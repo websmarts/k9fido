@@ -28,7 +28,7 @@
                     <td>{{ $item->product_code }}</td>
                     <td>{{ $item->price }}</td>
                     <td>{{ $clientPrice->price }}</td>
-                    <td width="20"><a href="{{ route('order.showitem', ['order_id' => $item->order_id,'product_code'=>$item->product_code] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
+                    <td width="20"><a href="{{ route('order.edititem', ['order_id' => $item->order_id,'product_code'=>$item->product_code] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
                 </tr>
 
 

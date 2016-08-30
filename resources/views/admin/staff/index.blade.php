@@ -27,7 +27,7 @@
                         <td>{{ $person->firstname }}</td>
                         <td>{{ $person->lastname }}</td>
                         <td>{{ $person->role }}</td>
-                    	<td width="20"><a href="#"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
+                    	<td width="20"><a href="{{ route('staff.edit', ['id' => $person->id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
                     </tr>
                     @endforeach
                     </tbody>

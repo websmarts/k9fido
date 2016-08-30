@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Legacy\Procuct\ProductType;
-use App\ProductTypeOption;
+use App\Legacy\Product\ProductType;
+use App\Legacy\Product\ProductTypeOption;
 use Illuminate\Http\Request;
 
 class ProductTypeOptionController extends Controller
@@ -62,7 +62,7 @@ class ProductTypeOptionController extends Controller
 
         ProductTypeOption::create($request->all());
 
-        return redirect()->route('type.show', $request->typeid);
+        return redirect()->route('type.edit', ['id' => $request->typeid]);
     }
 
     /**
@@ -82,9 +82,10 @@ class ProductTypeOptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($typeid, $opt)
     {
-        $typeOption = ProductTypeOption::find($id);
+
+        $typeOption = ProductTypeOption::where(['typeid' => $typeid, 'opt_code' => $opt])->first();
 
         return view('admin.type.edit_option')->with('typeOption', $typeOption);
     }
@@ -96,29 +97,28 @@ class ProductTypeOptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $typeid, $opt)
     {
-        $option = ProductTypeOption::find($id);
-        $typeId = $option->typeid;
+        $option = ProductTypeOption::where(['typeid' => $typeid, 'opt_code' => $opt])->first();
 
         // check if delete is being called for
-        if ($request->_delete == $id) {
+        if ($request->_delete == $typeid) {
             // TODO do we delete products that match this option
             // NO verticals can have extension and we dont want to delete them
             // as they are not really related to this option notion
             $option->delete();
-            return redirect()->route('type.show', $typeId);
+            return redirect()->route('type.edit', ['id' => $typeid]);
         }
 
-        $this->validate($request, [
-            'opt_code' => ['required', 'regex:/^[a-z]{3}$/i'],
-            'opt_desc' => 'required',
-            'opt_class' => ['required', 'regex:/^opt_([a-f0-9]{3}){1,2}$/i'],
-        ]);
+        // $this->validate($request, [
+        //     'opt_code' => ['required', 'regex:/^[a-z]{3}$/i'],
+        //     'opt_desc' => 'required',
+        //     'opt_class' => ['required', 'regex:/^opt_([a-f0-9]{3}){1,2}$/i'],
+        // ]);
 
         $option->update($request->all());
 
-        return redirect()->route('type.show', $typeId);
+        return redirect()->route('type.edit', ['id' => $typeid]);
     }
 
     /**

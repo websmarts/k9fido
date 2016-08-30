@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    @if($category->parent_id > 0)
+
     <div class="form-group{{ $errors->has('parent_id') ? ' has-error' : '' }}">
         {!! Form::label('parent_id', 'Parent id', array('class' => 'col-md-4 control-label')) !!}
         <div class="col-md-6">
@@ -53,7 +53,7 @@
         @endif
         </div>
     </div>
-    @endif
+
 
 
 

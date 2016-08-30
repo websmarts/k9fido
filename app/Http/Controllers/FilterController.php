@@ -156,6 +156,15 @@ class FilterController extends Controller
                     'value_prefix' => '%',
                     'value_postfix' => '%',
                 ],
+
+            ],
+            'and' => [
+                'type.status' => [
+                    'operater' => '=',
+                    'value_prefix' => '',
+                    'value_postfix' => '',
+                    'default_value' => 'active',
+                ],
             ],
         ];
 

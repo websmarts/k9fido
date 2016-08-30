@@ -23,13 +23,14 @@
     </thead>
     <tbody>
      @foreach ($type->options as $opt)
+
      <tr>
         <td>{{ $opt->opt_code }}</td>
         <td>{{ $opt->opt_desc }}</td>
         <td>{{ $opt->opt_class }}</td>
 
         @unless($hide_edit_link)
-        <td><a href="{{ route('typeoption.edit', ['id' => $opt->id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
+        <td><a href="{{ route('typeoption.edit', ['typeid' => $opt->typeid,'opt'=>$opt->opt_code] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
         @endunless
 
     </tr>

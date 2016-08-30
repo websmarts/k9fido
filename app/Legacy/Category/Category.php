@@ -62,11 +62,17 @@ class Category extends Model
     }
 
     /**
+     * Category childen
      * @return mixed
      */
     public function children()
     {
         return $this->hasMany('App\Legacy\Category\Category', 'parent_id', 'id');
+    }
+
+    public function productTypes()
+    {
+        return $this->hasMany(CategoryType::class, 'catid', 'id');
     }
 
 }

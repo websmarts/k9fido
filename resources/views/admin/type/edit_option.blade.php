@@ -11,13 +11,14 @@
 
 					<h3>Edit Product Option</h3>
 
-					{!! Form::model( $typeOption, array('route' => array('typeoption.update', $typeOption->id), 'method' => 'PUT' )) !!}
+					<form method="post" action='/typeoption/{{ $typeOption->typeid }}/{{ $typeOption->opt_code }}' >
+					<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
 
 					<div class="form-group{{ $errors->has('opt_code') ? ' has-error' : '' }}">
 					    {!! Form::label('opt_code', 'Opt code', array('class' => 'col-md-4 control-label')) !!}
 					    <div class="col-md-6">
-					    {!! Form::text('opt_code', null,  array('class' => 'form-control')) !!}
+					    {!! Form::text('opt_code', $typeOption->opt_code,  array('class' => 'form-control')) !!}
 
 					    @if ($errors->has('opt_code'))
 					        <span class="help-block">
@@ -30,7 +31,7 @@
 					<div class="form-group{{ $errors->has('opt_desc') ? ' has-error' : '' }}">
 					    {!! Form::label('opt_desc', 'Opt desc', array('class' => 'col-md-4 control-label')) !!}
 					    <div class="col-md-6">
-					    {!! Form::text('opt_desc', null,  array('class' => 'form-control')) !!}
+					    {!! Form::text('opt_desc', $typeOption->opt_desc,  array('class' => 'form-control')) !!}
 
 					    @if ($errors->has('opt_desc'))
 					        <span class="help-block">
@@ -43,7 +44,7 @@
 					<div class="form-group{{ $errors->has('opt_class') ? ' has-error' : '' }}">
 					    {!! Form::label('opt_class', 'Opt class', array('class' => 'col-md-4 control-label')) !!}
 					    <div class="col-md-6">
-					    {!! Form::text('opt_class', null,  array('class' => 'form-control')) !!}
+					    {!! Form::text('opt_class', $typeOption->opt_class,  array('class' => 'form-control')) !!}
 
 					    @if ($errors->has('opt_class'))
 					        <span class="help-block">
@@ -57,7 +58,7 @@
 					<div class="form-group">
 					    {!! Form::label('_delete', 'Delete option', array('class' => 'col-md-4 control-label')) !!}
 					    <div class="col-md-6">
-					    {!! Form::checkbox('_delete', $typeOption->id ) !!}
+					    {!! Form::checkbox('_delete', $typeOption->typeid ) !!}
 
 					    </div>
 					</div>

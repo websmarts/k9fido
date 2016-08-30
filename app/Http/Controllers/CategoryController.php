@@ -92,6 +92,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $category = Category::find($id);
 
         $category->update($request->all());
@@ -102,14 +103,44 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        // any types assigned to category?
+        if ($this->productTypes($id)->count() > 0) {
+            flash('Cannot delete category as it contains products', 'error');
+            return redirect()->route('category.index');
+        }
+
+        // any sub-categories?
+        if ($this->subCategories($id)->count() > 0) {
+            flash('Cannot delete category as it contains sub-categories', 'error');
+            return redirect()->route('category.index');
+        }
+
+        // Okay to delete the category
+        Category::find($id)->delete();
+
+        flash('Category deleted', 'success');
+
+        return redirect()->route('category.index');
+
+    }
+
+    protected function subCategories($id)
+    {
+        return Category::find($id)->children;
+
+    }
+
+    protected function productTypes($id)
+    {
+        return Category::with('productTypes')->find($id)->productTypes;
+
     }
 
     protected function _parentOptions()

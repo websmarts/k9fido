@@ -12,6 +12,7 @@
 
                     {!! Form::model($product, array('route' => array('product.update', $product->id ), 'method' => 'patch' )) !!}
 
+
                     <div class="col-md-12">
                          <button type="submit"  value="Save" class="btn btn-primary pull-right" >Save</button>
                          </div>
@@ -32,7 +33,7 @@
                     <div class="form-group{{ $errors->has('typeid') ? ' has-error' : '' }}">
                         {!! Form::label('typeid', 'Typeid', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('typeid', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('typeid', ( $productTypes), null, array('class' => 'form-control')) !!}
 
                         @if ($errors->has('typeid'))
                             <span class="help-block">

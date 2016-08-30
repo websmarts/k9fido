@@ -1,4 +1,9 @@
-The unique index should be removed from clients.myob_client_id 
+#The unique index should be removed from clients.myob_client_id 
 
-Delete client records where clients.name ='' - there is around four.
+#Delete client records where clients.name ='' - there is around four.
 
+#Add timestamp columns to the following tables:
+ - clients
+ - system_orders
+
+ All above are done 30-08-2016

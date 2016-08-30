@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Legacy\Product\Product;
+use App\Legacy\Product\ProductType;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -38,11 +39,17 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $product = new Product;
+        if ($request->has('typeid')) {
+            $product->typeid = $request->get('typeid');
+        }
 
-        return view('admin.product.create')->with('product', $product);
+        $productTypes = $this->getProductTypes();
+        // return $productTypes->toArray();
+
+        return view('admin.product.create', compact('product', 'productTypes'));
     }
 
     /**
@@ -88,7 +95,9 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        return view('admin.product.edit')->with('product', $product);
+        $productTypes = $this->getProductTypes();
+
+        return view('admin.product.edit', compact('product', 'productTypes'));
     }
 
     /**
@@ -115,6 +124,8 @@ class ProductController extends Controller
 
         $product->update($request->all());
 
+        flash('Product updated ...', 'success');
+
         return redirect()->route('product.edit', $id);
     }
 
@@ -127,5 +138,10 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function getProductTypes()
+    {
+        return ProductType::where('status', 'active')->orderBy('name', 'asc')->lists('name', 'typeid')->toArray();
     }
 }

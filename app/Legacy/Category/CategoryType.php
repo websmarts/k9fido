@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Legacy\Product;
+namespace App\Legacy\Category;
 
 use App\Legacy\Traits\HasCompositePrimaryKey;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductTypeOption extends Model
+class CategoryType extends Model
 {
     use HasCompositePrimaryKey;
 
@@ -21,22 +21,27 @@ class ProductTypeOption extends Model
      *
      * @var string
      */
-    protected $primaryKey = ['typeid', 'opt_code'];
+    protected $primaryKey = ['catid', 'typeid'];
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'type_options';
+    protected $table = 'type_category';
 
-    protected $fillable = [
-        'typeid',
-        'opt_desc',
-        'opt_class',
-        'opt_code',
-    ];
-
+    /**
+     * @var mixed
+     */
     public $timestamps = false;
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'catid',
+        'typeid',
+
+    ];
 
 }
