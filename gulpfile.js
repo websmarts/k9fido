@@ -13,5 +13,10 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.scss')
-    	.version('public/css/app.css');
+
+	.scripts(['app.js','imageuploader.js','SimpleAjaxUploader.js'])
+
+    .version(['css/app.css','js/all.js']);
+
+    
 });

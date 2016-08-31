@@ -39,7 +39,9 @@
                     <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th>TypeID</th>
                             <th>Product type</th>
+                            <th>Description</th>
                             <th>Status</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -47,7 +49,9 @@
                     <tbody>
                     @foreach($types as $type)
                     <tr>
-                    	<td>{{ $type->name }}</td>
+                    	<td>{{ $type->typeid }}</td>
+                        <td>{{ $type->name }}</td>
+                        <td>{{ $type->description }}</td>
                         <td>{{ $type->status }}</td>
                     	<td width="20"><a href="{{ route('type.edit', ['id' => $type->typeid] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
                     </tr>

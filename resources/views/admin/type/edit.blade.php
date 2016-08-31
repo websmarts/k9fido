@@ -34,6 +34,8 @@
 
                      @include('admin.type.partials.type_products')
 
+                     @include('admin.type.partials.type_images')
+
                      @include('admin.type.partials.type_categories')
 
 

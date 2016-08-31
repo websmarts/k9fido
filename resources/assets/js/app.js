@@ -1,0 +1,33 @@
+$( function() {
+
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+
+	// Sortable for type images
+    $( "#sortable" ).sortable({
+
+	    axis: 'y',
+	    update: function (event, ui) {
+	        var data = $(this).sortable('serialize');
+
+	        console.log(data);
+
+	        // POST to server using $.post or $.ajax
+	        $.post('/ajax/image/sort', data);
+	    }
+
+    });
+
+
+
+
+
+    $( "#sortable" ).disableSelection();
+
+
+    // flash message fader
+    $('.Alert').delay( 3000 ).fadeOut( 400 );
+});

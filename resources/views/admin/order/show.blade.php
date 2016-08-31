@@ -60,6 +60,7 @@
                 @endforeach
                 </tbody>
                 </table>
+                <a href="{{ route('order.delete', ['id' => $order->id] ) }}"><button class="btn btn-warning pull-left">Delete Order</button></a>
 
                 </div>
             </div>

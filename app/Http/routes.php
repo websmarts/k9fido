@@ -1,5 +1,8 @@
 <?php
 
+use App\ProductTypeImage;
+use Illuminate\Http\Request;
+
 // \Event::listen('Illuminate\Database\Events\QueryExecuted', function ($query) {
 //     echo '<pre>';
 //     var_dump($query->sql);
@@ -18,6 +21,18 @@
 | and give it the controller to call when that URI is requested.
 |
  */
+// sorts a productTypeImage list
+Route::post('ajax/image/sort', function (Request $request) {
+    $items = $request->get('item');
+    $order = 0;
+    foreach ($items as $item) {
+        $image = ProductTypeImage::find($item);
+        $image->order = $order++;
+        $image->save();
+    }
+    return $items;
+
+});
 
 Route::get('/', function () {
 
@@ -53,6 +68,10 @@ Route::resource('typecategory', 'TypeCategoryController');
 Route::resource('order', 'OrderController');
 Route::get('orderitem/{orderId}/{productCode}/edit', [
     'as' => 'order.edititem', 'uses' => 'OrderController@editOrderItem']);
+Route::get('order/{orderId}/delete', [
+    'as' => 'order.delete', 'uses' => 'OrderController@destroy']);
 
 Route::resource('client', 'ClientController');
 Route::resource('staff', 'StaffController');
+
+Route::resource('producttypeimage', 'ProductTypeImageController');

@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('typeid') ? ' has-error' : '' }}">
-                        {!! Form::label('typeid', 'Typeid', array('class' => 'col-md-4 control-label')) !!}
+                        <label for="typeid" class="col-md-4 control-label">TypeId <a href="{{ route('type.edit',['type'=>$product->typeid]) }}">edit</a></label>
                         <div class="col-md-6">
                         {!! Form::select('typeid', ( $productTypes), null, array('class' => 'form-control')) !!}
 

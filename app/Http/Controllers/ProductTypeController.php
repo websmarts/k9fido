@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Legacy\Product\ProductType;
+use App\ProductTypeImage;
 use DB;
 use Illuminate\Http\Request;
 
@@ -94,7 +95,9 @@ class ProductTypeController extends Controller
 
         }])->find($id);
 
-        return view('admin.type.edit')->with('type', $type);
+        $images = $this->getProductImages($id);
+
+        return view('admin.type.edit', compact('type', 'images'));
 
     }
 
@@ -150,13 +153,18 @@ class ProductTypeController extends Controller
         //
     }
 
-    protected function filter()
+    protected function getProductImages($typeid)
     {
-        if ($fd = session('__FILTER__type')) {
-            $where = ['name', 'like', '%' . $fd . '%'];
-        } else {
-            $where = ['typeid', '>', 0];
-        }
-        return [$where];
+        return ProductTypeImage::where('typeid', $typeid)->orderBy('order', 'asc')->get();
     }
+
+    // protected function filter()
+    // {
+    //     if ($fd = session('__FILTER__type')) {
+    //         $where = ['name', 'like', '%' . $fd . '%'];
+    //     } else {
+    //         $where = ['typeid', '>', 0];
+    //     }
+    //     return [$where];
+    // }
 }

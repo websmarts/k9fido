@@ -1,9 +1,10 @@
-<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>K9 Fido</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <title>K9 Fido</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
   <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />

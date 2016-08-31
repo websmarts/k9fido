@@ -114,8 +114,20 @@ class OrderController extends Controller
     public function destroy($id)
     {
         // Delete the order
+        $order = Order::with('items.product')->find($id);
+
+        //dd($order->items);
+        foreach ($order->items as $item) {
+            $item->product->qty_instock += ($item->qty - $item->qty_supplied);
+            $item->product->save();
+            $item->delete();
+        }
         // Delete the order items
+        $order->delete();
+
         // Return order items to stock
+        flash('Order ' . $id . 'has been deleted', 'success');
+        return redirect(route('order.index'));
 
     }
 
