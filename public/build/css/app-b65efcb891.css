@@ -7,6 +7,9 @@ body {
 .navbar-default {
   background: #FFC600; }
 
+.navbar-default a.navbar-brand {
+  color: #000000; }
+
 .Alert {
   padding: 5px;
   margin-bottom: 5px; }

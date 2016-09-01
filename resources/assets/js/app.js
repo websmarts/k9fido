@@ -21,6 +21,21 @@ $( function() {
 
     });
 
+    // setup delete click handler to delete images
+    $('#sortable li a').on('click', function(e){
+    	var imageId = $(e.target).closest('li').attr('id').substring(5,20) 
+    	
+
+    	$.post('/ajax/image/delete/' + imageId, function(data) {
+    		if (data > 0){
+    			$('#item-'+ data).remove(); // remove the deleted item
+    		}
+    		
+    	});
+    	
+
+    })
+
 
 
 

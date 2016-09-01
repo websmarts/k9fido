@@ -32,7 +32,7 @@
                       @if ($images->count())
                         <ul id="sortable" class="sortable">
                          @foreach ($images as $i)
-                         <li id="item-{{ $i->id }}"><img src="{{ url('/source/tn/'.$i->filename) }}" /> {{ $i->filename }} </li>
+                         <li id="item-{{ $i->id }}"><img src="{{ url('/source/tn/'.$i->filename) }}" /> <a title="delete image" class="pull-right" style="padding: 10px"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a> </li>
 
                          @endforeach
                          </ul>
@@ -48,4 +48,10 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('script')
+<script> var typeid = {{ $typeid }};</script>
+<script src="{{ asset('js/imageuploader.js') }}"></script>
 @endsection

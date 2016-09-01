@@ -1,7 +1,6 @@
 <?php
 
 use App\ProductTypeImage;
-use Illuminate\Http\Request;
 
 // \Event::listen('Illuminate\Database\Events\QueryExecuted', function ($query) {
 //     echo '<pre>';
@@ -21,18 +20,20 @@ use Illuminate\Http\Request;
 | and give it the controller to call when that URI is requested.
 |
  */
-// sorts a productTypeImage list
-Route::post('ajax/image/sort', function (Request $request) {
-    $items = $request->get('item');
-    $order = 0;
-    foreach ($items as $item) {
-        $image = ProductTypeImage::find($item);
-        $image->order = $order++;
-        $image->save();
-    }
-    return $items;
 
+Route::get('test', function () {
+    $typeid = 150;
+    //$max = ProductTypeImage::where('typeid', $typeid)->orderBy('order', 'desc')->take(1)->get()->first();
+
+    $images = ProductTypeImage::where('typeid', $typeid)->orderBy('order', 'desc')->get();
+    $max = $images->first();
+    return $max ? $max->order : 'x';
 });
+
+// sorts a productTypeImage list
+Route::post('ajax/image/sort', 'ProductTypeImageController@sort');
+Route::post('ajax/image/upload/{typeid}', 'ProductTypeImageController@upload');
+Route::post('ajax/image/delete/{imageid}', 'ProductTypeImageController@delete');
 
 Route::get('/', function () {
 

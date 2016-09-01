@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ProductTypeImage;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class ProductTypeImageController extends Controller
 {
@@ -17,7 +18,7 @@ class ProductTypeImageController extends Controller
         $typeid = $request->get('id');
         $images = ProductTypeImage::where('typeid', $typeid)->orderBy('order', 'asc')->get();
 
-        return view('admin.type.image', compact('images'));
+        return view('admin.type.image', compact('images', 'typeid'));
     }
 
     /**
@@ -81,8 +82,127 @@ class ProductTypeImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($imageId)
     {
-        //
+        $item = ProductTypeimage::find($imageId);
+
+        // Find all images for this typeid
+        $images = ProductTypeImage::where('typeid', $item->typeid)
+            ->whereNotIn('id', [$imageId])
+            ->select('id')
+            ->orderBy('order', 'asc')
+            ->get();
+
+        foreach ($images as $i) {
+            $list[] = $i->id;
+        }
+        $list[] = (int) $imageId;
+
+        $this->sort($list);
+
+        $item->delete();
+
+        return $imageId;
+    }
+
+    public function upload(Request $request, $typeid)
+    {
+        // check and get the file
+        if (!$request->file('uploadfile')->isValid()) {
+            return false;
+        }
+        $file = $request->file('uploadfile');
+
+        // get the typeid - already passed in
+
+        // get the current max order value from db for this typeid
+        $images = ProductTypeImage::where('typeid', $typeid)->orderBy('order', 'desc')->get();
+        $order = $images->first() ? $images->first()->order : 0;
+
+        $order++; // inc order to add new image to the end of the list
+
+        $filename = $this->makeFilename($typeid, $order);
+
+        $publicPath = public_path();
+        $imagePath = $publicPath . '/source';
+        $thumbPath = $imagePath . '/tn/';
+
+        $file->move($imagePath, $filename);
+
+        $image = Image::make($imagePath . '/' . $filename);
+
+        $data['width'] = $image->width();
+        $data['height'] = $image->height();
+        $data['filename'] = $filename;
+        $data['order'] = $order;
+        $data['typeid'] = $typeid;
+        $created = ProductTypeImage::create($data);
+
+        // create thumb
+        $image->resize(150, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+
+        // save thumb
+        $image->save($thumbPath . $filename);
+
+        return ['success' => true, 'imageid' => $created->id];
+
+        // mv the file to its new home with the new name
+
+        // save a thumbnail of the file
+        // create a db entry
+        // return list of images for typeid
+    }
+
+    public function sort($itemIDs = false)
+    {
+        $request = request();
+        if (!$itemIDs) {
+            $itemIDs = $request->get('item'); // itemIDs is an array of record ids for the images
+        }
+
+        $order = 0;
+        foreach ($itemIDs as $id) {
+            $image[$id] = ProductTypeImage::find($id);
+            $image[$id]->order = $order++;
+            //$image[$id]->save();
+        }
+
+        // rename all images to temp names
+        $folder = app_path() . '/../public/source/';
+        $thumbFolder = $folder . 'tn/';
+
+        foreach ($image as $i) {
+            rename($folder . $i->filename, $folder . $i->filename . 'X');
+            rename($thumbFolder . $i->filename, $thumbFolder . $i->filename . 'X');
+        }
+        foreach ($image as $i) {
+
+            $newFilename = $this->makeFilename($i->typeid, $i->order);
+
+            rename($folder . $i->filename . 'X', $folder . $newFilename);
+            rename($thumbFolder . $i->filename . 'X', $thumbFolder . $newFilename);
+
+            $i->filename = $newFilename;
+            $i->save();
+        }
+
+        $items = ProductTypeImage::whereIn('id', $itemIDs)->get();
+
+        return $items;
+
+    }
+
+    protected function makeFilename($typeid, $order)
+    {
+
+        $tail = '';
+        $ext = '.jpg';
+        if ($order > 0) {
+            $tail = '_' . ($order + 1);
+        }
+        return $typeid . $tail . $ext;
+
     }
 }

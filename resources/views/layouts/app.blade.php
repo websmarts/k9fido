@@ -14,5 +14,7 @@
 
     @include('layouts.partials.javascript')
 
+    @yield('script')
+
 </body>
 </html>

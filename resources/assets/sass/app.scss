@@ -12,6 +12,10 @@ body {
 	background: #FFC600;
 }
 
+.navbar-default a.navbar-brand {
+	color: #000000;
+}
+
 @import "components/alert";
 
 @import "components/sortable";

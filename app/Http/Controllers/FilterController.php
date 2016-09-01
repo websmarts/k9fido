@@ -126,6 +126,11 @@ class FilterController extends Controller
                     'value_prefix' => '%',
                     'value_postfix' => '%',
                 ],
+                'system_orders.order_id' => [
+                    'operater' => 'LIKE',
+                    'value_prefix' => 'T0_',
+                    'value_postfix' => '%',
+                ],
             ],
             'and' => [
                 'system_orders.status' => [

@@ -21,6 +21,21 @@ $( function() {
 
     });
 
+    // setup delete click handler to delete images
+    $('#sortable li a').on('click', function(e){
+    	var imageId = $(e.target).closest('li').attr('id').substring(5,20) 
+    	
+
+    	$.post('/ajax/image/delete/' + imageId, function(data) {
+    		if (data > 0){
+    			$('#item-'+ data).remove(); // remove the deleted item
+    		}
+    		
+    	});
+    	
+
+    })
+
 
 
 
@@ -31,58 +46,6 @@ $( function() {
     // flash message fader
     $('.Alert').delay( 3000 ).fadeOut( 400 );
 });
-function escapeTags( str ) {
-  return String( str )
-           .replace( /&/g, '&amp;' )
-           .replace( /"/g, '&quot;' )
-           .replace( /'/g, '&#39;' )
-           .replace( /</g, '&lt;' )
-           .replace( />/g, '&gt;' );
-}
-window.onload = function() {
-  var btn = document.getElementById('uploadBtn'),
-      progressBar = document.getElementById('progressBar'),
-      progressOuter = document.getElementById('progressOuter'),
-      msgBox = document.getElementById('msgBox');
-  var uploader = new ss.SimpleUpload({
-        button: btn,
-        url: 'file_upload.php',
-        name: 'uploadfile',
-        multipart: true,
-        hoverClass: 'hover',
-        focusClass: 'focus',
-        responseType: 'json',
-        startXHR: function() {
-            progressOuter.style.display = 'block'; // make progress bar visible
-            this.setProgressBar( progressBar );
-        },
-        onSubmit: function() {
-            msgBox.innerHTML = ''; // empty the message box
-            btn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
-          },
-        onComplete: function( filename, response ) {
-            btn.innerHTML = 'Choose Another File';
-            progressOuter.style.display = 'none'; // hide progress bar when upload is completed
-            if ( !response ) {
-                msgBox.innerHTML = 'Unable to upload file';
-                return;
-            }
-            if ( response.success === true ) {
-                msgBox.innerHTML = '<strong>' + escapeTags( filename ) + '</strong>' + ' successfully uploaded.';
-            } else {
-                if ( response.msg )  {
-                    msgBox.innerHTML = escapeTags( response.msg );
-                } else {
-                    msgBox.innerHTML = 'An error occurred and the upload failed.';
-                }
-            }
-          },
-        onError: function() {
-            progressOuter.style.display = 'none';
-            msgBox.innerHTML = 'Unable to upload file';
-          }
-  });
-};
 /**
  * Simple Ajax Uploader
  * Version 2.5.5

@@ -14,7 +14,9 @@ var elixir = require('laravel-elixir');
 elixir(function(mix) {
     mix.sass('app.scss')
 
-	.scripts(['app.js','imageuploader.js','SimpleAjaxUploader.js'])
+	.scripts(['app.js','SimpleAjaxUploader.js'])
+
+	.copy('resources/assets/js/imageuploader.js', 'public/js/imageuploader.js')
 
     .version(['css/app.css','js/all.js']);
 

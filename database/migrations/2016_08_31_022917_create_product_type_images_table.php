@@ -18,7 +18,7 @@ class CreateProductTypeImagesTable extends Migration
             $table->string('filename');
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
-            $table->float('order')->nullable();
+            $table->integer('order')->nullable();
             $table->timestamps();
         });
     }
