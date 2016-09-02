@@ -97,19 +97,20 @@ class ProductTypeImageController extends Controller
             $list[] = $i->id;
         }
         $list[] = (int) $imageId;
+        //return $list;
 
-        $this->sort($list);
+        $item = $this->sort($list)->last();
 
-        // delete the file
+        //return $item;
+
+        //delete the file
         $filename = public_path() . '/source/' . $item->filename;
-        if (file_exists($filename)) {
-            unlink($filename); // the image
-        }
+
+        unlink($filename); // the image
 
         $filename = public_path() . '/source/tn/' . $item->filename;
-        if (file_exists($filename)) {
-            unlink($filename); // the image
-        }
+
+        unlink($filename); // the image
 
         $item->delete();
 
@@ -199,7 +200,7 @@ class ProductTypeImageController extends Controller
             $i->save();
         }
 
-        $items = ProductTypeImage::whereIn('id', $itemIDs)->get();
+        $items = ProductTypeImage::whereIn('id', $itemIDs)->orderby('order', 'asc')->get();
 
         return $items;
 

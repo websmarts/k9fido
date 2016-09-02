@@ -28,7 +28,8 @@ $( function() {
 
     	$.post('/ajax/image/delete/' + imageId, function(data) {
     		if (data > 0){
-    			$('#item-'+ data).remove(); // remove the deleted item
+    			//$('#item-'+ data).remove(); // remove the deleted item
+    			location.reload();
     		}
     		
     	});
