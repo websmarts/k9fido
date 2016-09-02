@@ -42,6 +42,8 @@ class K9ImportProductImages extends Command
      */
     public function handle()
     {
+        ini_set('memory_limit', '-1');
+
         // Delete all staff
         DB::connection('mysql')->delete('delete from users where users.roles="staff" ');
 
@@ -87,7 +89,7 @@ class K9ImportProductImages extends Command
 
             // }
             echo $filename . "\n";
-            preg_match('/(\d+)?(_*)?(\d*)\.jpg/', $filename, $m);
+            preg_match('/(\d+)?(_*)?(\d*)\.[jpg|JPG]/', $filename, $m);
             //var_dump(count($m));
             if (!isset($m[1])) {
                 echo 'skipping ' . "\n";
