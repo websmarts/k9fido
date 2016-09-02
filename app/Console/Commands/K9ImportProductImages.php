@@ -45,7 +45,7 @@ class K9ImportProductImages extends Command
         ini_set('memory_limit', '-1');
 
         // Delete all staff
-        DB::connection('mysql')->delete('delete from users where users.roles="staff" ');
+        DB::connection('mysql')->delete('delete from producttypeimages" ');
 
         $sourceFolder = app_path() . '/../../catalog/source/';
 
@@ -89,7 +89,7 @@ class K9ImportProductImages extends Command
 
             // }
             echo $filename . "\n";
-            preg_match('/(\d+)?(_*)?(\d*)\.[jpg|JPG]/', $filename, $m);
+            preg_match('/(\d+)?(_*)?(\d*)\.jpg/i', $filename, $m);
             //var_dump(count($m));
             if (!isset($m[1])) {
                 echo 'skipping ' . "\n";
@@ -100,6 +100,7 @@ class K9ImportProductImages extends Command
                 'filename' => $m[0],
                 'order' => (int) $m['3'],
             ];
+            echo $filename . " - process\n";
             //dd($data);
             // image dimensions
 
@@ -116,7 +117,7 @@ class K9ImportProductImages extends Command
                 $constraint->aspectRatio();
             });
             // save thumb
-            $image->save($thumbFolder . $filename);
+            $image->save($thumbFolder . strtolower($filename));
 
             $image->destroy();
 
