@@ -86,9 +86,13 @@ class K9ImportProductImages extends Command
             //     $filename = strtolower($filename); // because it is now !
 
             // }
-            //var_dump(['filename' => $filename]);
+            var_dump(['filename' => $filename]);
             preg_match('/(\d+)?(_*)?(\d*)\.jpg/', $filename, $m);
-            //var_dump($m);
+            //var_dump(count($m));
+            if (!isset($m[1])) {
+                echo 'skipping ' . $filename . "\n";
+                continue;
+            }
             $data = [
                 'typeid' => (int) $m[1],
                 'filename' => $m[0],
@@ -98,7 +102,7 @@ class K9ImportProductImages extends Command
             // image dimensions
 
             $image = Image::make($realpath);
-            $image->save($newFolder . $filename);
+            $image->save($newFolder . strtolower($filename));
 
             $data['width'] = $image->width();
             $data['height'] = $image->height();
