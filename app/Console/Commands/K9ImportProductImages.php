@@ -93,7 +93,7 @@ class K9ImportProductImages extends Command
                 'filename' => $m[0],
                 'order' => (int) $m['3'],
             ];
-            dd($data);
+            //dd($data);
             // image dimensions
 
             $image = Image::make($realpath);
