@@ -128,7 +128,7 @@ class ProductTypeImageController extends Controller
 
         // get the current max order value from db for this typeid
         $images = ProductTypeImage::where('typeid', $typeid)->orderBy('order', 'desc')->get();
-        $order = $images->first() ? $images->first()->order : 0;
+        $order = $images->first() ? $images->first()->order : -1;
 
         $order++; // inc order to add new image to the end of the list
 
