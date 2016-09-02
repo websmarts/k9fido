@@ -116,6 +116,8 @@ class K9ImportProductImages extends Command
             // save thumb
             $image->save($thumbFolder . $filename);
 
+            $image->destroy();
+
         }
         $this->info('Image import and move complete');
     }
