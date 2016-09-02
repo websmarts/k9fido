@@ -86,11 +86,11 @@ class K9ImportProductImages extends Command
             //     $filename = strtolower($filename); // because it is now !
 
             // }
-            var_dump(['filename' => $filename]);
+            echo $filename . "\n";
             preg_match('/(\d+)?(_*)?(\d*)\.jpg/', $filename, $m);
             //var_dump(count($m));
             if (!isset($m[1])) {
-                echo 'skipping ' . $filename . "\n";
+                echo 'skipping ' . "\n";
                 continue;
             }
             $data = [
