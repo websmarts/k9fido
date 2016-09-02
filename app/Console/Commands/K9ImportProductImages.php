@@ -45,7 +45,7 @@ class K9ImportProductImages extends Command
         ini_set('memory_limit', '-1');
 
         // Delete all staff
-        DB::connection('mysql')->delete('delete from producttypeimages" ');
+        DB::connection('mysql')->delete('delete from producttypeimages');
 
         $sourceFolder = app_path() . '/../../catalog/source/';
 
