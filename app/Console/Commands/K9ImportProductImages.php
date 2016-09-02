@@ -97,7 +97,7 @@ class K9ImportProductImages extends Command
             }
             $data = [
                 'typeid' => (int) $m[1],
-                'filename' => $m[0],
+                'filename' => strtolower($m[0]),
                 'order' => (int) $m['3'],
             ];
             echo $filename . " - process\n";
