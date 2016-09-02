@@ -100,6 +100,11 @@ class ProductTypeImageController extends Controller
 
         $this->sort($list);
 
+        // delete the file
+
+        unlink(public_path() . '/source/' . $item->filename); // the image
+        unlink(public_path() . '/source/tn/' . $item->filename); // the thumb image
+
         $item->delete();
 
         return $imageId;

@@ -13,9 +13,10 @@ class ProductTypeImagesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::delete('delete from producttypeimages');
+        DB::connection('mysql')->delete('delete from producttypeimages');
 
         $folder = app_path() . '/../public/source/';
+
         $thumbFolder = $folder . 'tn/';
 
         $files = Finder::create()->in($folder)
@@ -58,7 +59,7 @@ class ProductTypeImagesTableSeeder extends Seeder
             //var_dump($m);
             $data = [
                 'typeid' => (int) $m[1],
-                'filename' => $m[0],
+                'filename' => strtolower($m[0]),
                 'order' => (int) $m['3'],
             ];
 
@@ -77,6 +78,8 @@ class ProductTypeImagesTableSeeder extends Seeder
             });
             // save thumb
             $image->save($thumbFolder . $filename);
+
+            $image->destroy();
 
         }
 
