@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\ProductTypeImage;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image;
 use Symfony\Component\Finder\Finder;
 
 class K9ImportProductImages extends Command
