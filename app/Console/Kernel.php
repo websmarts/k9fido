@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         // Commands\Inspire::class,
         Commands\K9MergeUsers::class,
         Commands\K9ArchiveData::class,
+        Commands\K9ImportProductImages::class,
     ];
 
     /**
