@@ -101,9 +101,15 @@ class ProductTypeImageController extends Controller
         $this->sort($list);
 
         // delete the file
+        $filename = public_path() . '/source/' . $item->filename;
+        if (file_exists($filename)) {
+            unlink($filename); // the image
+        }
 
-        unlink(public_path() . '/source/' . $item->filename); // the image
-        unlink(public_path() . '/source/tn/' . $item->filename); // the thumb image
+        $filename = public_path() . '/source/tn/' . $item->filename;
+        if (file_exists($filename)) {
+            unlink($filename); // the image
+        }
 
         $item->delete();
 
