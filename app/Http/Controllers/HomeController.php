@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Legacy\Order\Order;
+use Carbon\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -23,7 +26,17 @@ class HomeController extends Controller
     {
         // $users = DB::connection('k9homes')->select("select * from type");
         // dd($users);
+        $orders = Order::with('client')
+            ->whereIn('status', ['new', 'printed', 'basket'])
+            ->whereDate('modified', '>=', Carbon::today()->subDays(90)->toDateString())
 
-        return view('home');
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $newOrders = $orders->where('status', 'saved');
+        $pickOrders = $orders->where('status', 'printed');
+        $basketOrders = $orders->where('status', 'basket');
+
+        return view('home', compact('newOrders', 'pickOrders', 'basketOrders'));
     }
 }

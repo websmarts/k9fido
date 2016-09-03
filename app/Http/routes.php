@@ -44,9 +44,6 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
-// Route::get('/staff', 'StaffController@index');
-// Route::get('/clients', 'ClientController@index');
-// Route::get('/sales', 'OrderController@index');
 
 Route::post('filter/{name}', 'FilterController@index');
 
@@ -67,6 +64,9 @@ Route::get('category/{id}/delete', [
 Route::resource('typecategory', 'TypeCategoryController');
 
 Route::resource('order', 'OrderController');
+Route::get('order/{id}/pick', [
+    'as' => 'order.pick', 'uses' => 'OrderController@pick']);
+
 Route::get('orderitem/{orderId}/{productCode}/edit', [
     'as' => 'order.edititem', 'uses' => 'OrderController@editOrderItem']);
 Route::get('order/{orderId}/delete', [

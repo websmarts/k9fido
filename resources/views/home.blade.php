@@ -8,7 +8,23 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                     <div class="panel-body">
+
+
+                    @if(isSet($newOrders) )
+                        @include('admin.lists.orders',['title'=>'New orders', 'data'=>$newOrders])
+                    @endif
+
+                    @if(isSet($pickOrders) )
+                        @include('admin.lists.orders',['title'=>'Pick orders', 'data'=>$pickOrders])
+                    @endif
+
+                    @if(isSet($basketOrders) )
+                        @include('admin.lists.orders',['title'=>'Basket orders', 'data'=>$basketOrders])
+                    @endif
+
+
+
                 </div>
             </div>
         </div>

@@ -83,6 +83,7 @@ class OrderController extends Controller
 
         // Get the order and order items
         $order = Order::with('items', 'client')->find($id);
+
         $clientprices = collect(ClientPrice::where('client_id', $order->client_id)
                 ->select('product_code', 'client_price')
                 ->get()
@@ -149,6 +150,14 @@ class OrderController extends Controller
             ->first();
 
         return view('admin.order.edititem')->with(['item' => $item, 'clientPrice' => $clientPrice]);
+    }
+
+    public function pick($id)
+    {
+
+        $order = Order::with('items.product', 'client')->find($id);
+
+        return view('admin.order.pick', compact('order'));
     }
 
 }
