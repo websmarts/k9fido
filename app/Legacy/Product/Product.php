@@ -75,7 +75,7 @@ class Product extends Model
      */
     public function scopeApplyUserFilter($query)
     {
-        return $this->applyFilter($query, 'product');
+        return $this->applyFilter($query, $this->table);
 
     }
 

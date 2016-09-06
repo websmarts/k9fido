@@ -4,16 +4,14 @@ namespace App\Legacy\Traits;
 trait CanExportOrder
 {
 
-    protected function export()
+    public function export($order)
     {
-
-        $orderId = $this->id;
 
         $o = '';
         $header = 'Co./Last Name,First Name,Addr 1 - Line 1,           - Line 2,           - Line 3,           - Line 4,Inclusive,Invoice #,Date,Customer PO,Ship Via,Delivery Status,Item Number,Quantity,Description,Price,Inc-Tax Price,Discount,Total,Inc-Tax Total,Job,Comment,Journal Memo,Salesperson Last Name,Salesperson First Name,Shipping Date,Referral Source,Tax Code,Non-GST Amount,GST Amount,LCT Amount,Freight Amount,Inc-Tax Freight Amount,Freight Tax Code,Freight Non-GST Amount,Freight GST Amount,Freight LCT Amount,Sale Status,Currency Code,Exchange Rate,Terms - Payment is Due,           - Discount Days,           - Balance Due Days,           - % Discount,           - % Monthly Charge,Amount Paid,Payment Method,Payment Notes,Name on Card,Card Number,Expiry Date,Authorisation Code,BSB,Account Number,Drawer/Account Name,Cheque Number,Category,Location ID,Card ID,Record ID' . "\r\n";
 
-        $o = $this->get_order_export_data($orderId);
-        $filename = $orderId;
+        $o = $this->get_order_export_data($order);
+        $filename = $order->order_id;
 
         $o = $header . $o;
 
@@ -28,32 +26,33 @@ trait CanExportOrder
 
     }
 
-    protected function get_order_export_data($orderId)
+    protected function get_order_export_data($order)
     {
+
         $o = '';
         $lines = [];
         $n = 0;
-        foreach ($this->items as $item) {
+        foreach ($order->items as $item) {
             // dump($this->client->name);
             // dump($this->client->parentClient);
             // dump($this->salesrep->name);
             // dump($item->product->product_code);
 
-            $lines[$n]['order_id'] = $orderId;
-            $lines[$n]['order_date'] = $this->modified->format('d-m-Y');
-            $lines[$n]['Sales Person First Name'] = $this->salesrep->firstname;
-            $lines[$n]['Sales Person Last Name'] = $this->salesrep->lastname;
+            $lines[$n]['order_id'] = $order->order_id;
+            $lines[$n]['order_date'] = $order->modified->format('d-m-Y');
+            $lines[$n]['Sales Person First Name'] = $order->salesrep->firstname;
+            $lines[$n]['Sales Person Last Name'] = $order->salesrep->lastname;
             $lines[$n]['Item Number'] = $item->product->product_code;
             $lines[$n]['Quantity'] = $item->qty;
             $lines[$n]['Stdprice'] = $item->product->price;
             $lines[$n]['Invprice'] = $item->price;
-            $lines[$n]['Co./Last Name'] = $this->client->name;
-            $lines[$n]['address1'] = $this->client->address1;
-            $lines[$n]['address2'] = $this->client->address2;
-            $lines[$n]['address3'] = $this->client->address3;
-            $lines[$n]['city'] = $this->client->city;
-            $lines[$n]['postcode'] = $this->client->postcode;
-            $lines[$n]['parent_company'] = !is_null($this->client->parentClient) ? $this->client->parentClient->name : '';
+            $lines[$n]['Co./Last Name'] = $order->client->name;
+            $lines[$n]['address1'] = $order->client->address1;
+            $lines[$n]['address2'] = $order->client->address2;
+            $lines[$n]['address3'] = $order->client->address3;
+            $lines[$n]['city'] = $order->client->city;
+            $lines[$n]['postcode'] = $order->client->postcode;
+            $lines[$n]['parent_company'] = !is_null($order->client->parentClient) ? $order->client->parentClient->name : '';
 
             $n++;
         }
@@ -66,8 +65,8 @@ trait CanExportOrder
 
         // mark the order as exported
         // 'update system_orders set `exported`="yes" where id=' . $orderId;
-        $this->exported = "yessiree";
-        $this->save();
+        $order->exported = "yes";
+        $order->save();
 
         return $o;
 

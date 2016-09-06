@@ -31,7 +31,9 @@ class ProductTypeController extends Controller
             ->orderBy('typeid', 'desc')
             ->paginate(15);
 
-        return view('admin.type.index')->with('types', $types);
+        $filterKey = 'type'; // must mactch a key in FilterController
+
+        return view('admin.type.index', compact('types', 'filterKey'));
 
     }
 

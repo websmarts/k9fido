@@ -7,3 +7,18 @@
  - system_orders
 
  All above are done 30-08-2016
+
+ TRIMMING LIVE DBS
+
+ DELETE FROM system_order_items WHERE CONVERT(SUBSTR(order_id,4,10),UNSIGNED INTEGER) < 24134
+ DELETE FROM system_orders WHERE id < 24134
+
+ DELETE FROM clientstock where id < 556951
+
+ DELETE FROM contact_history where id < 26536
+
+ ADD a system_order_id colum to system_order_items table and then:
+ UPDATE system_order_items set system_order_id = CONVERT(SUBSTR(order_id,4,10),UNSIGNED INTEGER)
+
+ 
+

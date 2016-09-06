@@ -42,7 +42,7 @@ class K9MergeUsers extends Command
     public function handle()
     {
         // Delete all staff
-        DB::connection('mysql')->delete('delete from users where users.roles="staff" ');
+        DB::connection('mysql')->delete('delete from users where users.role_id > 0');
 
         $staff = Staff::all();
 
@@ -53,7 +53,7 @@ class K9MergeUsers extends Command
             $user->name = $emp->name;
             $user->email = $emp->name . '@k9homes.com.au';
             $user->password = bcrypt($emp->name);
-            $user->roles = 'staff';
+            $user->role_id = 2;
 
             $user->save();
 

@@ -137,7 +137,7 @@
                     <div class="form-group{{ $errors->has('special') ? ' has-error' : '' }}">
                         {!! Form::label('special', 'Special', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('special', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('special',['0'=>'No','1'=>'Yes'], null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('special'))
                             <span class="help-block">
@@ -150,7 +150,7 @@
                     <div class="form-group{{ $errors->has('clearance') ? ' has-error' : '' }}">
                         {!! Form::label('clearance', 'Clearance', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('clearance', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('clearance',['0'=>'No','1'=>'Yes'], null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('clearance'))
                             <span class="help-block">
@@ -163,7 +163,7 @@
                     <div class="form-group{{ $errors->has('can_backorder') ? ' has-error' : '' }}">
                         {!! Form::label('can_backorder', 'Can backorder', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('can_backorder', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('can_backorder',['n'=>'No','y'=>'Yes'], null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('can_backorder'))
                             <span class="help-block">
@@ -176,7 +176,7 @@
                     <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                         {!! Form::label('status', 'Status', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('status', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('status', K9config::get('product.status.options') ,null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('status'))
                             <span class="help-block">
@@ -215,7 +215,7 @@
                     <div class="form-group{{ $errors->has('last_costed_date') ? ' has-error' : '' }}">
                         {!! Form::label('last_costed_date', 'Last costed date', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('last_costed_date', null,  array('class' => 'form-control')) !!}
+                        {!! Form::text('last_costed_date', null,  array('class' => 'form-control datepicker')) !!}
 
                         @if ($errors->has('last_costed_date'))
                             <span class="help-block">
@@ -397,7 +397,7 @@
                     <div class="form-group{{ $errors->has('source') ? ' has-error' : '' }}">
                         {!! Form::label('source', 'Source', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('source', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('source', K9config::get('product.source.options'), null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('source'))
                             <span class="help-block">
@@ -410,7 +410,7 @@
                     <div class="form-group{{ $errors->has('new_product') ? ' has-error' : '' }}">
                         {!! Form::label('new_product', 'New product', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('new_product', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('new_product',K9config::get('product.new_product.options'), null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('new_product'))
                             <span class="help-block">
@@ -423,7 +423,7 @@
                     <div class="form-group{{ $errors->has('core_product') ? ' has-error' : '' }}">
                         {!! Form::label('core_product', 'Core product', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('core_product', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('core_product',K9config::get('product.core_product.options'), null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('core_product'))
                             <span class="help-block">
@@ -457,5 +457,17 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('script')
+<script>
+  $( function() {
+    $( ".datepicker" ).datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+  } );
+  </script>
+
 
 @endsection

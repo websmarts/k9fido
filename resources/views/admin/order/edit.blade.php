@@ -30,7 +30,7 @@
                     <p class="col-xs-10">{{ $order->instructions }}</p>
 
                     <div class="col-xs-2">Total Items Cost</div>
-                    <p class="col-xs-10">${{ number_format($order->totalItemsCost(),2) }}</p>
+                    <p class="col-xs-10">${{ number_format($totalItemsCost,2) }}</p>
                 </div>
                 <hr>
                 <div>Ordered Items</div>

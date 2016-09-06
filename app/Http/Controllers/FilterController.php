@@ -52,7 +52,7 @@ class FilterController extends Controller
      * @method product
      * @return [type]  [description]
      */
-    private function client()
+    private function clients()
     {
 
         $filterFields = [
@@ -82,7 +82,7 @@ class FilterController extends Controller
      * @method product
      * @return [type]  [description]
      */
-    private function product()
+    private function products()
     {
 
         $filterFields = [
@@ -116,7 +116,7 @@ class FilterController extends Controller
      * @method order
      * @return [type] [description]
      */
-    private function order()
+    private function system_orders()
     {
 
         $filterFields = [
@@ -180,7 +180,7 @@ class FilterController extends Controller
     private function registerFilter($name)
     {
 
-        $filterKey = env('USER_FILTER_KEY') . '_' . $name;
+        $filterKey = env('USER_FILTER_KEY') . $name;
 
         $filterFields = $this->$name();
 

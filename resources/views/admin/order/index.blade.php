@@ -7,18 +7,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Orders</h3>
 
-                <form method="POST" action="/filter/order" class="form-inline">
+                <form method="POST" action="/filter/{{ $filterKey }}" class="form-inline">
                     <div class="form-group">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                        <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').'_order'),true)['fkey']['or'] }}" />
+                        <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['or'] }}" />
 
                         <label>Status</label>
-                        {!! Form::select('fkey[and]', [''=>'Any', 'printed'=>'Printed','picked'=>'Picked','basket'=>'Basket','saved'=>'Saved'],json_decode( session( env('USER_FILTER_KEY').'_order'),true)['fkey']['and'],['class'=>'form-control']) !!}
+                        {!! Form::select('fkey[and]', [''=>'Any', 'printed'=>'Printed','picked'=>'Picked','basket'=>'Basket','saved'=>'Saved'],json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['and'],['class'=>'form-control']) !!}
 
 
                         <button type="submit" name="Filter" class="btn btn-default"><i class="fa fa-filter fa-1x"></i> Filter list</button>
 
-                        @if( session( env('USER_FILTER_KEY').'_order') )
+                        @if( session( env('USER_FILTER_KEY').$filterKey) )
                         <button type="submit" name="remove_filter" value="1" class="btn btn-default"><i class="fa fa-eraser fa-1x"></i> Remove filter</button>
                         @endif
 

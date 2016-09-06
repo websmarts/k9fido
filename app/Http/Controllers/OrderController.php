@@ -5,19 +5,23 @@ namespace App\Http\Controllers;
 use App\Legacy\Order\Item;
 use App\Legacy\Order\Order;
 use App\Legacy\Product\ClientPrice;
-use App\Queries\OrderListQuery;
+use App\Repositories\OrderRepository;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    protected $repo; // the Order Repository
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(OrderRepository $orderRepository)
     {
         $this->middleware('auth');
+
+        $this->repo = $orderRepository;
     }
 
     /**
@@ -28,9 +32,11 @@ class OrderController extends Controller
     public function index(Request $request)
     {
 
-        $orders = OrderListQuery::perform();
+        $orders = $this->repo->index(10);
 
-        return view('admin.order.index')->with('orders', $orders);
+        $filterKey = "system_orders"; // must match a key in FilterController
+
+        return view('admin.order.index', compact('orders', 'filterKey'));
     }
 
     /**
@@ -63,13 +69,13 @@ class OrderController extends Controller
     public function show($id)
     {
         // Get the order and order items
-        $order = Order::with('items', 'client')->find($id);
-        $clientprices = collect(ClientPrice::where('client_id', $order->client_id)
-                ->select('product_code', 'client_price')
-                ->get()
-        )->keyBy('product_code');
+        $order = $this->repo->get($id);
 
-        return view('admin.order.show')->with(['order' => $order, 'clientprices' => $clientprices]);
+        $clientprices = $this->repo->clientPrices($order->client->client_id);
+
+        $totalItemsCost = $this->repo->totalItemsCost($order);
+
+        return view('admin.order.show', compact('order', 'clientprices', 'totalItemsCost'));
     }
 
     /**
@@ -81,15 +87,13 @@ class OrderController extends Controller
     public function edit($id)
     {
 
-        // Get the order and order items
-        $order = Order::with('items', 'client')->find($id);
+        $order = $this->repo->get($id);
 
-        $clientprices = collect(ClientPrice::where('client_id', $order->client_id)
-                ->select('product_code', 'client_price')
-                ->get()
-        )->keyBy('product_code');
+        $clientprices = $this->repo->clientPrices($order->client->client_id);
 
-        return view('admin.order.edit')->with(['order' => $order, 'clientprices' => $clientprices]);
+        $totalItemsCost = $this->repo->totalItemsCost($order);
+
+        return view('admin.order.edit', compact('order', 'clientprices', 'totalItemsCost'));
     }
 
     /**
@@ -134,8 +138,7 @@ class OrderController extends Controller
 
     public function export($id)
     {
-        $order = Order::with('items', 'client')->find($id);
-        return $order->export;
+        return $this->repo->exportOrder($id);
     }
 
     public function editOrderItem($orderId, $productCode)

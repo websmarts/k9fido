@@ -22,8 +22,8 @@
                 @if (Auth::user())
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
-                    <li><a href="{{ route('category.index') }}">Categories</a></li>
-                    <li><a href="{{ route('type.index') }}">Types</a></li>
+                    <li><a href="{{ route('category.index') }}">Product Categories</a></li>
+                    <li><a href="{{ route('type.index') }}">Product Types</a></li>
                     <li><a href="{{ route('product.index') }}">Products</a></li>
                     <li><a href="{{ route('order.index') }}">Orders</a></li>
                     <li><a href="{{ route('client.index')}}">Clients</a></li>

@@ -2,14 +2,12 @@
 
 namespace App\Legacy\Order;
 
-use App\Legacy\Traits\CanExportOrder;
 use App\Legacy\Traits\UsersQueryFilter;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
     use UsersQueryFilter;
-    use CanExportOrder;
 
     /**
      * The connection name for the model.
@@ -57,15 +55,7 @@ class Order extends Model
      */
     public function scopeApplyUserFilter($query)
     {
-        return $this->applyFilter($query, 'order');
-    }
-
-    //
-    public function totalItemsCost()
-    {
-        return $this->items->sum(function ($item) {
-            return $item['qty'] * ($item['price'] / 100);
-        });
+        return $this->applyFilter($query, $this->table);
     }
 
     public function client()

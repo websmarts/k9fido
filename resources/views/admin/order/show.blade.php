@@ -41,7 +41,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-3">Total Items Cost</div>
-                    <p class="col-xs-9">${{ number_format($order->totalItemsCost(),2) }}</p>
+                    <p class="col-xs-9">${{ number_format($totalItemsCost,2) }}</p>
                 </div>
                 <hr style="clear:both">
 
@@ -71,7 +71,10 @@
                 @endforeach
                 </tbody>
                 </table>
+                <a href="{{ route('order.export', ['id' => $order->id] ) }}"><button class="btn btn-success pull-right">Export Order</button></a>
+
                 <a href="{{ route('order.delete', ['id' => $order->id] ) }}"><button class="btn btn-warning pull-left">Delete Order</button></a>
+
 
                 </div>
             </div>

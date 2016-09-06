@@ -25,7 +25,6 @@ trait UsersQueryFilter
         }
 
         $filters = $data->filters;
-        //dd($filters->or[1]);
 
         if (isset($filters->or)) {
 
@@ -68,8 +67,10 @@ trait UsersQueryFilter
 
     protected function getStoredUsersQueryFilterParams($name)
     {
-        $sessionKey = env('USER_FILTER_KEY') . '_' . $name;
+        $sessionKey = env('USER_FILTER_KEY') . $name;
+
         $sessionData = session()->get($sessionKey, false);
+
         return $sessionData ? json_decode($sessionData) : $sessionData;
     }
 
