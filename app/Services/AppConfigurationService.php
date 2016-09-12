@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-//K9config::get(key)
+//Appdata::get(key)
 
 class AppConfigurationService
 {
@@ -18,6 +18,9 @@ class AppConfigurationService
         // product type ref data
         'type.status.options' => ['active' => 'Active', 'inactive' => 'In-active', 'pending' => 'Pending', 'archive' => 'Archive'],
         'type.status.filter.options' => ['' => 'Any', 'active' => 'Active', 'inactive' => 'Inactive', 'pending' => 'Pending', 'archive' => 'Archive'],
+
+        // Order ref data
+        'order.status.options' => ['basket' => 'Basket', 'saved' => 'Saved (new)', 'printed' => 'To be picked', 'picked' => 'Closed'],
     ];
 
     public function get($property)

@@ -14,7 +14,7 @@
                         <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['or'] }}" />
 
                         <label>Status</label>
-                        {!! Form::select('fkey[and]', K9config::get('type.status.filter.options'),json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['and'],['class'=>'form-control']) !!}
+                        {!! Form::select('fkey[and]', Appdata::get('type.status.filter.options'),json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['and'],['class'=>'form-control']) !!}
 
                         <button type="submit" name="Filter" class="btn btn-default"><i class="fa fa-filter fa-1x"></i> Filter list</button>
 

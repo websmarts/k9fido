@@ -16,7 +16,7 @@
                     @endif
 
                     @if(isSet($pickOrders) )
-                        @include('admin.lists.orders',['title'=>'Pick orders', 'data'=>$pickOrders])
+                        @include('admin.lists.pickorders',['title'=>'Pick orders', 'data'=>$pickOrders])
                     @endif
 
                     @if(isSet($basketOrders) )

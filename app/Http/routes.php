@@ -21,7 +21,7 @@
 
 Route::get('test', function () {
 
-    return K9config::get('product.status.options');
+    return Appdata::get('product.status.options');
 
     $data = [1, 2, 3];
 

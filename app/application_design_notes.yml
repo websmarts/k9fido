@@ -1,0 +1,35 @@
+Business Logic/Rules
+
+Users:
+  Roles - system admin, office admin, storesperson, sales rep, client reseller, customer individual
+  Permissions: many
+  CRUD Users - staff, client resellers, private customers
+
+Categories:
+CRUD Categories
+
+ProtuctTypes
+- CRUD Product Types
+- Manage ProductType Images
+- Manage ProductType Options
+- Manage ProductType to Category association(s)
+
+Products:
+-CRUD Products
+-Manage BOMs
+
+Orders:
+-CRUD Orders
+-Manage CRUD OrderItems
+-OrderRules:
+--Quantity:
+-- Update Product stock count when: order picked*, order returned to stock 
+-- Update Product qty_ordered when: order picked, basket saved, pre-picked order items updated 
+--Price:
+-- System price client price -> std price -> [discount% || price overide]
+
+Clients:
+- CRUD Clients
+Client Rules:
+-- Rule params: parent_bill_to, inherit_parent_special_pricing
+-- Order credit limit

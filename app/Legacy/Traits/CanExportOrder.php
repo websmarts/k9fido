@@ -40,8 +40,8 @@ trait CanExportOrder
 
             $lines[$n]['order_id'] = $order->order_id;
             $lines[$n]['order_date'] = $order->modified->format('d-m-Y');
-            $lines[$n]['Sales Person First Name'] = $order->salesrep->firstname;
-            $lines[$n]['Sales Person Last Name'] = $order->salesrep->lastname;
+            $lines[$n]['Sales Person First Name'] = @$order->salesrep->firstname;
+            $lines[$n]['Sales Person Last Name'] = @$order->salesrep->lastname;
             $lines[$n]['Item Number'] = $item->product->product_code;
             $lines[$n]['Quantity'] = $item->qty;
             $lines[$n]['Stdprice'] = $item->product->price;

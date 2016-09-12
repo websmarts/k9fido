@@ -20,5 +20,42 @@
  ADD a system_order_id colum to system_order_items table and then:
  UPDATE system_order_items set system_order_id = CONVERT(SUBSTR(order_id,4,10),UNSIGNED INTEGER)
 
- 
+ // Updateing live DB to support transition
+
+ # Add system_order_id column to system_order_items
+ # Add product_id to system_order_items
+ # Add supplied_product_id to system_order_items
+ # Add timestamps to system_order_items
+
+ # Add an autoincrement id , created_at and updated at columns to client_prices
+
+ # Add timestamps to clients table
+
+ # Add timestamps top clientstock table
+
+ # Add timestamps to contact_history table
+
+ # Add product_id and timestamps to notify_me table
+
+ # Add timestamps to products table
+
+ Think about price int issue and strategy to ensure pricing consistency without rounding differences
+
+ # Add timestamps on system_orders table
+
+ # Add timestamps to travel table
+
+ # Add timestamps to type table
+
+ # Add id auto inc , and timestamps  to type_category table
+
+ # Add id auto inc to type_options 
+
+ # Add user_id column to users table
+
+
+
+
+
+
 

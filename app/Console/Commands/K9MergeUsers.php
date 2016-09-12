@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Legacy\Staff\User as Staff;
 use App\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class K9MergeUsers extends Command
 {
@@ -42,7 +41,6 @@ class K9MergeUsers extends Command
     public function handle()
     {
         // Delete all staff
-        DB::connection('mysql')->delete('delete from users where users.role_id > 0');
 
         $staff = Staff::all();
 
@@ -53,7 +51,8 @@ class K9MergeUsers extends Command
             $user->name = $emp->name;
             $user->email = $emp->name . '@k9homes.com.au';
             $user->password = bcrypt($emp->name);
-            $user->role_id = 2;
+
+            //$user->hasRole('staff');
 
             $user->save();
 

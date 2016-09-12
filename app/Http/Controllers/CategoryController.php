@@ -60,17 +60,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -79,7 +68,6 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::with('children')->find($id);
-
         return view('admin.category.edit', ['category' => $category, 'parentOptions' => $this->_parentOptions()]);
     }
 
@@ -92,13 +80,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $category = Category::find($id);
-
+        if (!$category) {
+            abort(404);
+        }
         $category->update($request->all());
-
         flash('Category updated', 'success');
-
         return redirect()->route('category.index');
     }
 

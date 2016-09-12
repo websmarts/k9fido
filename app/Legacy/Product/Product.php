@@ -79,4 +79,9 @@ class Product extends Model
 
     }
 
+    public function bom()
+    {
+        return $this->hasMany(Bom::class, 'parent_product_code', 'product_code');
+    }
+
 }

@@ -17,7 +17,7 @@ ALTER TABLE client_prices ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT, ADD KEY(i
 ALTER TABLE client_prices ADD updated_at TIMESTAMP;
 ALTER TABLE client_prices ADD created_at TIMESTAMP;
 */
-
+/*
 ALTER TABLE clientstock ADD updated_at TIMESTAMP;
 ALTER TABLE clientstock ADD created_at TIMESTAMP;
 
@@ -44,7 +44,7 @@ ALTER TABLE type_category ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT, ADD KEY(i
 
 ALTER TABLE type_options ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT, ADD KEY(id);
 
-
+*/
 
 /*
 UPDATE system_order_items set system_order_id = CONVERT(SUBSTR(order_id,4,10),UNSIGNED INTEGER);

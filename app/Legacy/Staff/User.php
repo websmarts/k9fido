@@ -35,6 +35,7 @@ class User extends Model
         'firstname',
         'lastname',
         'record_milage',
+        'user_id',
     ];
 
 }

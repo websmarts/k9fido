@@ -27,7 +27,7 @@ class HomeController extends Controller
         // $users = DB::connection('k9homes')->select("select * from type");
         // dd($users);
         $orders = Order::with('client')
-            ->whereIn('status', ['new', 'printed', 'basket'])
+            ->whereIn('status', ['saved', 'printed', 'basket'])
             ->whereDate('modified', '>=', Carbon::today()->subDays(90)->toDateString())
 
             ->orderBy('id', 'asc')

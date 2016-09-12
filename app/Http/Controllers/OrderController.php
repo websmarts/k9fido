@@ -4,64 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Legacy\Order\Item;
 use App\Legacy\Order\Order;
-use App\Legacy\Product\ClientPrice;
-use App\Repositories\OrderRepository;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    protected $repo; // the Order Repository
+    protected $orderService; // the Order Service
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(OrderRepository $orderRepository)
+    public function __construct(OrderService $orderService)
     {
         $this->middleware('auth');
-
-        $this->repo = $orderRepository;
+        $this->orderService = $orderService;
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of Orders.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-
-        $orders = $this->repo->index(10);
-
+        $orders = $this->orderService->index(10);
         $filterKey = "system_orders"; // must match a key in FilterController
-
         return view('admin.order.index', compact('orders', 'filterKey'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Display the Order detail.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -69,12 +43,9 @@ class OrderController extends Controller
     public function show($id)
     {
         // Get the order and order items
-        $order = $this->repo->get($id);
-
-        $clientprices = $this->repo->clientPrices($order->client->client_id);
-
-        $totalItemsCost = $this->repo->totalItemsCost($order);
-
+        $order = $this->orderService->getOrderById($id);
+        $clientprices = $this->orderService->clientPrices($order->client->client_id);
+        $totalItemsCost = $this->orderService->totalItemsCost($order);
         return view('admin.order.show', compact('order', 'clientprices', 'totalItemsCost'));
     }
 
@@ -86,13 +57,9 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-
-        $order = $this->repo->get($id);
-
-        $clientprices = $this->repo->clientPrices($order->client->client_id);
-
-        $totalItemsCost = $this->repo->totalItemsCost($order);
-
+        $order = $this->orderService->getOrderById($id);
+        $clientprices = $this->orderService->clientPrices($order->client->client_id);
+        $totalItemsCost = $this->orderService->totalItemsCost($order);
         return view('admin.order.edit', compact('order', 'clientprices', 'totalItemsCost'));
     }
 
@@ -103,15 +70,23 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $orderId)
     {
-        // Check status to see if order can be edited (not exporteded)
 
-        // Update the order details
+        $items = $this->sortInputItems($request, $orderId);
+        $this->orderService->updateOrderItems($items['update']);
+        $this->orderService->deleteOrderItems($items['delete']);
+        $this->orderService->addOrderItems($items['new']);
+        $this->orderService->updateOrderStatus($orderId, $request->input('status'));
+
+        flash('Order updated', 'success');
+        return redirect(route('order.edit', ['id' => $orderId]));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the Order and all all ordered Items
+     *
+     * Put Ordered Items back into stock
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -119,18 +94,7 @@ class OrderController extends Controller
     public function destroy($id)
     {
         // Delete the order
-        $order = Order::with('items.product')->find($id);
-
-        //dd($order->items);
-        foreach ($order->items as $item) {
-            $item->product->qty_instock += ($item->qty - $item->qty_supplied);
-            $item->product->save();
-            $item->delete();
-        }
-        // Delete the order items
-        $order->delete();
-
-        // Return order items to stock
+        $this->orderService->deleteOrder($id);
         flash('Order ' . $id . 'has been deleted', 'success');
         return redirect(route('order.index'));
 
@@ -138,29 +102,49 @@ class OrderController extends Controller
 
     public function export($id)
     {
-        return $this->repo->exportOrder($id);
-    }
-
-    public function editOrderItem($orderId, $productCode)
-    {
-        $item = Item::where('order_id', $orderId)
-            ->where('product_code', $productCode)
-            ->first();
-        // return $item->order->client_id . '---' . $productCode;
-        $clientPrice = ClientPrice::where('product_code', $productCode)
-            ->where('client_id', $item->order->client_id)
-            ->select('client_price as price')
-            ->first();
-
-        return view('admin.order.edititem')->with(['item' => $item, 'clientPrice' => $clientPrice]);
+        return $this->orderService->exportOrder($id);
     }
 
     public function pick($id)
     {
-
         $order = Order::with('items.product', 'client')->find($id);
 
         return view('admin.order.pick', compact('order'));
+    }
+
+    /**
+     * Sorts the input items from the edit order form
+     * @method sortInputItems
+     * @param  [Request]     $request [HTTP request]
+     * @param  [int]         $orderId [the order ID]
+     * @return [array of collections]  [items by intent, update, delete or new]
+     */
+    protected function sortInputItems($request, $orderId)
+    {
+        $updateItems = collect([]);
+        $deleteItems = collect([]);
+        $addItems = collect([]);
+        foreach ($request->input('items') as $itemId => $i) {
+            $item = $this->orderService->getItem();
+            $item->qty = $i['qty'];
+            $item->product_code = $i['product_code'];
+            $item->price = trim($i['price']);
+            $item->order_id = 'T0_' . $orderId;
+            if ($itemId > 0) {
+                // its an existing item
+                $item->id = $itemId;
+                if ($item->qty < 0) {
+                    $deleteItems->push($item);
+                } else {
+                    $updateItems->push($item);
+                }
+            } elseif ($itemId < 0) {
+                // it is a new item being added to order
+                unset($item->id); //just to be sure we have no id set
+                $addItems->push($item);
+            }
+        }
+        return ['update' => $updateItems, 'delete' => $deleteItems, 'new' => $addItems];
     }
 
 }

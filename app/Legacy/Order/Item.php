@@ -2,12 +2,10 @@
 
 namespace App\Legacy\Order;
 
-use App\Legacy\Traits\HasCompositePrimaryKey;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    use HasCompositePrimaryKey;
 
     /**
      * The connection name for the model.
@@ -21,7 +19,7 @@ class Item extends Model
      *
      * @var string
      */
-    protected $primaryKey = ['order_id', 'product_code'];
+    protected $primaryKey = 'id';
 
     /**
      * The table associated with the model.
@@ -30,14 +28,16 @@ class Item extends Model
      */
     protected $table = 'system_order_items';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'order_id',
         'product_code',
+        'product_id',
         'qty',
         'price',
         'qty_supplied',
+        'supplied_product_id',
 
     ];
 

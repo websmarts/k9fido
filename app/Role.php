@@ -9,13 +9,18 @@ class Role extends Model
 
     protected $table = 'roles';
 
-    protected $fillable = ['title'];
+    protected $fillable = ['name', 'title'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
-    // public function permissions()
-    // {
-    //     return $this->belongsToMany(Permission::class, 'role_permissions', 'role_id', 'permission_id');
-    // }
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function givePermissionTo(Permission $permission)
+    {
+        return $this->permissions()->save($permission);
+    }
 
 }

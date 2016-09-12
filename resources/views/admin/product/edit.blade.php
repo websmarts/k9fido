@@ -176,7 +176,7 @@
                     <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                         {!! Form::label('status', 'Status', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::select('status', K9config::get('product.status.options') ,null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('status', Appdata::get('product.status.options') ,null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('status'))
                             <span class="help-block">
@@ -397,7 +397,7 @@
                     <div class="form-group{{ $errors->has('source') ? ' has-error' : '' }}">
                         {!! Form::label('source', 'Source', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::select('source', K9config::get('product.source.options'), null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('source', Appdata::get('product.source.options'), null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('source'))
                             <span class="help-block">
@@ -410,7 +410,7 @@
                     <div class="form-group{{ $errors->has('new_product') ? ' has-error' : '' }}">
                         {!! Form::label('new_product', 'New product', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::select('new_product',K9config::get('product.new_product.options'), null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('new_product',Appdata::get('product.new_product.options'), null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('new_product'))
                             <span class="help-block">
@@ -423,7 +423,7 @@
                     <div class="form-group{{ $errors->has('core_product') ? ' has-error' : '' }}">
                         {!! Form::label('core_product', 'Core product', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::select('core_product',K9config::get('product.core_product.options'), null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('core_product',Appdata::get('product.core_product.options'), null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('core_product'))
                             <span class="help-block">

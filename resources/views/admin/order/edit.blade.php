@@ -10,29 +10,42 @@
 
 
                 <div class="panel-body">
+
+                {{ Form::open( ['route' => ['order.update', $order->id], 'method'=>'put'] ) }}
+
+
+
                 <div class="row">
 
 
-                    <div class="col-xs-2">Customer ID</div>
+                    <div class="col-xs-2"><label>Customer ID</label></div>
                     <p class="col-xs-10">{{ $order->client->client_id }}</p>
 
 
-                    <div class="col-xs-2">Customer</div>
+                    <div class="col-xs-2"><label>Customer</label></div>
                     <p class="col-xs-10">{{ $order->client->name }}</p>
 
-                    <div class="col-xs-2">Customer parent</div>
+                    <div class="col-xs-2"><label>Customer parent</label></div>
                     <p class="col-xs-10">{{ isSet($order->client->clientParent) ? $order->client->clientParent->name : '-' }}</p>
 
-                    <div class="col-xs-2">Order date</div>
+                    <div class="col-xs-2"><label>Order date</label></div>
                     <p class="col-xs-10">{{ date('j-m-Y',strtotime($order->modified)) }}</p>
 
-                    <div class="col-xs-2">Instructions</div>
-                    <p class="col-xs-10">{{ $order->instructions }}</p>
+                    <div class="col-xs-2"><label>Instructions</label></div>
+                    <p class="col-xs-10">{{ $order->instructions }}&nbsp;</p>
 
-                    <div class="col-xs-2">Total Items Cost</div>
-                    <p class="col-xs-10">${{ number_format($totalItemsCost,2) }}</p>
+                    <div class="col-xs-2"><label>Total Items Cost</label></div>
+                    <p class="col-xs-10">${{ number_format($totalItemsCost,2) }} </p>
+                </div>
+
+                <div class="row" style="margin-top:15px;">
+                    <div class="col-xs-2"><label>Order status</label></div>
+                    <div class="col-md-3 col-xs-10">
+                    {{ Form::select('status',Appdata::get('order.status.options'),$order->status, ['class'=>'form-control']) }}
+                    </div>
                 </div>
                 <hr>
+
                 <div>Ordered Items</div>
 
                 <table class="table table-striped">
@@ -48,17 +61,30 @@
                 <tbody>
                 @foreach($order->items as $i)
                 <tr>
-                    <td><input type="text" value="{{ $i->qty }}" /></td>
-                    <td>{{ $i->product_code }}</td>
-                    <td><input type="text" value="{{ $i->price }}" /></td>
+                    <td><input type="text" name="items[{{$i->id}}][qty]" value="{{$i->qty}}"/></td>
+                    <td><input type="text" name="items[{{$i->id}}][product_code]" value="{{$i->product_code}}"/></td>
+                    <td><input type="text" name="items[{{$i->id}}][price]" value="{{$i->price}}"/></td>
                     <td>{{ isSet($clientprices[$i->product_code]) ? $clientprices[$i->product_code]->client_price : '-' }}</td>
 
                 </tr>
 
                 @endforeach
+                <tr><td colspan="4">New order line:</td></tr>
+                <tr>
+                    <td><input type="text" name="items[-1][qty]" value=""/></td>
+                    <td><input type="text" name="items[-1][product_code]" value=""/></td>
+                    <td><input type="text" name="items[-1][price]" value=""/></td>
+                    <td>&nbsp;</td>
+
+                </tr>
+
                 </tbody>
                 </table>
 
+
+
+                <button type="submit" value="Update" class="btn btn-primary">Update</button>
+                {{ Form::close() }}
                 </div>
             </div>
         </div>
