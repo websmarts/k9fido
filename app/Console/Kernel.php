@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\K9MergeUsers::class,
         Commands\K9ArchiveData::class,
         Commands\K9ImportProductImages::class,
+        Commands\K9UpdateProductImages::class,
     ];
 
     /**
