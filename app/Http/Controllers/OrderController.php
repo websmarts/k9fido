@@ -97,7 +97,6 @@ class OrderController extends Controller
         $this->orderService->deleteOrder($id);
         flash('Order ' . $id . 'has been deleted', 'success');
         return redirect(route('order.index'));
-
     }
 
     public function export($id)
