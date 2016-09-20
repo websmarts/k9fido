@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\ProductTypeImageController;
+use App\Legacy\Product\ProductType;
 use App\ProductTypeImage;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\Finder\Finder;
@@ -93,5 +96,17 @@ class K9UpdateProductImages extends Command
 
         }
         $this->info($count . ' Images info has been imported to database productypeimages table');
+        // sort the image collection for each type
+        $types = ProductType::all();
+        // login user with id 1 so we can use the controller
+        Auth::loginUsingId(1);
+        $C = new ProductTypeImageController();
+        $count = 0;
+        foreach ($types as $type) {
+            echo 's';
+            $count++;
+            $C->doSortIfRequired($type->typeid);
+        }
+        $this->info($count . ' Types have had theior images sorted');
     }
 }

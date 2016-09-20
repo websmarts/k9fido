@@ -46,7 +46,7 @@ class ProductTypeImageController extends Controller
      */
     public function delete($imageId)
     {
-        $item = ProductTypeimage::find($imageId);
+        $item = ProductTypeImage::find($imageId);
 
         // Find all images for this typeid
         $images = ProductTypeImage::where('typeid', $item->typeid)
@@ -87,6 +87,9 @@ class ProductTypeImageController extends Controller
         }
 
         ini_set('memory_limit', '-1');
+
+        // Force a sort of all images for this typeid if needed
+        $this->doSortIfRequired($typeid);
 
         $file = $request->file('uploadfile');
 
@@ -130,6 +133,40 @@ class ProductTypeImageController extends Controller
         // save a thumbnail of the file
         // create a db entry
         // return list of images for typeid
+    }
+
+    public function doSortIfRequired($typeid)
+    {
+        $images = ProductTypeImage::where('typeid', $typeid);
+        $result = $images->get()->sortBy('order')->keyBy('order');
+        // if keys are not sequential then sort is required
+        $sortRequired = false;
+        $lastKey = -1;
+        $ids = [];
+        $m = false;
+        //dd($result);
+        foreach ($result as $key => $value) {
+            if (($key - $lastKey) != 1) {
+                $sortRequired = 10;
+            }
+            $lastKey = $key;
+
+            // or if filename suffix not equal to $key +1 if exists
+            preg_match('/_(\d+)\.jpg$/', $value->filename, $m);
+            $mm[] = $m;
+            if (isset($m[1])) {
+
+                if ($m[1] != ($value->order + 1)) {
+                    $sortRequired = $value->order;
+                }
+            }
+            $ids[] = $value->id;
+        }
+        //echo $sortRequired;
+
+        if ($sortRequired) {
+            $this->sort($ids);
+        }
     }
 
     public function sort($itemIDs = false)

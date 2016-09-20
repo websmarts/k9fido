@@ -19,14 +19,7 @@
 |
  */
 
-Route::get('test', function () {
-
-    return Appdata::get('product.status.options');
-
-    $data = [1, 2, 3];
-
-    return view('vueapp', compact('data'));
-});
+Route::get('test/{typeid}', 'ProductTypeImageController@doSortIfRequired');
 
 // sorts a productTypeImage list
 
