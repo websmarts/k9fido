@@ -52,6 +52,7 @@
                 <thead>
                     <tr>
                         <th>Order qty</th>
+                        <th>Supplied qty</th>
                         <th>Product code</th>
                         <th>Price</th>
                         <th>Client price</th>
@@ -62,6 +63,7 @@
                 @foreach($order->items as $i)
                 <tr>
                     <td><input type="text" name="items[{{$i->id}}][qty]" value="{{$i->qty}}"/></td>
+                    <td><input type="text" name="items[{{$i->id}}][qty_supplied]" value="{{$i->qty_supplied}}"/></td>
                     <td><input type="text" name="items[{{$i->id}}][product_code]" value="{{$i->product_code}}"/></td>
                     <td><input type="text" name="items[{{$i->id}}][price]" value="{{$i->price}}"/></td>
                     <td>{{ isSet($clientprices[$i->product_code]) ? $clientprices[$i->product_code]->client_price : '-' }}</td>
@@ -72,6 +74,7 @@
                 <tr><td colspan="4">New order line:</td></tr>
                 <tr>
                     <td><input type="text" name="items[-1][qty]" value=""/></td>
+                    <td><input type="text" name="items[-1][qty_supplied]" value=""/></td>
                     <td><input type="text" name="items[-1][product_code]" value=""/></td>
                     <td><input type="text" name="items[-1][price]" value=""/></td>
                     <td>&nbsp;</td>

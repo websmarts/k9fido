@@ -16,6 +16,14 @@ body {
 	color: #000000;
 }
 
+h3.item-error {
+	background: #a43434;
+}
+h3.ui-accordion-header-collapsed.item-error {
+	background: #ffcccc;
+}
+
+
 @import "components/alert";
 
 @import "components/sortable";

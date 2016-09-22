@@ -159,6 +159,9 @@ class OrderService
             } else {
                 $orderItem->price = $item->price;
             }
+
+            $orderItem->qty_supplied = $item->qty_supplied;
+
             $orderItem->save();
 
             $stockAdjustQuantity = $originalItemQty - $item->qty;
@@ -239,5 +242,26 @@ class OrderService
             $item->delete();
         }
         $order->delete();
+    }
+
+    /**
+     * Updates qty_supplied for an ordered item
+     * @method updatePickedItems
+     * @param  [array]            $items [description]
+     * @return [type]                   [description]
+     */
+    public function updateQuantitySupplied($items)
+    {
+        foreach ($items as $i) {
+            if (!isset($i['picked_barcode'])) {
+                continue;
+            }
+            if (($i['barcode'] == $i['picked_barcode']) && $i['picked_qty'] > 0) {
+
+                $_item = Item::find($i['id']);
+                $_item->qty_supplied += $i['picked_qty'];
+                $_item->save();
+            }
+        }
     }
 }

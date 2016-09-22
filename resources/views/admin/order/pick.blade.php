@@ -10,7 +10,7 @@
 
 
                 <div class="panel-body">
-                {{ dump($order->items) }}
+                {{-- dump($order) --}}
                 <div class="row">
                     <div class="col-xs-2">For:</div>
                     <p class="col-xs-10">{{ $order->client->name }}</p>
@@ -18,24 +18,10 @@
 
 
                 <div>Ordered Items</div>
-                <div id="accordion" >
-
-	                @foreach($order->items as $i)
-	                <h3 id="header-{{ $i->id }}">{{ $i->product_code }}<span><i class="pull-right fa fa-cart-plus fa-1x" aria-hidden="true"></i></span></h3>
-	                <div id="item-{{ $i->id }}">
-		                <div class="col-lg-5">Barcode</div>
-		                <div class="col-lg-7"><input type="text" class="barcode_input" name="barcode[{{ $i->id }}]"/></div>
-		                <div class="col-lg-5">Qty Supplied</div>
-		                <div class="col-lg-2"><input type="text" class="supplied_input" name="supplied[{{ $i->id }}]"/></div>
-	                </div>
-	                @endforeach
-
-
-                </div>
-				<div style="padding:15px; text-align:center">
-	                <a class="btn btn-primary">Update Picking List</a>
-                  <a class="btn btn-primary">Save Order</a>
-	            </div>
+                <div id="accordion" ></div>
+				        <div style="padding:15px; text-align:center">
+                    <a class="btn btn-primary" id="save-button">Save Order</a>
+  	            </div>
                 </div>
             </div>
         </div>
@@ -47,38 +33,160 @@
 @section('script')
 
 <script>
-var items = [];
-@foreach($order->items as $i)
-var item = {
-              id: {{ $i->id }},
-              barcode: {{ $i->product->barcode }},
-              qty: {{$i->qty}}
-            };
-items[{{ $i->id }}] = item;
-@endforeach;
+//var items = {!! json_encode($order->items->toArray()) !!};
+var items=[];
+var orderId = {{ $order->id }};
+var csrf_token = $("meta[name=csrf-token]").attr('content');
+var url = "{{ url('ajax/pickorder/'.$order->id) }}";
+
   $( function() {
 
-    console.log(items);
-
-    var regExpForKey = /\[(\d+)?\]/;
-
-    $( "#accordion" ).accordion({
-      collapsible: true,
-      heightStyle: "content"
+     // onChange event handler for barcode input
+    $('#accordion').on('change',function(e){
+      getInput(e.target);
     });
 
-    // onChange event handlers for inputs
-    $('.barcode_input').on('change',function(e){
-      var name = $(this).attr('name');
-      var match = regExpForKey.exec(name)
-      var id = match[1];
-      var data = {
-        required_barcode: items[id]['barcode'],
-        supplied_barcode: this.value
+    // onClick event handler for save form
+    $('#save-button').on('click',function(e){
+      saveItems();
+    });
+
+    function getPickItem(id){
+      return items.filter(function(e){return e.id == id;}).pop();
+    }
+
+    function updatePickItem(id,obj){
+      $.each(items,function(idx,val){
+        if(val.id == id){
+          items[idx] = obj;
+        }
+      });
+    }
+    function getInputId(e){
+      var name = $(e).attr('name');
+      var regExpForId = /\[(\d+)?\]/;
+      var match = regExpForId.exec(name)
+      return match[1];
+    }
+    function getInputName(e){
+      var name = $(e).attr('name');
+      var regExpForName = /^([^\]]+)?\[/;
+      var match = regExpForName.exec(name)
+      return match[1];
+    }
+
+    function getInput(input){
+
+      var inputId = getInputId(input);
+      var inputName = getInputName(input);
+      var item = getPickItem(inputId);
+
+      if (inputName =='barcode'){
+        item.picked_barcode = parseInt(input.value);
       }
-      console.log(data);
-    });
 
+      if (inputName =='supplied'){
+        item.picked_qty = parseInt(input.value);
+      }
+
+      updatePickItem(inputId,item);
+      updateForm();
+
+    }
+    /**
+     * updates the form based on the state
+     * of the current item infomration
+     * @method updateForm
+     * @return {[type]}   [description]
+     */
+    function updateForm(){
+      $('h3').addClass('item-error');
+      $('.barcode-icon').show();
+      $('.qty-icon').show();
+      checkItems();
+    }
+
+    function checkItems(){
+        $.each(items, function(idx,item){
+            if((item.picked_barcode == item.barcode) && (item.picked_qty == item.qty)){
+              $('#header-' + item.id).removeClass('item-error');
+            }
+            if(item.picked_barcode == item.barcode){
+             hideBarcodeIcon(item.id)
+            }
+            if(item.picked_qty == item.qty){
+              hideQtyIcon(item.id);
+            }
+
+            $('#itemqty-'+item.id).text((item.qty - item.qty_supplied) +' / '+item.qty);
+
+
+        });
+    }
+    function hideBarcodeIcon(id){
+      $('#header-' + id).find('.barcode-icon').hide();
+    }
+    function hideQtyIcon(id){
+      $('#header-' + id).find('.qty-icon').hide();
+    }
+
+    function renderForm (){
+
+      $('#accordion').html('');
+      $.each(items, function(idx,item){
+          // Add accordion row
+          var row = '<h3 class="item" id="header-'+item.id+'">'+item.product_code +'<i class="barcode-icon pull-right fa fa-barcode fa-1x" aria-hidden="true"></i><i class="qty-icon pull-right fa fa-cubes fa-1x" aria-hidden="true"></i></h3>';
+          row += '<div id="item-' + item.id + '">';
+          row += '<div class="col-lg-5">Barcode</div>';
+          row += '<div class="col-lg-7"><input type="text" class="barcode_input" name="barcode['+item.id+']"/></div>';
+          row += '<div class="col-lg-5">Pick (<span id="itemqty-'+item.id+'">'+ (item.qty - item.qty_supplied) +' / '+item.qty+'</span> )</div>';
+          row += '<div class="col-lg-2"><input type="text" class="supplied_input" name="supplied['+ item.id+']"/></div>';
+          row += '</div>';
+          $('#accordion').append(row);
+
+      });
+
+      $( "#accordion" ).accordion({
+        collapsible: true,
+        heightStyle: "content"
+      });
+
+      updateForm();
+
+    };
+
+    function loadItems(){
+
+      $.ajax({
+        method: "GET",
+        url: url,
+      })
+        .done(function( data ) {
+          console.log(data);
+          items = data;
+          renderForm();
+        });
+    }
+
+    function saveItems(){
+      $.ajax({
+        method: "POST",
+        url: url,
+        data: { _token: csrf_token, order_id: orderId, items: items }
+      })
+        .done(function( result ) {
+          items = result;
+          clearForm();
+
+        });
+    }
+
+    function clearForm(){
+       $("#accordion").find("input[type=text]").val("");
+       updateForm();
+    }
+
+    loadItems();
 
   } );
 </script>

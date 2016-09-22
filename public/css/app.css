@@ -10,6 +10,12 @@ body {
 .navbar-default a.navbar-brand {
   color: #000000; }
 
+h3.item-error {
+  background: #a43434; }
+
+h3.ui-accordion-header-collapsed.item-error {
+  background: #ffcccc; }
+
 .Alert {
   padding: 5px;
   margin-bottom: 5px; }

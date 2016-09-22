@@ -74,6 +74,7 @@ class OrderController extends Controller
     {
 
         $items = $this->sortInputItems($request, $orderId);
+
         $this->orderService->updateOrderItems($items['update']);
         $this->orderService->deleteOrderItems($items['delete']);
         $this->orderService->addOrderItems($items['new']);
@@ -106,9 +107,39 @@ class OrderController extends Controller
 
     public function pick($id)
     {
-        $order = Order::with('items.product', 'client')->find($id);
+        $order = Order::with('client')->find($id);
 
         return view('admin.order.pick', compact('order'));
+    }
+    /**
+     * ajax handler for pick order app
+     * @method pickorder
+     * @return [type]    [description]
+     */
+    public function pickorderGet($id)
+    {
+        $order = Order::with('items.product')->find($id);
+        $data = [];
+        foreach ($order->items as $i) {
+            $x = new \stdClass();
+            $x->barcode = $i->product->barcode;
+            $x->product_code = $i->product_code;
+            $x->id = $i->id;
+            $x->qty = $i->qty;
+            $x->qty_supplied = $i->qty_supplied;
+
+            $data[] = $x;
+        }
+        return $data;
+    }
+    public function pickorderStore(Request $request)
+    {
+        $items = $request->input('items');
+        $orderId = $request->input('order_id');
+
+        $this->orderService->updateQuantitySupplied($items);
+
+        return $this->pickOrderGet($orderId);
     }
 
     /**
@@ -126,6 +157,7 @@ class OrderController extends Controller
         foreach ($request->input('items') as $itemId => $i) {
             $item = $this->orderService->getItem();
             $item->qty = $i['qty'];
+            $item->qty_supplied = $i['qty_supplied'];
             $item->product_code = $i['product_code'];
             $item->price = trim($i['price']);
             $item->order_id = 'T0_' . $orderId;

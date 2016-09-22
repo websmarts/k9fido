@@ -73,6 +73,9 @@ Route::get('orderitem/{orderId}/{productCode}/edit', [
     'as' => 'order.edititem', 'uses' => 'OrderController@editOrderItem']);
 Route::get('order/{orderId}/delete', [
     'as' => 'order.delete', 'uses' => 'OrderController@destroy']);
+// PICKING ORDERS
+Route::get('ajax/pickorder/{id}', 'OrderController@pickorderGet');
+Route::post('ajax/pickorder/{id}', 'OrderController@pickorderStore');
 
 //CLIENT ROUTES
 Route::resource('client', 'ClientController');
