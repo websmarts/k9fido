@@ -42,7 +42,7 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
   $( function() {
 
      // onChange event handler for barcode input
-    $('#accordion').on('change',function(e){
+    $('#accordion').on('keyup',function(e){
       getInput(e.target);
     });
 
@@ -108,13 +108,20 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
 
     function checkItems(){
         $.each(items, function(idx,item){
+            //console.log('chk item',item);
+            if(item.qty_supplied >= item.qty){
+              hideBarcodeIcon(item.id)
+              hideQtyIcon(item.id);
+              $('#header-' + item.id).removeClass('item-error');
+              return;
+            }
             if((item.picked_barcode == item.barcode) && (item.picked_qty == item.qty)){
               $('#header-' + item.id).removeClass('item-error');
             }
             if(item.picked_barcode == item.barcode){
              hideBarcodeIcon(item.id)
             }
-            if(item.picked_qty == item.qty){
+            if(item.picked_qty == (item.qty - item.qty_supplied)) {
               hideQtyIcon(item.id);
             }
 
@@ -138,7 +145,7 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
           var row = '<h3 class="item" id="header-'+item.id+'">'+item.product_code +'<i class="barcode-icon pull-right fa fa-barcode fa-1x" aria-hidden="true"></i><i class="qty-icon pull-right fa fa-cubes fa-1x" aria-hidden="true"></i></h3>';
           row += '<div id="item-' + item.id + '">';
           row += '<div class="col-lg-5">Barcode</div>';
-          row += '<div class="col-lg-7"><input type="text" class="barcode_input" name="barcode['+item.id+']"/></div>';
+          row += '<div class="col-lg-7"><input type="text" value="' +item.barcode+ '-" class="barcode_input" name="barcode['+item.id+']"/></div>';
           row += '<div class="col-lg-5">Pick (<span id="itemqty-'+item.id+'">'+ (item.qty - item.qty_supplied) +' / '+item.qty+'</span> )</div>';
           row += '<div class="col-lg-2"><input type="text" class="supplied_input" name="supplied['+ item.id+']"/></div>';
           row += '</div>';
@@ -162,7 +169,7 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
         url: url,
       })
         .done(function( data ) {
-          console.log(data);
+          //console.log(data);
           items = data;
           renderForm();
         });
@@ -182,7 +189,7 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
     }
 
     function clearForm(){
-       $("#accordion").find("input[type=text]").val("");
+       //$("#accordion").find("input[type=text]").val("");
        updateForm();
     }
 
