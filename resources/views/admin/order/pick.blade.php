@@ -14,7 +14,9 @@
 
                 <div id="accordion" ></div>
 				        <div style="padding:15px; text-align:center">
-                    <a class="btn btn-primary" id="save-button">Save Order</a>
+
+                    <a class="btn btn-success pull-right" id="park-button">Park Order</a>
+                    <a class="btn btn-primary pull-left" id="save-button">Save Order</a>
   	            </div>
                 </div>
             </div>
@@ -42,7 +44,10 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
 
     // onClick event handler for save form
     $('#save-button').on('click',function(e){
-      saveItems();
+      saveOrder();
+    });
+    $('#park-button').on('click',function(e){
+      parkOrder();
     });
 
     function getPickItem(id){
@@ -70,22 +75,27 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
     }
 
     function getInput(input){
-
       var inputId = getInputId(input);
       var inputName = getInputName(input);
       var item = getPickItem(inputId);
 
+      //console.log(item);
+
       if (inputName =='barcode'){
         item.picked_barcode = parseInt(input.value);
+        item.picked_qty =$('input[name="supplied['+inputId+']"]').val();
+        updatePickItem(inputId,item);
+        updateForm();
       }
 
       if (inputName =='supplied'){
         item.picked_qty = parseInt(input.value);
+        if( item.picked_barcode == parseInt(item.barcode)){
+
+          updatePickItem(inputId,item);
+          updateForm();
+        }
       }
-
-      updatePickItem(inputId,item);
-      updateForm();
-
     }
     /**
      * updates the form based on the state
@@ -103,25 +113,17 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
     function checkItems(){
         $.each(items, function(idx,item){
             //console.log('chk item',item);
-            if(item.qty_supplied >= item.qty){
-              hideBarcodeIcon(item.id)
+            if(item.picked_qty == item.qty){
               hideQtyIcon(item.id);
-              $('#header-' + item.id).removeClass('item-error');
-              return;
             }
-            if((item.picked_barcode == item.barcode) && (item.picked_qty == item.qty)){
-              $('#header-' + item.id).removeClass('item-error');
-            }
+
             if(item.picked_barcode == item.barcode){
              hideBarcodeIcon(item.id)
             }
-            if(item.picked_qty == (item.qty - item.qty_supplied)) {
-              hideQtyIcon(item.id);
+            if((item.picked_barcode == item.barcode) && (item.picked_qty == item.qty )){
+              $('#header-' + item.id).removeClass('item-error');
             }
-
-            $('#itemqty-'+item.id).text((item.qty - item.qty_supplied) +' / '+item.qty);
-
-
+            //$('#itemqty-'+item.id).text((item.qty - item.qty_supplied) +' / '+item.qty);
         });
     }
     function hideBarcodeIcon(id){
@@ -141,7 +143,7 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
           row += '<div class="col-lg-5">Barcode</div>';
           row += '<div class="col-lg-7"><input type="number" value="' +item.barcode+ '0" class="barcode_input" name="barcode['+item.id+']"/></div>';
           row += '<div class="col-lg-5">Pick (<span id="itemqty-'+item.id+'">'+ (item.qty - item.qty_supplied) +' / '+item.qty+'</span> )</div>';
-          row += '<div class="col-lg-2"><input type="number" class="supplied_input" name="supplied['+ item.id+']"/></div>';
+          row += '<div class="col-lg-2"><input type="number" value="'+ item.qty_supplied +'" class="supplied_input" name="supplied['+ item.id+']"/></div>';
           row += '</div>';
           $('#accordion').append(row);
 
@@ -169,15 +171,24 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
         });
     }
 
-    function saveItems(){
+    function saveOrder(){
+      saveItems('picked');
+    }
+
+    function parkOrder(){
+      saveItems('parked');
+    }
+
+    function saveItems(status){
       $.ajax({
         method: "POST",
         url: url,
-        data: { _token: csrf_token, order_id: orderId, items: items }
+        data: { _token: csrf_token, status: status, order_id: orderId, items: items }
       })
         .done(function( result ) {
-          items = result;
-          clearForm();
+          console.log(result);
+          // redirect to location returned
+          window.location = result.location;
 
         });
     }

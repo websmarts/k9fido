@@ -31,7 +31,7 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 // FILTER LISTS
 Route::post('filter/{name}', 'FilterController@index');

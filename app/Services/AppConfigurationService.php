@@ -20,7 +20,12 @@ class AppConfigurationService
         'type.status.filter.options' => ['' => 'Any', 'active' => 'Active', 'inactive' => 'Inactive', 'pending' => 'Pending', 'archive' => 'Archive'],
 
         // Order ref data
-        'order.status.options' => ['basket' => 'Basket', 'saved' => 'Saved (new)', 'printed' => 'To be picked', 'picked' => 'Closed'],
+        'order.status.options' => [
+            'basket' => 'Basket',
+            'saved' => 'Saved (new)',
+            'printed' => 'To be picked',
+            'parked' => 'Pick parked',
+            'picked' => 'Closed'],
     ];
 
     public function get($property)

@@ -27,7 +27,7 @@ class HomeController extends Controller
         // $users = DB::connection('k9homes')->select("select * from type");
         // dd($users);
         $orders = Order::with('client')
-            ->whereIn('status', ['saved', 'printed', 'basket'])
+            ->whereIn('status', ['saved', 'printed', 'parked', 'basket'])
             ->whereDate('modified', '>=', Carbon::today()->subDays(90)->toDateString())
 
             ->orderBy('id', 'asc')
@@ -35,8 +35,9 @@ class HomeController extends Controller
 
         $newOrders = $orders->where('status', 'saved');
         $pickOrders = $orders->where('status', 'printed');
+        $parkOrders = $orders->where('status', 'parked');
         $basketOrders = $orders->where('status', 'basket');
 
-        return view('home', compact('newOrders', 'pickOrders', 'basketOrders'));
+        return view('home', compact('newOrders', 'pickOrders', 'parkOrders', 'basketOrders'));
     }
 }

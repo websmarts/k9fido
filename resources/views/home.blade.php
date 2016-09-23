@@ -18,6 +18,9 @@
                     @if(isSet($pickOrders) )
                         @include('admin.lists.pickorders',['title'=>'Pick orders', 'data'=>$pickOrders])
                     @endif
+                    @if(isSet($parkOrders) )
+                        @include('admin.lists.pickorders',['title'=>'Parked Pick orders', 'data'=>$parkOrders])
+                    @endif
 
                     @if(isSet($basketOrders) )
                         @include('admin.lists.orders',['title'=>'Basket orders', 'data'=>$basketOrders])

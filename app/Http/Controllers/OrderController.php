@@ -121,6 +121,9 @@ class OrderController extends Controller
         $order = Order::with('items.product')->find($id);
         $data = [];
         foreach ($order->items as $i) {
+            if ($i->qty_supplied >= $i->qty) {
+                continue;
+            }
             $x = new \stdClass();
             $x->barcode = $i->product->barcode;
             $x->product_code = $i->product_code;
@@ -136,10 +139,16 @@ class OrderController extends Controller
     {
         $items = $request->input('items');
         $orderId = $request->input('order_id');
+        $status = $request->input('status');
 
-        $this->orderService->updateQuantitySupplied($items);
+        //return $items;
+        foreach ($items as $item) {
+            $this->orderService->updateItemQuantitySupplied($item['id'], $item['qty_supplied']);
+        }
 
-        return $this->pickOrderGet($orderId);
+        $this->orderService->updateOrderStatus($orderId, $status);
+
+        return ['result' => 200, 'location' => route('home')];
     }
 
     /**

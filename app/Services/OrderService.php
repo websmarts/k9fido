@@ -246,22 +246,14 @@ class OrderService
 
     /**
      * Updates qty_supplied for an ordered item
-     * @method updatePickedItems
-     * @param  [array]            $items [description]
+     * @method  updateItemQuantitySupplied
+     * @param  [int]            $itemId [system_order_item id]
+     * @param  [int]            $qty [qty supplied]
      * @return [type]                   [description]
      */
-    public function updateQuantitySupplied($items)
+    public function updateItemQuantitySupplied($itemId, $qty)
     {
-        foreach ($items as $i) {
-            if (!isset($i['picked_barcode'])) {
-                continue;
-            }
-            if (($i['barcode'] == $i['picked_barcode']) && $i['picked_qty'] > 0) {
-
-                $_item = Item::find($i['id']);
-                $_item->qty_supplied += $i['picked_qty'];
-                $_item->save();
-            }
-        }
+        $item = Item::find($itemId);
+        $item->qty_supplied = $qty;
     }
 }
