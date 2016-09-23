@@ -139,9 +139,9 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
           var row = '<h3 class="item" id="header-'+item.id+'">'+item.product_code +'<i class="barcode-icon pull-right fa fa-barcode fa-1x" aria-hidden="true"></i><i class="qty-icon pull-right fa fa-cubes fa-1x" aria-hidden="true"></i></h3>';
           row += '<div id="item-' + item.id + '">';
           row += '<div class="col-lg-5">Barcode</div>';
-          row += '<div class="col-lg-7"><input type="text" value="' +item.barcode+ '-" class="barcode_input" name="barcode['+item.id+']"/></div>';
+          row += '<div class="col-lg-7"><input type="number" value="' +item.barcode+ '0" class="barcode_input" name="barcode['+item.id+']"/></div>';
           row += '<div class="col-lg-5">Pick (<span id="itemqty-'+item.id+'">'+ (item.qty - item.qty_supplied) +' / '+item.qty+'</span> )</div>';
-          row += '<div class="col-lg-2"><input type="text" class="supplied_input" name="supplied['+ item.id+']"/></div>';
+          row += '<div class="col-lg-2"><input type="number" class="supplied_input" name="supplied['+ item.id+']"/></div>';
           row += '</div>';
           $('#accordion').append(row);
 
