@@ -5,19 +5,13 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading" >Pick Order  {{ $order->order_id  }}</div>
+                <div class="panel-heading" >Pick Order  {{ $order->order_id  }} for {{ $order->client->name }}</div>
 
 
 
                 <div class="panel-body">
                 {{-- dump($order) --}}
-                <div class="row">
-                    <div class="col-xs-2">For:</div>
-                    <p class="col-xs-10">{{ $order->client->name }}</p>
-                 </div>
 
-
-                <div>Ordered Items</div>
                 <div id="accordion" ></div>
 				        <div style="padding:15px; text-align:center">
                     <a class="btn btn-primary" id="save-button">Save Order</a>
