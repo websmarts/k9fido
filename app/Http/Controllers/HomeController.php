@@ -30,7 +30,7 @@ class HomeController extends Controller
             ->whereIn('status', ['saved', 'printed', 'parked', 'picked', 'basket'])
             ->whereDate('modified', '>=', Carbon::today()->subDays(90)->toDateString())
             ->where('exported', '!=', 'yes')
-            ->orderBy('id', 'asc')
+            ->orderBy('id', 'desc')
             ->get();
 
         $basketOrders = $orders->where('status', 'basket');
