@@ -2,12 +2,11 @@
 
 namespace App\Legacy\Product;
 
-use App\Legacy\Traits\HasCompositePrimaryKey;
 use Illuminate\Database\Eloquent\Model;
 
 class ClientPrice extends Model
 {
-    use HasCompositePrimaryKey;
+    // use HasCompositePrimaryKey;
 
     /**
      * The connection name for the model.
@@ -21,7 +20,7 @@ class ClientPrice extends Model
      *
      * @var string
      */
-    protected $primaryKey = ['order_id', 'product_code'];
+    protected $primaryKey = 'id';
 
     /**
      * The table associated with the model.
@@ -38,5 +37,11 @@ class ClientPrice extends Model
         'client_price',
 
     ];
+
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'product_code', 'product_code')
+            ->select(['product_code', 'price']);
+    }
 
 }

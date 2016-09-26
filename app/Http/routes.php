@@ -79,6 +79,8 @@ Route::post('ajax/pickorder/{id}', 'OrderController@pickorderStore');
 
 //CLIENT ROUTES
 Route::resource('client', 'ClientController');
+Route::get('client/{id}/pricing', ['as' => 'client.pricing', 'uses' => 'ClientController@pricing']);
+Route::post('client/{id}/pricing', ['as' => 'client.pricing', 'uses' => 'ClientController@storePricing']);
 
 // STAFF ROUTES
 Route::resource('staff', 'StaffController');

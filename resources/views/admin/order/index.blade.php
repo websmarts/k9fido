@@ -35,6 +35,7 @@
                     <th>Order #</th>
                     <th>Date</th>
                     <th>Customer</th>
+                    <th>Exported</th>
                     <th>&nbsp;</th>
 
                     </tr>
@@ -46,6 +47,7 @@
                         <td>{{ date('j-m-Y',strtotime($order->modified)) }}</td>
 
                         <td>{{ $order->name }}</td>
+                        <td>{{ $order->exported }}</td>
                     	<td width="20"><a href="{{ route('order.show', ['id' => $order->id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
                     </tr>
                     @endforeach

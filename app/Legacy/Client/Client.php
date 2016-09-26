@@ -76,7 +76,7 @@ class Client extends Model
      */
     public function scopeApplyUserFilter($query)
     {
-        return $this->applyFilter($query, 'client');
+        return $this->applyFilter($query, $this->table);
 
     }
 

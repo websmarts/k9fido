@@ -71,7 +71,9 @@
                 @endforeach
                 </tbody>
                 </table>
+                @if($order->exported !='yes')
                 <a href="{{ route('order.export', ['id' => $order->id] ) }}"><button class="btn btn-success pull-right">Export Order</button></a>
+                @endif
 
                 <a href="{{ route('order.delete', ['id' => $order->id] ) }}"><button class="btn btn-warning pull-left">Delete Order</button></a>
 

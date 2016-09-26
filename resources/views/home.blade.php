@@ -22,6 +22,10 @@
                         @include('admin.lists.pickorders',['title'=>'Parked Pick orders', 'data'=>$parkOrders])
                     @endif
 
+                    @if(isSet($exportOrders) )
+                        @include('admin.lists.orders',['title'=>'Export orders', 'data'=>$exportOrders])
+                    @endif
+
                     @if(isSet($basketOrders) )
                         @include('admin.lists.orders',['title'=>'Basket orders', 'data'=>$basketOrders])
                     @endif

@@ -6,7 +6,7 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Clients</h3>
-                <form method="POST" action="/filter/client" class="form-inline">
+                <form method="POST" action="/filter/clients" class="form-inline">
                     <div class="form-group">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <label>Search key</label>
@@ -48,7 +48,12 @@
                         <td>{{ $client->client_id }}</td>
                     	<td>{{ $client->name }}</td>
                         <td>{{ $client->city }}</td>
-                    	<td width="20"><a href="{{ route('client.edit', ['id' => $client->client_id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
+                    	<td width="80">
+
+                        <a href="{{ route('client.pricing', ['id' => $client->client_id] ) }}"><i class="fa fa-usd" aria-hidden="true"></i></a>&nbsp;
+                        <a href="{{ route('client.edit', ['id' => $client->client_id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a>
+
+                        </td>
                     </tr>
                     @endforeach
 

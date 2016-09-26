@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Legacy\Client\Client;
+use App\Legacy\Product\ClientPrice;
 use App\Queries\ClientListQuery;
 use Illuminate\Http\Request;
 
@@ -33,28 +34,6 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
     {
         //
     }
@@ -94,6 +73,20 @@ class ClientController extends Controller
         flash('Client updated', 'success');
         return redirect()->route('client.edit', $id);
 
+    }
+
+    public function pricing($clientId)
+    {
+        $prices = ClientPrice::with('product')
+            ->where('client_id', $clientId)
+            ->get();
+        $client = Client::find($clientId);
+        return view('admin.client.pricing', compact('prices', 'client'));
+    }
+
+    public function storePricing(Request $request)
+    {
+        dd($request->all());
     }
 
 }

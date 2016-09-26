@@ -27,17 +27,18 @@ class HomeController extends Controller
         // $users = DB::connection('k9homes')->select("select * from type");
         // dd($users);
         $orders = Order::with('client')
-            ->whereIn('status', ['saved', 'printed', 'parked', 'basket'])
+            ->whereIn('status', ['saved', 'printed', 'parked', 'picked', 'basket'])
             ->whereDate('modified', '>=', Carbon::today()->subDays(90)->toDateString())
-
+            ->where('exported', '!=', 'yes')
             ->orderBy('id', 'asc')
             ->get();
 
+        $basketOrders = $orders->where('status', 'basket');
         $newOrders = $orders->where('status', 'saved');
         $pickOrders = $orders->where('status', 'printed');
         $parkOrders = $orders->where('status', 'parked');
-        $basketOrders = $orders->where('status', 'basket');
+        $exportOrders = $orders->where('status', 'picked');
 
-        return view('home', compact('newOrders', 'pickOrders', 'parkOrders', 'basketOrders'));
+        return view('home', compact('newOrders', 'pickOrders', 'parkOrders', 'exportOrders', 'basketOrders'));
     }
 }

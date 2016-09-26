@@ -142,8 +142,10 @@ class OrderController extends Controller
         $status = $request->input('status');
 
         //return $items;
-        foreach ($items as $item) {
-            $this->orderService->updateItemQuantitySupplied($item['id'], $item['qty_supplied']);
+        if (is_array($items) && count($items) > 0) {
+            foreach ($items as $item) {
+                $this->orderService->updateItemQuantitySupplied($item['id'], $item['qty_supplied']);
+            }
         }
 
         $this->orderService->updateOrderStatus($orderId, $status);

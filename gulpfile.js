@@ -1,4 +1,5 @@
 var elixir = require('laravel-elixir');
+require('laravel-elixir-vueify');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,11 +15,13 @@ var elixir = require('laravel-elixir');
 elixir(function(mix) {
     mix.sass('app.scss')
 
+    .browserify('main.js')
+
 	.scripts(['app.js','SimpleAjaxUploader.js'])
 
 	.copy('resources/assets/js/imageuploader.js', 'public/js/imageuploader.js')
 
-    .version(['css/app.css','js/all.js']);
+    .version(['css/app.css','js/all.js','js/main.js']);
 
     
 });
