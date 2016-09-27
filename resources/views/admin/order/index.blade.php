@@ -13,10 +13,10 @@
                         <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['or'] }}" />
 
                         <label>Status</label>
-                        {!! Form::select('fkey[and]', array_merge([''=>'Any'] ,Appdata::get('order.status.options')),json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['and'],['class'=>'form-control']) !!}
+                        {!! Form::select('fkey[and]', array_merge([''=>'Any'] ,Appdata::get('order.status.options')),@json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['and'],['class'=>'form-control']) !!}
 
                          <label>Exported</label>
-                        {!! Form::select('fkey[and2]', array_merge([''=>'Any'] ,Appdata::get('order.exported.options')),json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['and2'],['class'=>'form-control']) !!}
+                        {!! Form::select('fkey[and2]', array_merge([''=>'Any'] ,Appdata::get('order.exported.options')),@json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['and2'],['class'=>'form-control']) !!}
 
 
                         <button type="submit" name="Filter" class="btn btn-default"><i class="fa fa-filter fa-1x"></i> Filter list</button>
