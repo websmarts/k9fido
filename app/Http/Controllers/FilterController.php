@@ -140,6 +140,14 @@ class FilterController extends Controller
                     'default_value' => 'active',
                 ],
             ],
+            'and2' => [
+                'system_orders.exported' => [
+                    'operater' => '=',
+                    'value_prefix' => '',
+                    'value_postfix' => '',
+                    'default_value' => 'no',
+                ],
+            ],
         ];
 
         return $filterFields;
@@ -197,9 +205,12 @@ class FilterController extends Controller
 
         if ($filterKeyGroups) {
             foreach ($filterKeyGroups as $fgk => $fgv) {
+
                 if (!empty($fgv)) {
                     // eg fgv = main
                     foreach ($filterFields[$fgk] as $fk => $fv) {
+                        // Hack to remove numeric postfix on fgk eg make and2 = and
+                        $fgk = preg_replace('/\d/', '', $fgk);
 
                         $whereArray[$fgk][] = [
                             $fk,
@@ -224,7 +235,7 @@ class FilterController extends Controller
                 'fkey' => $this->request->input('fkey'),
             ];
 
-            // dd($filterKey);
+            //dd($data);
 
             $this->request->session()->put($filterKey, json_encode($data));
         } else {

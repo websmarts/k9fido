@@ -24,8 +24,8 @@ class AppConfigurationService
             'basket' => 'Basket',
             'saved' => 'Saved (new)',
             'printed' => 'To be picked',
-            'parked' => 'Pick parked',
-            'picked' => 'Closed'],
+            'parked' => 'Parked',
+            'picked' => 'Picked'],
 
         //Order exported options
         'order.exported.options' => [
