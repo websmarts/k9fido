@@ -9,26 +9,26 @@
 
                 <div class="panel-body">
                      <div class="panel-body">
-
+                    @if(isSet($basketOrders) )
+                    @include('admin.lists.orders',['title'=>'Order baskets', 'data'=>$basketOrders])
+                    @endif
 
                     @if(isSet($newOrders) )
                         @include('admin.lists.orders',['title'=>'New orders', 'data'=>$newOrders])
                     @endif
 
                     @if(isSet($pickOrders) )
-                        @include('admin.lists.pickorders',['title'=>'Pick orders', 'data'=>$pickOrders])
+                        @include('admin.lists.pickorders',['title'=>'Orders ready to be picked now', 'data'=>$pickOrders])
                     @endif
                     @if(isSet($parkOrders) )
-                        @include('admin.lists.pickorders',['title'=>'Parked Pick orders', 'data'=>$parkOrders])
+                        @include('admin.lists.pickorders',['title'=>'Parked orders - to be picked later', 'data'=>$parkOrders])
                     @endif
 
                     @if(isSet($exportOrders) )
-                        @include('admin.lists.orders',['title'=>'Export orders', 'data'=>$exportOrders])
+                        @include('admin.lists.orders',['title'=>'Orders ready to be exported to MYOB', 'data'=>$exportOrders])
                     @endif
 
-                    @if(isSet($basketOrders) )
-                        @include('admin.lists.orders',['title'=>'Basket orders', 'data'=>$basketOrders])
-                    @endif
+
 
 
 

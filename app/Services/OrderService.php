@@ -231,6 +231,13 @@ class OrderService
         }
     }
 
+    public function updateOrderExportedStatus($orderId, $exported = false)
+    {
+        if ($exported && in_array($exported, array_keys(\Appdata::get('order.exported.options')))) {
+            return Order::find($orderId)->update(['exported' => $exported]);
+        }
+    }
+
     public function deleteOrder($orderId, $restock = true)
     {
         $order = Order::with('items.product.bom')->find($orderId);

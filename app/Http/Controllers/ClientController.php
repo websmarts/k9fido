@@ -84,9 +84,27 @@ class ClientController extends Controller
         return view('admin.client.pricing', compact('prices', 'client'));
     }
 
-    public function storePricing(Request $request)
+    public function storePrice(Request $request)
     {
-        dd($request->all());
+        $clientId = $request->input('client_id');
+        $productCode = $request->input('product_code');
+        $price = $request->input('client_price');
+
+        $clientPrice = ClientPrice::firstOrNew([
+            'client_id' => $clientId,
+            'product_code' => $productCode,
+
+        ]);
+
+        if (is_null($clientPrice->product)) {
+            return ['result' => 404];
+        }
+
+        $clientPrice->client_price = $price;
+
+        $clientPrice->save();
+
+        return $clientPrice;
     }
 
 }

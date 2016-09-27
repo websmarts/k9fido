@@ -79,6 +79,7 @@ class OrderController extends Controller
         $this->orderService->deleteOrderItems($items['delete']);
         $this->orderService->addOrderItems($items['new']);
         $this->orderService->updateOrderStatus($orderId, $request->input('status'));
+        $this->orderService->updateOrderExportedStatus($orderId, $request->input('exported'));
 
         flash('Order updated', 'success');
         return redirect(route('order.edit', ['id' => $orderId]));

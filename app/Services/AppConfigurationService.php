@@ -26,6 +26,12 @@ class AppConfigurationService
             'printed' => 'To be picked',
             'parked' => 'Pick parked',
             'picked' => 'Closed'],
+
+        //Order exported options
+        'order.exported.options' => [
+            'no' => 'No',
+            'yes' => 'Yes',
+        ],
     ];
 
     public function get($property)

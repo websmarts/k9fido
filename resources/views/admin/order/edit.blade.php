@@ -44,6 +44,14 @@
                     {{ Form::select('status',Appdata::get('order.status.options'),$order->status, ['class'=>'form-control']) }}
                     </div>
                 </div>
+
+                 <div class="row" style="margin-top:15px;">
+                    <div class="col-xs-2"><label>Exported status</label></div>
+                    <div class="col-md-3 col-xs-10">
+                    {{ Form::select('exported',Appdata::get('order.exported.options'),$order->exported, ['class'=>'form-control']) }}
+                    </div>
+                </div>
+
                 <hr>
 
                 <div>Ordered Items</div>
