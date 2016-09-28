@@ -61,7 +61,7 @@ class Order extends Model
     public function client()
     {
         return $this->belongsTo('App\Legacy\Client\Client', 'client_id', 'client_id')
-            ->select(['client_id', 'name', 'contacts', 'parent']);
+            ->select(['client_id', 'name', 'contacts', 'parent', 'address1', 'address2', 'address3', 'city', 'postcode']);
     }
 
     public function items()
@@ -72,6 +72,6 @@ class Order extends Model
     public function salesrep()
     {
         return $this->belongsTo('App\Legacy\Staff\User', 'reference_id', 'id')
-            ->select('id', 'name');
+            ->select('id', 'firstname', 'lastname');
     }
 }

@@ -31,6 +31,7 @@ trait CanExportOrder
         $o = '';
         $lines = [];
         $n = 0;
+        //dd($order->client);
         foreach ($order->items as $item) {
             // dump($this->client->name);
             // dump($this->client->parentClient);
@@ -61,7 +62,7 @@ trait CanExportOrder
         foreach ($lines as $l) {
             $o .= $this->format_line($l);
         }
-
+        // dd($o);
         // mark the order as exported
         // 'update system_orders set `exported`="yes" where id=' . $orderId;
         $order->exported = "yes";

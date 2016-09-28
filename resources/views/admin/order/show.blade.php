@@ -29,7 +29,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-3">Customer parent</div>
-                    <p class="col-xs-9">{{ isSet($order->client->clientParent) ? $order->client->clientParent->name : '-' }}</p>
+                    <p class="col-xs-9">{{ isSet($order->client->parentGroup) ? $order->client->parentGroup->name : '-' }}</p>
                 </div>
                 <div class="row">
                     <div class="col-xs-3">Order date</div>
