@@ -85,7 +85,7 @@ class Client extends Model
         return $this->hasMany('App\Legacy\Order\Order', 'client_id');
     }
 
-    public function clientParent()
+    public function parentGroup()
     {
 
         return $this->belongsTo('App\Legacy\Client\Client', 'parent', 'client_id');

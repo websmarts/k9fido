@@ -91,7 +91,6 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
       if (inputName =='supplied'){
         item.picked_qty = parseInt(input.value);
         if( item.picked_barcode == parseInt(item.barcode)){
-
           updatePickItem(inputId,item);
           updateForm();
         }

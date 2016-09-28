@@ -77,11 +77,25 @@ class ClientController extends Controller
 
     public function pricing($clientId)
     {
-        $prices = ClientPrice::with('product')
+        $items = ClientPrice::with('product')
             ->where('client_id', $clientId)
             ->get();
-        $client = Client::find($clientId);
-        return view('admin.client.pricing', compact('prices', 'client'));
+
+        // Transfrom prices into format for Vue.js app
+        /**
+         * id, product_code, client_price, std_price
+         */
+        $prices = $items->map(function ($item, $key) {
+            return [
+                'id' => $item->id,
+                'product_code' => $item->product_code,
+                'client_price' => $item->client_price,
+                'std_price' => $item->product->price,
+            ];
+        });
+        dd($prices);
+        // $client = Client::find($clientId);
+        // return view('admin.client.pricing', compact('prices', 'client'));
     }
 
     public function storePrice(Request $request)

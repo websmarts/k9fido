@@ -6,7 +6,6 @@ trait CanExportOrder
 
     public function export($order)
     {
-
         $o = '';
         $header = 'Co./Last Name,First Name,Addr 1 - Line 1,           - Line 2,           - Line 3,           - Line 4,Inclusive,Invoice #,Date,Customer PO,Ship Via,Delivery Status,Item Number,Quantity,Description,Price,Inc-Tax Price,Discount,Total,Inc-Tax Total,Job,Comment,Journal Memo,Salesperson Last Name,Salesperson First Name,Shipping Date,Referral Source,Tax Code,Non-GST Amount,GST Amount,LCT Amount,Freight Amount,Inc-Tax Freight Amount,Freight Tax Code,Freight Non-GST Amount,Freight GST Amount,Freight LCT Amount,Sale Status,Currency Code,Exchange Rate,Terms - Payment is Due,           - Discount Days,           - Balance Due Days,           - % Discount,           - % Monthly Charge,Amount Paid,Payment Method,Payment Notes,Name on Card,Card Number,Expiry Date,Authorisation Code,BSB,Account Number,Drawer/Account Name,Cheque Number,Category,Location ID,Card ID,Record ID' . "\r\n";
 
@@ -52,13 +51,13 @@ trait CanExportOrder
             $lines[$n]['address3'] = $order->client->address3;
             $lines[$n]['city'] = $order->client->city;
             $lines[$n]['postcode'] = $order->client->postcode;
-            $lines[$n]['parent_company'] = !is_null($order->client->parentClient) ? $order->client->parentClient->name : '';
+            $lines[$n]['parent_company'] = !is_null($order->client->parentGroup) ? $order->client->parentGroup->name : '';
 
             $n++;
         }
 
         $lines = collect($lines);
-
+        // dd($lines);
         foreach ($lines as $l) {
             $o .= $this->format_line($l);
         }
@@ -93,7 +92,6 @@ trait CanExportOrder
             $o .= $this->qc($l['address1'] . ' ' . $l['address2']) . ','; // Addr 1 - line 2
             $o .= $this->qc($l['city']) . ' ' . $l['postcode'] . ','; // Addr 1 - line 3
             $o .= ','; // Addr 1 - line 4
-
         } else {
             $o .= $this->qc($l['Co./Last Name']) . ','; // Co./Last Name
             $o .= ','; // First Name
