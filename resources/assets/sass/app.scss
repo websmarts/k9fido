@@ -23,6 +23,11 @@ h3.ui-accordion-header-collapsed.item-error {
 	background: #ffcccc;
 }
 
+// Order table padding so its printable on one page
+table.order_table tr td {
+	padding: 0;
+}
+
 
 @import "components/alert";
 

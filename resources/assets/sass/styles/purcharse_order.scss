@@ -1,0 +1,10 @@
+// print styling for purchase orders
+@media print {
+	
+}
+
+@media screen {
+	.print_only {
+	visibility: none;
+	}
+}

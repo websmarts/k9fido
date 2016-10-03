@@ -43,10 +43,8 @@ class OrderController extends Controller
     public function show($id)
     {
         // Get the order and order items
-        $order = $this->orderService->getOrderById($id);
-        $clientprices = $this->orderService->clientPrices($order->client->client_id);
-        $totalItemsCost = $this->orderService->totalItemsCost($order);
-        return view('admin.order.show', compact('order', 'clientprices', 'totalItemsCost'));
+
+        return view('admin.order.show', $this->orderService->fetchOrderDisplayData($id));
     }
 
     /**

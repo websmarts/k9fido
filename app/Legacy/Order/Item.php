@@ -32,6 +32,7 @@ class Item extends Model
 
     protected $fillable = [
         'order_id',
+        'system_order_id',
         'product_code',
         'product_id',
         'qty',

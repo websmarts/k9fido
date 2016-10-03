@@ -16,6 +16,9 @@ h3.item-error {
 h3.ui-accordion-header-collapsed.item-error {
   background: #ffcccc; }
 
+table.order_table tr td {
+  padding: 0; }
+
 .Alert {
   padding: 5px;
   margin-bottom: 5px; }

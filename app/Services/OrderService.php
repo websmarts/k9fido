@@ -52,6 +52,65 @@ class OrderService
         return $query->get();
     }
 
+    /**
+     * get and format data for displaying an order view
+     * @method fetchOrderDisplayData
+     * @param  [type]                $orderId [description]
+     * @return [type]                         [description]
+     */
+    public function fetchOrderDisplayData($orderId)
+    {
+
+        $order = $this->getOrderById($orderId);
+        $orderItems = $this->getOrderItemsWithProduct($orderId);
+        $clientprices = $this->clientPrices($order->client->client_id);
+
+        $totalItemsCost = 0;
+        $totalItemsPrice = 0;
+        $items = [];
+        $strategy = '';
+        foreach ($orderItems as $item) {
+            $customDiscount = null;
+            $i = new \stdClass();
+            if (isset($clientprices[$item->product_code])) {
+                if ($clientprices[$item->product_code]->client_price == $item->price) {
+                    $strategy = 'special_client_price';
+                    $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
+                }
+            } else if (($item->product->qty_break > 0) && ($item->qty >= $item->product->qty_break)) {
+                if ($item->price == ($item->product->price * (1 - ($item->product->qty_discount / 100)))) {
+                    $strategy = 'quantity_discount';
+                }
+            } else if ($item->price != $item->product->price) {
+                $strategy = 'custom_pricing';
+
+            }
+            // Markup
+            $markup = '';
+            if ($item->price > 0) {
+                $markup = ($item->price - $item->product->cost) / $item->price;
+            }
+            $i->qty = $item->qty;
+            $i->product_code = $item->product_code;
+            $i->price = $item->price;
+            $i->product = $item->product;
+            $i->pricing_strategy = $strategy;
+            $i->ext_price = $item->qty * $item->price;
+            $i->markup = $markup;
+            $i->custom_discount = $customDiscount;
+            $items[] = $i;
+
+            $totalItemsCost += $item->qty * $item->product->cost;
+            $totalItemsPrice += $i->ext_price;
+        }
+        return (compact('order', 'items', 'totalItemsCost', 'totalItemsPrice'));
+    }
+
+    protected function itemDisplayData($orderId)
+    {
+
+    }
+
     public function getOrderById($id)
     {
         return $this->order->find($id);
@@ -262,5 +321,10 @@ class OrderService
     {
         $item = Item::find($itemId);
         $item->qty_supplied = $qty;
+    }
+
+    public function getOrderItemsWithProduct($orderId)
+    {
+        return Item::with('product')->where('order_id', 'T0_' . $orderId)->orderBy('product_code', 'asc')->get();
     }
 }
