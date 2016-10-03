@@ -144,6 +144,6 @@ class ProductController extends Controller
 
     protected function getProductTypes()
     {
-        return ProductType::where('status', 'active')->orderBy('name', 'asc')->lists('name', 'typeid')->toArray();
+        return ProductType::orderBy('name', 'asc')->lists('name', 'typeid')->toArray();
     }
 }
