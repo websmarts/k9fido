@@ -42,7 +42,7 @@
 
 
                 <div>Ordered Items</div>
-{{-- dump($items) --}}
+{{ dump($order) }}
 
                 <table class="table table-striped table-condensed order_table">
                 <thead>
@@ -83,7 +83,7 @@ $n = 1;
                 </tr>
                 @endforeach
                 <tr>
-                <td colspan="5"  align="left" ><br>Order Contact: <span style="color: #00f">{{ $order->order_contact }}</span><br>Order instructions:<br><span class="orderinstructions">{{ nl2br($order->instructions) }}</span></td><td aligne="right"><span style="font-weight: bold" >Order total :</span></td>
+                <td colspan="5"  align="left" ><br>Order Contact: <span style="color: #00f">{{ $order->order_contact }}</span><br>Order instructions:<br><span class="orderinstructions">{!! nl2br($order->instructions) !!}</span></td><td aligne="right"><span style="font-weight: bold" >Order total :</span></td>
                 <td colspan="2"><p style="font-weight: bold" align="left">${{ number_format($totalItemsPrice/100,2) }}</p></td>
                 <td colspan="2">&nbsp;</td>
                 </tr>
