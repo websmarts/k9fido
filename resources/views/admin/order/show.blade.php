@@ -42,7 +42,7 @@
 
 
                 <div>Ordered Items</div>
-{{ dump($order) }}
+{{-- dump($order) --}}
 
                 <table class="table table-striped table-condensed order_table">
                 <thead>
