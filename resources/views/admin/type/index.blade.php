@@ -42,7 +42,7 @@
                             <th>TypeID</th>
                             <th>Product type</th>
                             <th>Description</th>
-                            <th>Status</th>
+                            <th>Display direction</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -52,7 +52,7 @@
                     	<td>{{ $type->typeid }}</td>
                         <td>{{ $type->name }}</td>
                         <td>{{ $type->type_description }}</td>
-                        <td>{{ $type->status }}</td>
+                         <td>{{ $type->display_format }}</td>
                     	<td width="20"><a href="{{ route('type.edit', ['id' => $type->typeid] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
                     </tr>
                     @endforeach

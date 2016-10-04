@@ -52,18 +52,3 @@
         @endif
         </div>
     </div>
-
-    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                        {!! Form::label('status', 'Status', array('class' => 'col-md-4 control-label')) !!}
-                        <div class="col-md-6">
-                        {!! Form::select('status', Appdata::get('type.status.options') ,null,  array('class' => 'form-control')) !!}
-
-                        @if ($errors->has('status'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('status') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
-
-</div>
