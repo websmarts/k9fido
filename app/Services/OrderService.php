@@ -206,11 +206,19 @@ class OrderService
     public function addOrderItem($item)
     {
         if ($this->validProductCode($item->product_code)) {
-            $item->price = $this->getProductPrice($item);
-            $item->save();
+            if (!$this->itemExists($item)) {
+                $item->price = $this->getProductPrice($item);
+                $item->save();
+                $this->updateStockQuantity($item->product, -$item->qty);
+            }
 
-            $this->updateStockQuantity($item->product, -$item->qty);
         }
+    }
+
+    protected function itemExists($item)
+    {
+        //dd($item);
+        return Item::where('order_id', $item->order_id)->where('product_code', $item->product_code)->first();
     }
 
     public function updateOrderItems($items)
@@ -250,10 +258,13 @@ class OrderService
 
     protected function updateStockQuantity($product, $adjust)
     {
-        //dd(['product' => $product->bom, 'adjust' => $adjust]);
+        if (!$product) {
+            return;
+        }
+        // dd(['product' => $product->bom, 'adjust' => $adjust]);
         // if product is a BOM then restock each BOM item_qty times the adjustment
         if ($product->bom->count()) {
-            foreach ($bom as $bomItem) {
+            foreach ($product->bom as $bomItem) {
                 $this->updateStockQuantity($bomItem->product, $bomItem->qty * $adjust);
             }
         } else {

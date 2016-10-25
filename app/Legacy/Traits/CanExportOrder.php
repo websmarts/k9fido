@@ -31,7 +31,7 @@ trait CanExportOrder
         $o = '';
         $lines = [];
         $n = 0;
-        //dd($order->client);
+        //dd($order->items);
         foreach ($order->items as $item) {
             // dump($this->client->name);
             // dump($this->client->parentClient);
@@ -43,7 +43,7 @@ trait CanExportOrder
             $lines[$n]['Sales Person First Name'] = @$order->salesrep->firstname;
             $lines[$n]['Sales Person Last Name'] = @$order->salesrep->lastname;
             $lines[$n]['Item Number'] = $item->product->product_code;
-            $lines[$n]['Quantity'] = $item->qty;
+            $lines[$n]['Quantity'] = $item->qty_supplied;
             $lines[$n]['Stdprice'] = $item->product->price;
             $lines[$n]['Invprice'] = $item->price;
             $lines[$n]['Co./Last Name'] = $order->client->name;
@@ -58,7 +58,7 @@ trait CanExportOrder
         }
 
         $lines = collect($lines);
-        // dd($lines);
+        dd($lines);
         foreach ($lines as $l) {
             $o .= $this->format_line($l);
         }

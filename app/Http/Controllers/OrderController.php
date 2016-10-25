@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Legacy\Order\Item;
 use App\Legacy\Order\Order;
+use App\Legacy\Product\Product;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
@@ -173,9 +174,15 @@ class OrderController extends Controller
         $addItems = collect([]);
         foreach ($request->input('items') as $itemId => $i) {
             $item = $this->orderService->getItem();
+
             $item->qty = $i['qty'];
             $item->qty_supplied = $i['qty_supplied'];
-            $item->product_code = $i['product_code'];
+            $item->product_code = $this->getRealProductCode($i['product_code']);
+
+            // If product code is not valid then skip
+            if (!$item->product_code) {
+                //continue;
+            }
             $item->price = trim($i['price']);
             $item->order_id = 'T0_' . $orderId;
             if ($itemId > 0) {
@@ -193,6 +200,23 @@ class OrderController extends Controller
             }
         }
         return ['update' => $updateItems, 'delete' => $deleteItems, 'new' => $addItems];
+    }
+
+    protected function getRealProductCode($productCode)
+    {
+        $product = $this->getProductByProductCode($productCode);
+        if ($product) {
+            return $product->product_code;
+        }
+        return false;
+    }
+
+    protected function getProductByProductCode($productCode)
+    {
+        return Product::where(function ($q) use ($productCode) {
+            $q->whereRaw(' LOWER(`product_code`) = ?', [strtolower($productCode)]);
+        })->first();
+
     }
 
 }
