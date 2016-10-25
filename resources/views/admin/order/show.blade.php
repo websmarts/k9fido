@@ -66,7 +66,7 @@
                         <th>Product code</th>
                         <th>Color</th>
                         <th>Size</th>
-                        <th>Qty</th>
+                        <th>P/O qty</th>
                         <th>UnitPrice</th>
                         <th>Ext price</th>
                         <th>Markup</th>
