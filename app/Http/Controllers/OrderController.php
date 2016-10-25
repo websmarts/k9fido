@@ -43,7 +43,8 @@ class OrderController extends Controller
     public function show($id)
     {
         // Get the order and order items
-
+        // $data = $this->orderService->fetchOrderDisplayData($id);
+        // dd($data);
         return view('admin.order.show', $this->orderService->fetchOrderDisplayData($id));
     }
 
@@ -58,6 +59,7 @@ class OrderController extends Controller
         $order = $this->orderService->getOrderById($id);
         $clientprices = $this->orderService->clientPrices($order->client->client_id);
         $totalItemsCost = $this->orderService->totalItemsCost($order);
+
         return view('admin.order.edit', compact('order', 'clientprices', 'totalItemsCost'));
     }
 
@@ -118,21 +120,23 @@ class OrderController extends Controller
     public function pickorderGet($id)
     {
         $order = Order::with('items.product')->find($id);
-        $data = [];
+        $result['data'] = [];
         foreach ($order->items as $i) {
             if ($i->qty_supplied >= $i->qty) {
                 continue;
             }
             $x = new \stdClass();
-            $x->barcode = $i->product->barcode;
+            $x->barcode = (float) $i->product->barcode;
             $x->product_code = $i->product_code;
+            $x->description = $i->product->description;
             $x->id = $i->id;
             $x->qty = $i->qty;
             $x->qty_supplied = $i->qty_supplied;
 
-            $data[] = $x;
+            $result['data'][] = $x;
         }
-        return $data;
+        $result['status'] = 'success';
+        return $result;
     }
     public function pickorderStore(Request $request)
     {
@@ -141,15 +145,18 @@ class OrderController extends Controller
         $status = $request->input('status');
 
         //return $items;
+
         if (is_array($items) && count($items) > 0) {
             foreach ($items as $item) {
-                $this->orderService->updateItemQuantitySupplied($item['id'], $item['qty_supplied']);
+                if (isset($item['picked_qty'])) {
+                    $this->orderService->updateItemQuantitySupplied($item['id'], $item['picked_qty']);
+                }
             }
         }
 
         $this->orderService->updateOrderStatus($orderId, $status);
 
-        return ['result' => 200, 'location' => route('home')];
+        return ['status' => 'success', 'location' => route('home')];
     }
 
     /**

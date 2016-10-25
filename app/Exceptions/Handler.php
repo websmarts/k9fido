@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -58,6 +60,11 @@ class Handler extends ExceptionHandler
 
         //     // return back to referer
         // }
+        if ($e instanceof TokenMismatchException) {
+            if ($request->ajax()) {
+                return response()->json(['error', ' Token Mismatch Exception']);
+            }
+        }
 
         return parent::render($request, $e);
     }

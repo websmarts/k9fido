@@ -61,7 +61,7 @@ class Order extends Model
     public function client()
     {
         return $this->belongsTo('App\Legacy\Client\Client', 'client_id', 'client_id')
-            ->select(['client_id', 'name', 'contacts', 'parent', 'address1', 'address2', 'address3', 'city', 'postcode', 'phone']);
+            ->select(['client_id', 'name', 'contacts', 'parent', 'address1', 'address2', 'address3', 'city', 'postcode', 'phone', 'custom_freight', 'freight_notes']);
     }
 
     public function items()

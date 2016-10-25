@@ -64,6 +64,7 @@ class OrderService
         $order = $this->getOrderById($orderId);
         $orderItems = $this->getOrderItemsWithProduct($orderId);
         $clientprices = $this->clientPrices($order->client->client_id);
+        $freight = $this->getFreightInformation($order->client);
 
         $totalItemsCost = 0;
         $totalItemsPrice = 0;
@@ -91,6 +92,7 @@ class OrderService
                 $markup = ($item->price - $item->product->cost) / $item->price;
             }
             $i->qty = $item->qty;
+            $i->qty_supplied = $item->qty_supplied;
             $i->product_code = $item->product_code;
             $i->price = $item->price;
             $i->product = $item->product;
@@ -103,7 +105,22 @@ class OrderService
             $totalItemsCost += $item->qty * $item->product->cost;
             $totalItemsPrice += $i->ext_price;
         }
-        return (compact('order', 'items', 'totalItemsCost', 'totalItemsPrice'));
+        return (compact('order', 'freight', 'items', 'totalItemsCost', 'totalItemsPrice'));
+    }
+
+    protected function getFreightInformation($client)
+    {
+        $result = new \stdClass();
+        if ($client->custom_freight > 0) {
+            $result->code = 'Custom freight';
+            $result->notes = $client->freight_notes;
+            return $result;
+        }
+
+        $freight = FreightService::create()->getFreightCode($client->postcode);
+        $result->code = $freight[1] == 'local' ? 'Local' : $freight[0];
+        return $result;
+
     }
 
     protected function itemDisplayData($orderId)
@@ -321,6 +338,7 @@ class OrderService
     {
         $item = Item::find($itemId);
         $item->qty_supplied = $qty;
+        $item->save();
     }
 
     public function getOrderItemsWithProduct($orderId)

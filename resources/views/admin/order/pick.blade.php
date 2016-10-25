@@ -34,6 +34,8 @@ var items=[];
 var orderId = {{ $order->id }};
 var csrf_token = $("meta[name=csrf-token]").attr('content');
 var url = "{{ url('ajax/pickorder/'.$order->id) }}";
+var formOpenedTime = new Date().getTime();
+
 
   $( function() {
 
@@ -80,6 +82,7 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
       var item = getPickItem(inputId);
 
       //console.log(item);
+      checkFormTime();
 
       if (inputName =='barcode'){
         item.picked_barcode = parseInt(input.value);
@@ -109,6 +112,18 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
       checkItems();
     }
 
+    /**
+     * checks how long the form has been open because CSRF Token expires
+     * after a while and form does not handle this intelligently yet
+     */
+    function checkFormTime(){
+      var nowTime = new Date().getTime();
+      if((nowTime - formOpenedTime) > 1000 * 3600 * 1 ){
+        alert('Pick form has timed out, order will be parked');
+        parkOrder();
+      }
+    }
+
     function checkItems(){
         $.each(items, function(idx,item){
             //console.log('chk item',item);
@@ -121,10 +136,12 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
             }
             if((item.picked_barcode == item.barcode) && (item.picked_qty == item.qty )){
               $('#header-' + item.id).removeClass('item-error');
+
             }
             //$('#itemqty-'+item.id).text((item.qty - item.qty_supplied) +' / '+item.qty);
         });
     }
+
     function hideBarcodeIcon(id){
       $('#header-' + id).find('.barcode-icon').hide();
     }
@@ -137,17 +154,18 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
       $('#accordion').html('');
       $.each(items, function(idx,item){
           // Add accordion row
-          var row = '<h3 class="item" id="header-'+item.id+'">'+item.product_code +'<i class="barcode-icon pull-right fa fa-barcode fa-1x" aria-hidden="true"></i><i class="qty-icon pull-right fa fa-cubes fa-1x" aria-hidden="true"></i></h3>';
+          var row = '<h3 class="item" id="header-'+item.id+'">'+item.product_code +'<i class="barcode-icon pull-right fa fa-barcode fa-1x" aria-hidden="true"></i><i class="qty-icon pull-right fa fa-cubes fa-1x" aria-hidden="true"></i><br><i>'+ item.description.replace('<br>',' ') + '</i></h3>';
           row += '<div id="item-' + item.id + '">';
           if(0 != parseInt(item.barcode)){
             row += '<div class="col-lg-5">Barcode</div>';
-            row += '<div class="col-lg-7"><input type="number" value="' +parseInt(item.barcode)+ '0" class="barcode_input" name="barcode['+item.id+']"/></div>';
+            row += '<div class="col-lg-7"><input type="number" value="" class="barcode_input" name="barcode['+item.id+']"/></div>';
           } else {
             item.picked_barcode = item.barcode
           }
 
           row += '<div class="col-lg-5">Pick (<span id="itemqty-'+item.id+'">'+ (item.qty - item.qty_supplied) +' / '+item.qty+'</span> )</div>';
-          row += '<div class="col-lg-2"><input type="number" value="'+ item.qty_supplied +'" class="supplied_input" name="supplied['+ item.id+']"/></div>';
+          var qty = item.qty_supplied || '';
+          row += '<div class="col-lg-2"><input type="number" value="'+ qty +'" class="supplied_input" name="supplied['+ item.id+']"/></div>';
           row += '</div>';
           $('#accordion').append(row);
 
@@ -168,10 +186,17 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
         method: "GET",
         url: url,
       })
-        .done(function( data ) {
-          //console.log(data);
-          items = data;
-          renderForm();
+        .done(function( result ) {
+          // console.log(result);
+          if(result.status == 'success'){
+            items = result.data;
+            renderForm();
+          } else {
+            alert('OOPS Error loading items from server');
+          }
+
+        }).fail(function(){
+          alert('Opps, Server error encounter whilst trying to load item list');
         });
     }
 
@@ -191,8 +216,18 @@ var url = "{{ url('ajax/pickorder/'.$order->id) }}";
       })
         .done(function( result ) {
           console.log(result);
+
+          // If soft error then Alert user
+          if(result.status == 'success'){
+             window.location = result.location;
+          }
+
+          if(result.status == 'error'){
+            alert('Error encountered');
+          }
+
           // redirect to location returned
-          window.location = result.location;
+         //
 
         });
     }

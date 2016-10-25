@@ -44,20 +44,14 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-3">Order date</div>
-                    <p class="col-xs-9">{{ date('g:h a, l jS F Y',strtotime($order->modified)) }}
-                    @if($order->salesRep != null)
-                     &nbsp;( Refer: {{ $order->salesRep->firstname .', '.$order->salesRep->lastname }} )
-                    @endif
-
-
-                     </p>
+                    <p class="col-xs-9">{{ date('g:h a, l jS F Y',strtotime($order->modified)) }}  &nbsp;( Refer: {{ $order->salesRep->firstname .', '.$order->salesRep->lastname }} )</p>
                 </div>
 
                 <hr class="hidden-print" style="clear:both">
 
 
                 <div>Ordered Items</div>
-{{-- dump($items) --}}
+{{-- dump($order) --}}
 
                 <table class="table table-striped table-condensed order_table">
                 <thead>
@@ -86,7 +80,7 @@ $n = 1;
                     <td>{{ $i->product_code }}</td>
                     <td>{{ $i->product->color_name }}</td>
                     <td>{{ $i->product->size }}</td>
-                    <td>{{ $i->qty_supplied }}/{{ $i->qty }}</td>
+                    <td>{{ $i->qty }}</td>
                     <td>{{ number_format($i->price/100,2) }}
 
                     </td>
