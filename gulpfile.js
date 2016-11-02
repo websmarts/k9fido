@@ -1,5 +1,6 @@
-var elixir = require('laravel-elixir');
-require('laravel-elixir-vueify');
+const elixir = require('laravel-elixir');
+
+require('laravel-elixir-vue-2');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,17 +12,12 @@ require('laravel-elixir-vueify');
  | file for our application, as well as publishing vendor resources.
  |
  */
-
-elixir(function(mix) {
+elixir(mix => {
     mix.sass('app.scss')
-
-    .browserify('main.js')
-
-	.scripts(['app.js','SimpleAjaxUploader.js'])
-
-	.copy('resources/assets/js/imageuploader.js', 'public/js/imageuploader.js')
-
-    .version(['css/app.css','js/all.js','js/main.js']);
-
-    
+		.webpack('main.js')
+		.webpack('orderpicker.js')
+		.scripts(['app.js','SimpleAjaxUploader.js'])
+		.copy('resources/assets/js/imageuploader.js', 'public/js/imageuploader.js')
+		.version(['css/app.css','js/all.js','js/main.js','js/orderpicker.js']);
 });
+

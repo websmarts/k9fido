@@ -145,7 +145,7 @@ class OrderController extends Controller
         $orderId = $request->input('order_id');
         $status = $request->input('status');
 
-        //return $items;
+        // return $items;
 
         if (is_array($items) && count($items) > 0) {
             foreach ($items as $item) {
@@ -172,6 +172,7 @@ class OrderController extends Controller
         $updateItems = collect([]);
         $deleteItems = collect([]);
         $addItems = collect([]);
+
         foreach ($request->input('items') as $itemId => $i) {
             $item = $this->orderService->getItem();
 
