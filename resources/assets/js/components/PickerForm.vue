@@ -4,7 +4,7 @@
         <h2>Pick Order: {{orderId}}</h2>
         <template v-for="item in items">
 
-            <item :item="item"></item>
+            <item :item="item" v-on:picked="focusNextItem"></item>
             
         </template>
         <div class="buttons">
@@ -60,7 +60,18 @@
                     // error callback
                     alert('server error encountered');
                 });
+            },
+            focusNextItem() {
+                // Find the next item that has not been picked and give it focus.
+                _.forEach(this.items, function(item){
+                    if(item.qty != (item.qty_supplied + item.picked_qty)){
+                        $('#item_'+item.id).focus();
+                        return false;
+                    }
+                });
             }
+
+
               
 
         },
@@ -100,10 +111,10 @@
     color: #555;
     font-size: 80%;
 }
-.pickerform div.incomplete {
+.pickerform div.item {
     border-left: 8px solid orange;
 }
-.pickerform div.complete {
+.pickerform div.item.complete {
     border-left: 8px solid #999;
 }
 .pickerform input.input {

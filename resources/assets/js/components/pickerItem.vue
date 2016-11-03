@@ -2,7 +2,7 @@
   <div class="item" v-bind:class="picked"> 
       <h3>{{ item.product_code }}</h3>
       <h4>{{ item.description }}</h4>
-      <div>Qty:({{ item.qty - item.qty_supplied }}:{{ item.qty }}) <input v-model="item.input" class="input" v-on:keyup="itemInput" />&nbsp;<span>barcode: {{ item.barcode }}</span></div>       
+      <div>Qty:({{ item.qty - item.qty_supplied }}:{{ item.qty }}) <input v-bind:id="itemId(item.id)" v-model="item.input" class="input" v-on:keyup.prevent="itemInput" />&nbsp;<span>barcode: {{ item.barcode }}</span></div>       
   </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   props: ['item'],
   methods: {
     itemInput: function() {
-        
+        // console.log(this)
         // Check if input concontains the barcode string
         let inputString = String(this.item.input);
         let barcodeString = String(this.item.barcode);
@@ -53,31 +53,40 @@ export default {
             this.item.picked_qty = '';
             this.item.input ='';
         }
-        
+
+
+        if (this.isPicked()){
+          this.$emit('picked');
+        }
         
     },
     
     quantityCheck() {
-        return {
-            incorrect: (this.item.qty - this.item.qty_supplied) != this.item.picked_qty
-        }
+        return (this.item.qty - this.item.qty_supplied) == this.item.picked_qty
+        
     },
     barcodeCheck() {
-        return {
-            incorrect: this.item.barcode != this.item.scanned_barcode
-        }
+         return this.item.barcode == this.item.scanned_barcode
+      
     },
+    itemId(id) {
+      return "item_" + id;
+    },
+    isPicked() {
+        return this.quantityCheck() && this.barcodeCheck()
+    },
+    
+    
 
   },
   computed: {
     picked() {
-        let qtyCheck = this.quantityCheck()
-        let barcodeCheck = this.barcodeCheck()
-        return {
-            incomplete: this.quantityCheck().incorrect || barcodeCheck.incorrect,
-            complete: ! (qtyCheck.incorrect || barcodeCheck.incorrect)
+      let picked = this.isPicked();
+      return {
+            complete: picked  
         }
-    },
+    }
+    
   }
 }
 
