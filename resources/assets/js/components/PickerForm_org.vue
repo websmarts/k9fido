@@ -3,9 +3,12 @@
     <fieldset>
         <h2>Pick Order: {{orderId}}</h2>
         <template v-for="item in items">
-
-            <item :item="item"></item>
+            <div class="item" v-bind:class="picked(item)">
             
+            <h3>{{ item.product_code }}</h3>
+            <h4>{{ item.description }}</h4>
+            <div>Qty:({{ item.qty - item.qty_supplied }}:{{ item.qty }}) <input v-model="item.input" class="input" v-on:keyup="itemInput(item)" />&nbsp;<span>barcode: {{ item.barcode }}</span></div>       
+            </div>
         </template>
         <div class="buttons">
         <a class="btn btn-success pull-right" v-on:click="parkOrder">Park Order</a>
@@ -24,11 +27,54 @@
                 items: []
             };
         },
-        components: {
-            item: require('./pickerItem.vue')
-        },
         methods: {
+            itemInput: function(item){
+                
+                let value = parseInt(item.input);
 
+                if(item.barcode === value) {
+                    item.scanned_barcode = item.barcode
+
+                    if((item.qty - item.qty_supplied) > item.picked_qty) {
+                        item.picked_qty++
+                    }
+                } else {
+                    if(item.barcode == item.scanned_barcode){
+                        
+                        if (value > 0 ){
+                            item.picked_qty = value
+                        }
+                    }
+                    
+                }
+
+                // check if input looks like a qty and not a barcode value
+                if(value > 0){
+                    item.input = item.picked_qty > 0 ? item.picked_qty : '';
+                } else {
+                    item.picked_qty = '';
+                }
+                
+                
+            },
+            picked(item) {
+                let qtyCheck = this.quantityCheck(item)
+                let barcodeCheck = this.barcodeCheck(item)
+                return {
+                    incomplete: qtyCheck.incorrect || barcodeCheck.incorrect,
+                    complete: ! (qtyCheck.incorrect || barcodeCheck.incorrect)
+                }
+            },
+            quantityCheck(item) {
+                return {
+                    incorrect: (item.qty - item.qty_supplied) != item.picked_qty
+                }
+            },
+            barcodeCheck(item) {
+                return {
+                    incorrect: item.barcode != item.scanned_barcode
+                }
+            },
             parkOrder() {
                 this.saveItems('parked');
             },
@@ -64,7 +110,11 @@
               
 
         },
-        
+        computed: {
+            
+            
+        },
+
         created() {
           this.$http.get(pageVar.url).then( (response) => {
             // Success callback
