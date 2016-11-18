@@ -69,7 +69,11 @@
                         return false;
                     }
                 });
+            },
+            handleResize() {
+                alert('window resized');
             }
+
 
 
               
@@ -88,7 +92,6 @@
                 this.items.push(value);
             });
 
-
             
 
           }, (response) => {
@@ -96,6 +99,9 @@
           }) 
         },
         mounted() {
+            
+        },
+        destroy() {
             
         }
     }
@@ -120,6 +126,7 @@
 }
 .pickerform input.input {
     width: 9em;
+    font-size: 16px;
 }
 .pickerform h2 {
     text-align: center;
