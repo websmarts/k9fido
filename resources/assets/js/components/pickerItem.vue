@@ -1,7 +1,7 @@
 <template>
   <div class="item" v-bind:class="picked"> 
       <h3>{{ item.product_code }}<span class="pull-right" v-show="!barcodeCheck()">Barcode: {{ item.barcode }}</span></h3>
-      <h4>{{ item.description }}</h4>
+      <h4 v-html="item.description"></h4>
       <div>Qty:({{ item.qty - item.qty_supplied }}:{{ item.qty }}) <input type="number" v-bind:id="itemId(item.id)" v-model="item.input" class="input" v-on:keyup.prevent="itemInput" />
      
       </div>       
@@ -69,7 +69,7 @@ export default {
         
     },
     barcodeCheck() {
-         return this.item.barcode == this.item.scanned_barcode
+         return this.item.barcode === this.item.scanned_barcode
       
     },
     itemId(id) {
