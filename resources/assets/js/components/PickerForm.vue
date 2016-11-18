@@ -84,6 +84,7 @@
                 value.status = "incomplete";
                 value.input ='';
                 value.picked_qty ='';
+                value.error = false;
                 this.items.push(value);
             });
 

@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="max-width: 500px;">
+<div class="container" style="max-width: 400px;">
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
             <div id="app">
-
               <picker-form order-id="{{ $order->id }}"></picker-form>
             </div>
         </div>
