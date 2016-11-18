@@ -1,7 +1,7 @@
 <template>
     <form class="pickerform">
     <fieldset>
-        <h2>Pick Order: {{orderId}}</h2>
+        <h2>Picking order# {{orderId}}</h2>
         <template v-for="item in items">
 
             <item :item="item" v-on:picked="focusNextItem"></item>
@@ -130,7 +130,9 @@
 }
 .pickerform h2 {
     text-align: center;
-    color: #666;
+
+    color: #28e;
+    font-size:120%;
     margin-top:5px;
 }
 .pickerform h3 {
