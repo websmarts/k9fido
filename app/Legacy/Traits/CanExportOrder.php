@@ -58,7 +58,7 @@ trait CanExportOrder
         }
 
         $lines = collect($lines);
-        dd($lines);
+        //dd($lines);
         foreach ($lines as $l) {
             $o .= $this->format_line($l);
         }
