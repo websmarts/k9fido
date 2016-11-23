@@ -76,6 +76,8 @@ class OrderController extends Controller
 
         $items = $this->sortInputItems($request, $orderId);
 
+        // dd($items);
+
         $this->orderService->updateOrderItems($items['update']);
         $this->orderService->deleteOrderItems($items['delete']);
         $this->orderService->addOrderItems($items['new']);
@@ -194,8 +196,8 @@ class OrderController extends Controller
                 } else {
                     $updateItems->push($item);
                 }
-            } elseif ($itemId < 0) {
-                // it is a new item being added to order
+            } elseif ($itemId < 0 && $item->qty > 0 && $this->getRealProductCode($item->product_code)) {
+                // it is a new item being added to order, id = -1 for new item
                 unset($item->id); //just to be sure we have no id set
                 $addItems->push($item);
             }

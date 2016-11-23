@@ -183,7 +183,6 @@ class OrderService
     public function deleteOrderItem($item)
     {
         $orderItem = $this->getOrderItem($item);
-
         $orderItem->product->qty_instock += ($orderItem->qty);
         $orderItem->product->save();
         $orderItem->delete();

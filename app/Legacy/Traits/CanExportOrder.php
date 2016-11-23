@@ -113,7 +113,12 @@ trait CanExportOrder
         $o .= ','; // Description
         $o .= '$' . number_format($l['Stdprice'] / 100, 2, '.', '') . ','; // Price in dollars and cents MUST have $ sign eg $23.45 - ex gst
 
-        $extprice = 1.1 * ($l['Stdprice'] * $l['Quantity']) / $l['Quantity']; // cents
+        // handle qty = zero
+        $extprice = 0;
+        if ($l['Quantity'] > 0) {
+            $extprice = 1.1 * ($l['Stdprice'] * $l['Quantity']) / $l['Quantity']; // cents
+        }
+
         $priceplusgst = number_format($extprice / 100, 2, '.', '');
         $o .= '$' . $priceplusgst . ','; // Price inc gst
         $o .= ','; // Discount
