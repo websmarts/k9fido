@@ -102,7 +102,7 @@ class ProductController extends Controller
         // Get the total of items ordered on all un-picked orders
         // get list of all any system_order_items for this product where
         // the status of the order status is not 'picked'
-        $sql = 'SELECT SUM(soi.qty) as qty_ordered FROM system_orders so
+        $sql = 'SELECT SUM(soi.qty - soi.qty_supplied) as qty_ordered FROM system_orders so
                 LEFT JOIN system_order_items soi ON so.order_id = soi.order_id
 
                 WHERE so.`status` != "picked"
