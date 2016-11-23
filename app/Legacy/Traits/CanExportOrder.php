@@ -43,7 +43,7 @@ trait CanExportOrder
             $lines[$n]['Sales Person First Name'] = @$order->salesrep->firstname;
             $lines[$n]['Sales Person Last Name'] = @$order->salesrep->lastname;
             $lines[$n]['Item Number'] = $item->product->product_code;
-            $lines[$n]['Quantity'] = $item->qty_supplied;
+            $lines[$n]['Quantity'] = $item->qty;
             $lines[$n]['Stdprice'] = $item->product->price;
             $lines[$n]['Invprice'] = $item->price;
             $lines[$n]['Co./Last Name'] = $order->client->name;
