@@ -95,4 +95,15 @@ class Client extends Model
     {
         return $this->hasMany('App\Legacy\Product\ClientPrice', 'client_id', 'client_id');
     }
+
+    public function myrep()
+    {
+        $res = \DB::connection('k9homes')->select('select * from user_clients where client_id=?', [$this->client_id]);
+
+        $user = \DB::connection('k9homes')->select('select * from users where id=?', [$res[0]->salesrep_id]);
+
+        return $user[0];
+
+    }
+
 }

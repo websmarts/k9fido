@@ -31,7 +31,9 @@ trait CanExportOrder
         $o = '';
         $lines = [];
         $n = 0;
-        //dd($order->items);
+
+        $salesrep = $order->client->myrep();
+        // dd($salesrep->firstname);
         foreach ($order->items as $item) {
             // dump($this->client->name);
             // dump($this->client->parentClient);
@@ -40,8 +42,10 @@ trait CanExportOrder
 
             $lines[$n]['order_id'] = $order->order_id;
             $lines[$n]['order_date'] = $order->modified->format('d-m-Y');
-            $lines[$n]['Sales Person First Name'] = @$order->salesrep->firstname;
-            $lines[$n]['Sales Person Last Name'] = @$order->salesrep->lastname;
+
+            // Update to get Client->salesrep info not order->salesrep
+            $lines[$n]['Sales Person First Name'] = @$salesrep->firstname;
+            $lines[$n]['Sales Person Last Name'] = @$salesrep->lastname;
             $lines[$n]['Item Number'] = $item->product->product_code;
             $lines[$n]['Quantity'] = $item->qty;
             $lines[$n]['Stdprice'] = $item->product->price;

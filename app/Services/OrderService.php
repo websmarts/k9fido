@@ -119,7 +119,7 @@ class OrderService
         }
 
         $freight = FreightService::create()->getFreightCode($client->postcode);
-        $result->code = $freight[1] == 'local' ? 'Local' : $freight[0];
+        $result->code = $freight[1] == 'local' ? $freight[0] . ' Local' : $freight[0];
         return $result;
 
     }

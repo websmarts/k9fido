@@ -18,7 +18,7 @@
 
 
                 <div class="panel-body">
-
+{{-- dump($freight) --}}
                 <div class="row hidden-print">
                     <div class="col-xs-3">Customer ID</div>
                     <p class="col-xs-9">{{ $order->client->client_id }}</p>
