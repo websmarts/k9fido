@@ -94,6 +94,7 @@ class OrderService
             $i->qty = $item->qty;
             $i->qty_supplied = $item->qty_supplied;
             $i->product_code = $item->product_code;
+            $i->description = $item->description;
             $i->price = $item->price;
             $i->product = $item->product;
             $i->pricing_strategy = $strategy;

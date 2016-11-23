@@ -24,6 +24,9 @@ h3.ui-accordion-header-collapsed.item-error {
 }
 
 // Order table padding so its printable on one page
+table.order_table {
+	font-size: 9pt;
+}
 table.order_table tr td {
 	padding: 0;
 }

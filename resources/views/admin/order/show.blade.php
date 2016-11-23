@@ -83,7 +83,7 @@ $n = 1;
                 <?php $customDiscount = '';?>
                 <tr>
                     <td>{{ $n++ }}</td>
-                    <td>{{ $i->product_code }}</td>
+                    <td>{{ $i->product_code }} - {!! $i->product->description !!}</td>
                     <td>{{ $i->product->color_name }}</td>
                     <td>{{ $i->product->size }}</td>
                     <td>{{ $i->qty_supplied }}/{{ $i->qty }}</td>
