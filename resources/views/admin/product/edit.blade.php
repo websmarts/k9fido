@@ -124,7 +124,7 @@
                     <div class="form-group{{ $errors->has('qty_ordered') ? ' has-error' : '' }}">
                         {!! Form::label('qty_ordered', 'Qty ordered', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('qty_ordered', null,  array('class' => 'form-control')) !!}
+                        {!! Form::text('qty_ordered', null,  array('class' => 'form-control', 'disabled'=>'disabled')) !!}
 
                         @if ($errors->has('qty_ordered'))
                             <span class="help-block">

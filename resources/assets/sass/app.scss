@@ -32,7 +32,17 @@ table.order_table tr td {
 }
 
 
+
 @import "components/alert";
 
 @import "components/sortable";
+
+@media print {
+	.container {
+		width:100%;
+	}
+	.panel-default {
+		border: none;
+	}
+}
 

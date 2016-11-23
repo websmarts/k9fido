@@ -56,7 +56,20 @@
                 <hr class="hidden-print" style="clear:both">
 
 
-                <div>Ordered Items</div>
+
+
+                @if($order->exported !='yes')
+                <a class="hidden-print" href="{{ route('order.export', ['id' => $order->id] ) }}"><button class="btn btn-success pull-right">Export Order</button></a>
+                @endif
+
+                <a class="hidden-print" href="{{ route('order.delete', ['id' => $order->id] ) }}"><button class="btn btn-warning pull-left">Delete Order</button></a>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+     <div>Ordered Items</div>
 {{-- dump($items) --}}
 
                 <table class="table table-striped table-condensed order_table">
@@ -108,19 +121,7 @@ $n = 1;
                 </tbody>
                 </table>
 
-                <img class="freight-docket visible-print" src="{{ asset('images/freight_docket.jpg') }}" />
-
-                @if($order->exported !='yes')
-                <a class="hidden-print" href="{{ route('order.export', ['id' => $order->id] ) }}"><button class="btn btn-success pull-right">Export Order</button></a>
-                @endif
-
-                <a class="hidden-print" href="{{ route('order.delete', ['id' => $order->id] ) }}"><button class="btn btn-warning pull-left">Delete Order</button></a>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
+                <img class="freight-docket visible-print" style="page-break-before: always" src="{{ asset('images/freight_docket.jpg') }}" />
 </div>
 
 @endsection

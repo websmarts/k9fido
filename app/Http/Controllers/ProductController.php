@@ -99,6 +99,19 @@ class ProductController extends Controller
 
         $productTypes = $this->getProductTypes();
 
+        // Get the total of items ordered on all un-picked orders
+        // get list of all any system_order_items for this product where
+        // the status of the order status is not 'picked'
+        $sql = 'SELECT SUM(soi.qty) as qty_ordered FROM system_orders so
+                LEFT JOIN system_order_items soi ON so.order_id = soi.order_id
+
+                WHERE so.`status` != "picked"
+                AND soi.product_code = ?';
+        $qty = \DB::connection('k9homes')->select($sql, [$product->product_code]);
+
+        $product->qty_ordered = $qty[0]->qty_ordered;
+        // dd($product);
+
         return view('admin.product.edit', compact('product', 'productTypes'));
     }
 
@@ -124,7 +137,12 @@ class ProductController extends Controller
 
         $this->validate($request, ['description' => 'required']);
 
-        $product->update($request->all());
+        $data = $request->all();
+        //dd($data);
+        // Reset the displayed value of qty_ordered to zero
+        $data['qty_ordered'] = 0;
+
+        $product->update($data);
 
         flash('Product updated ...', 'success');
 

@@ -43,4 +43,10 @@ table.order_table tr td {
   list-style: none;
   border: 1px dashed #999; }
 
+@media print {
+  .container {
+    width: 100%; }
+  .panel-default {
+    border: none; } }
+
 /*# sourceMappingURL=app.css.map */
