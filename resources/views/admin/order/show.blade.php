@@ -92,6 +92,9 @@
                 <tbody>
 <?php
 $n = 1;
+usort($items, function ($a, $b) {
+    return strcmp($b->product_code, $a->product_code);
+});
 
 ?>
 

@@ -456,6 +456,40 @@
             </div>
         </div>
     </div>
+
+    @if($product->bom->count())
+     <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Bill of Material: {{ dump($product->bom)  }}</div>
+
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                        </tr>
+                        </head>
+                        <tbody>
+                        @foreach($product->bom as $item)
+                        <tr>
+                        <td>{{ $item->item_product_code }}</td>
+                        <td>{{ $item->item_qty }}</td>
+                        <td>{{ is_null($item->item_price) ? '-' :  $item->item_price }}</td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    <a class="btn btn-primary pull-right" href="{{ route('bom.edit',$item->parent_product_code) }}">Edit BoM</a>
+                </div>
+            </div>
+        </div>
+        @endif;
+    </div>
+
+
 </div>
 
 @endsection

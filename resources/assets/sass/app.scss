@@ -24,8 +24,8 @@ h3.ui-accordion-header-collapsed.item-error {
 }
 
 // Order table padding so its printable on one page
-table.order_table {
-	font-size: 12px;
+table.order_table.table-condensed {
+	font-size: 11px;
 	padding: 0;
 
 	tr th {
@@ -40,7 +40,7 @@ table.order_table {
 		width: 80px;
 	}
 	.c4 {
-		width: 120px;
+		width: 100px;
 	}
 	.c5 {
 		width: 40px;
@@ -53,6 +53,7 @@ table.order_table {
 	}
 	.c8, .c9 {
 		text-align: right;
+		width:40px;
 	}
 
 	td.c6 {
@@ -60,6 +61,10 @@ table.order_table {
 	}
 	th.c6 {
 		text-align: left;
+	}
+
+	tr td, tr th {
+		padding: 0;
 	}
 
 }

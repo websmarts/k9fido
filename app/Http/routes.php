@@ -39,6 +39,9 @@ Route::post('filter/{name}', 'FilterController@index');
 // PRODUCT ROUTES
 Route::resource('product', 'ProductController');
 
+// BOM ROUTES
+Route::resource('bom', 'BomController');
+
 // PRODUCT TYPE , TYPE_OPTION , TYPE IMAGES
 Route::resource('type', 'ProductTypeController');
 Route::resource('typeoption', 'ProductTypeOptionController');
