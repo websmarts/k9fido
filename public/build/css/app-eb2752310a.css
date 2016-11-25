@@ -41,7 +41,7 @@ table.order_table.table-condensed {
   table.order_table.table-condensed th.c6 {
     text-align: left; }
   table.order_table.table-condensed tr td, table.order_table.table-condensed tr th {
-    padding: 0; }
+    padding: 0 5px 0 0; }
 
 .Alert {
   padding: 5px;
