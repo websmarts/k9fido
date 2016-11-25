@@ -25,11 +25,47 @@ h3.ui-accordion-header-collapsed.item-error {
 
 // Order table padding so its printable on one page
 table.order_table {
-	font-size: 9pt;
-}
-table.order_table tr td {
+	font-size: 12px;
 	padding: 0;
+
+	tr th {
+		text-align: left;
+	}
+
+	.c1 {
+		width: 20px;
+	}
+
+	.c3 {
+		width: 80px;
+	}
+	.c4 {
+		width: 120px;
+	}
+	.c5 {
+		width: 40px;
+	}
+	.c6 {
+		width: 70px;
+	}
+	.c7,.c8 {
+		width: 70px;
+	}
+	.c8, .c9 {
+		text-align: right;
+	}
+
+	td.c6 {
+		text-align: center;
+	}
+	th.c6 {
+		text-align: left;
+	}
+
 }
+
+
+
 
 
 

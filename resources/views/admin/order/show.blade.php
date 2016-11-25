@@ -20,30 +20,33 @@
                 <div class="panel-body">
 {{-- dump($freight) --}}
                 <div class="row hidden-print">
-                    <div class="col-xs-3">Customer ID</div>
+                    <div class="col-xs-2">Customer ID</div>
                     <p class="col-xs-9">{{ $order->client->client_id }}</p>
                 </div>
+
+                {{-- dump($order->client) --}}
                 <div class="row">
-                    <div class="col-xs-3">Freight</div>
-                    <p class="col-xs-9">{{ $freight->code }}
+
+                    <div class="col-xs-2">Customer</div>
+                    <p class="col-xs-9"><strong>{{ $order->client->name }}</strong><br />
+                    {{ $order->client->address1 }}, {{ $order->client->city }}, {{ $order->client->postcode }} Ph {{ $order->client->phone }}</p>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">Customer parent</div>
+                    <p class="col-xs-9">{{ isSet($order->client->parentGroup) ? $order->client->parentGroup->name : '-' }}</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-2">Freight</div>
+                    <p class="col-xs-9">{{ empty($freight->code) ? ' - ' : $freight->code }}
                     @if(isSet($freight->notes))
                     <br /> {{ $freight->notes }}
                     @endif
                     </p>
                 </div>
-                {{-- dump($order->client) --}}
-                <div class="row">
 
-                    <div class="col-xs-3">Customer</div>
-                    <p class="col-xs-9">{{ $order->client->name }}<br />
-                    {{ $order->client->address1 }}, {{ $order->client->city }}, {{ $order->client->postcode }} Ph {{ $order->client->phone }}</p>
-                </div>
                 <div class="row">
-                    <div class="col-xs-3">Customer parent</div>
-                    <p class="col-xs-9">{{ isSet($order->client->parentGroup) ? $order->client->parentGroup->name : '-' }}</p>
-                </div>
-                <div class="row">
-                    <div class="col-xs-3">Order date</div>
+                    <div class="col-xs-2">Order date</div>
                     <p class="col-xs-9">{{ date('g:h a, l jS F Y',strtotime($order->modified)) }}
                     @if($order->salesRep != null)
                      &nbsp;( Refer: {{ $order->salesRep->firstname .', '.$order->salesRep->lastname }} )
@@ -75,15 +78,15 @@
                 <table class="table table-striped table-condensed order_table">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Product code</th>
-                        <th>Color</th>
-                        <th>Size</th>
-                        <th>P/O qty</th>
-                        <th>UnitPrice</th>
-                        <th>Ext price</th>
-                        <th>Markup</th>
-                        <th>Custom %</th>
+                        <th class="c1">#</th>
+                        <th class="c2">Product code</th>
+                        <th class="c3">Color</th>
+                        <th class="c4">Size</th>
+                        <th class="c5">P/O qty</th>
+                        <th class="c6">Unit Price</th>
+                        <th class="c7">Ext price</th>
+                        <th class="c8" >M%</th>
+                        <th class="c9">C%</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,19 +98,19 @@ $n = 1;
                 @foreach($items as $i)
                 <?php $customDiscount = '';?>
                 <tr>
-                    <td>{{ $n++ }}</td>
-                    <td>{{ $i->product_code }} - {!! $i->product->description !!}</td>
-                    <td>{{ $i->product->color_name }}</td>
-                    <td>{{ $i->product->size }}</td>
-                    <td>{{ $i->qty_supplied }}/{{ $i->qty }}</td>
-                    <td>{{ number_format($i->price/100,2) }}
+                    <td class="c1">{{ $n++ }}</td>
+                    <td class="c2">{{ $i->product_code }} - {!! $i->product->description !!}</td>
+                    <td class="c3">{{ $i->product->color_name }}</td>
+                    <td class="c4">{{ $i->product->size }}</td>
+                    <td class="c5">{{ $i->qty_supplied }}/{{ $i->qty }}</td>
+                    <td class="c6">{{ number_format($i->price/100,2) }}
 
                     </td>
-                    <td>{{ number_format($i->ext_price/100,2) }}
+                    <td class="c7">{{ number_format($i->ext_price/100,2) }}
 
 
-                    <td>{{ $i->markup != 0 ? number_format($i->markup * 100,1).'%' : '' }}</td>
-                    <td>{{ $i->custom_discount }}</td>
+                    <td class="c8">{{ $i->markup != 0 ? number_format($i->markup * 100,1).'%' : '' }}</td>
+                    <td class="c9">{{ $i->custom_discount }}</td>
 
                 </tr>
                 @endforeach
@@ -117,11 +120,11 @@ $n = 1;
                 <td colspan="2">&nbsp;</td>
                 </tr>
 
-                <tr><td align="right" colspan="7">{{ number_format(($totalItemsPrice-$totalItemsCost)*100/$totalItemsPrice,1) }}%<br /><i>note:<br /> #q = qty discount<br /> #s = Special client price <br /> #c Custom price entered </i> </td><td colspan="2">&nbsp;</td></tr>
+                <tr><td align="right" colspan="8">{{ number_format(($totalItemsPrice-$totalItemsCost)*100/$totalItemsPrice,1) }}%<br /><i>note:<br /> #q = qty discount<br /> #s = Special client price <br /> #c Custom price entered </i> </td></tr>
                 </tbody>
                 </table>
 
-                <img class="freight-docket visible-print" style="page-break-before: always" src="{{ asset('images/freight_docket.jpg') }}" />
+                <img class="freight-docket visible-print" src="{{ asset('images/freight_docket.jpg') }}" />
 </div>
 
 @endsection
