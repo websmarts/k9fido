@@ -6,9 +6,9 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading" style="overflow: hidden">Purchase Order:  {{ $order->order_id  }}
+
                  @if($order->status == 'printed')
                 <a class="btn btn-warning pull-right hidden-print" style="margin-left: 40px" href="{{ route('order.pick', ['id' => $order->id] ) }}">Pick Order</a>
-
                 @endif
 
 
@@ -18,7 +18,6 @@
 
 
                 <div class="panel-body">
-{{-- dump($freight) --}}
                 <div class="row hidden-print">
                     <div class="col-xs-2">Customer ID</div>
                     <p class="col-xs-9">{{ $order->client->client_id }}</p>
@@ -72,9 +71,10 @@
             </div>
         </div>
     </div>
-     <div>Ordered Items</div>
-{{-- dump($items) --}}
 
+    <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div>Ordered Items</div>
                 <table class="table table-striped table-condensed order_table">
                 <thead>
                     <tr>
@@ -106,10 +106,8 @@ usort($items, function ($a, $b) {
                     <td class="c3">{{ $i->product->color_name }}</td>
                     <td class="c4">{{ $i->product->size }}</td>
                     <td class="c5">{{ $i->qty_supplied }}/{{ $i->qty }}</td>
-                    <td class="c6">{{ number_format($i->price/100,2) }}
-
-                    </td>
-                    <td class="c7">{{ number_format($i->ext_price/100,2) }}
+                    <td class="c6">{{ number_format($i->price/100,2) }}</td>
+                    <td class="c7">{{ number_format($i->ext_price/100,2) }}</td>
 
 
                     <td class="c8">{{ $i->markup != 0 ? number_format($i->markup * 100,1).'%' : '' }}</td>
@@ -118,16 +116,21 @@ usort($items, function ($a, $b) {
                 </tr>
                 @endforeach
                 <tr>
-                <td colspan="5"  align="left" ><br>Order Contact: <span style="color: #00f">{{ $order->order_contact }}</span><br>Order instructions:<br><span class="orderinstructions">{!! nl2br($order->instructions) !!}</span></td><td aligne="right"><span style="font-weight: bold" >Order total :</span></td>
-                <td colspan="2"><p style="font-weight: bold" align="left">${{ number_format($totalItemsPrice/100,2) }}</p></td>
+                <td colspan="5"  align="left" ><br>Order Contact: <span style="color: #00f">{{ $order->order_contact }}</span><br>Order instructions:<br><span class="orderinstructions">{!! nl2br($order->instructions) !!}</span></td>
+                <td align="right"><span style="font-weight: bold" >Total:</span></td>
+                <td><span style="font-weight: bold" align="left">${{ number_format($totalItemsPrice/100,2) }}</span></td>
                 <td colspan="2">&nbsp;</td>
                 </tr>
 
-                <tr><td align="right" colspan="8">{{ number_format(($totalItemsPrice-$totalItemsCost)*100/$totalItemsPrice,1) }}%<br /><i>note:<br /> #q = qty discount<br /> #s = Special client price <br /> #c Custom price entered </i> </td></tr>
+                <tr><td align="right" colspan="8">{{ number_format(($totalItemsPrice-$totalItemsCost)*100/$totalItemsPrice,1) }}%<br /><i>note:<br /> #q = qty discount<br /> #s = Special client price <br /> #c Custom price entered </i> </td>
+                <td>&nbsp;</td>
+                </tr>
                 </tbody>
                 </table>
+            </div>
+        </div>
 
                 <img class="freight-docket visible-print" src="{{ asset('images/freight_docket.jpg') }}" />
-</div>
+</div><!-- end container -->
 
 @endsection
