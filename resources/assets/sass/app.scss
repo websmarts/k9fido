@@ -86,6 +86,8 @@ table.order_table.table-condensed {
 		border: none;
 	}
 	 img.freight-docket {
+	 	display: block;
+	 	page-break-inside: avoid;
 	    width: 800px;
 	    margin-top:90px;
 	    border-top: 1px solid #888;
