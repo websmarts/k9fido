@@ -65,6 +65,11 @@ table.order_table {
   .container {
     width: 100%; }
   .panel-default {
-    border: none; } }
+    border: none; }
+  img.freight-docket {
+    width: 800px;
+    margin-top: 90px;
+    border-top: 1px solid #888;
+    padding-top: 10px; } }
 
 /*# sourceMappingURL=app.css.map */
