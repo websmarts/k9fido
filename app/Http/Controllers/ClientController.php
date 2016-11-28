@@ -59,9 +59,12 @@ class ClientController extends Controller
 
         });
 
+        $clients = Client::lists('name', 'client_id')->toArray();
+        //dd($clients);
+
         // dd($salesreps);
 
-        return view('admin.client.edit', compact('client', 'salesreps'));
+        return view('admin.client.edit', compact('client', 'salesreps', 'clients'));
     }
 
     /**
