@@ -1,24 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Edit Client: {{ $client->name  }}</div>
-
-                <div class="panel-body">
-
-
-                    {!! Form::model($client, array('route' => array('client.update', $client->client_id ), 'method' => 'patch' )) !!}
-
-                    <div class="col-md-12">
-                         <button type="submit"  value="Save" class="btn btn-primary pull-right" >Save</button>
-                         </div>
-
-
-
-                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+ <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         {!! Form::label('name', 'Name', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('name', null,  array('class' => 'form-control')) !!}
@@ -203,8 +183,7 @@
                     <div class="form-group{{ $errors->has('salesrep') ? ' has-error' : '' }}">
                         {!! Form::label('salesrep', 'Salesrep', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::select('salesrep', [0=>'Select rep...'] + $salesreps, null,  array('class' => 'form-control')) !!}
-
+                        {!! Form::text('salesrep', null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('salesrep'))
                             <span class="help-block">
@@ -448,17 +427,3 @@
                         @endif
                         </div>
                     </div>
-
-                    <div class="col-md-12">
-                         <button type="submit"  value="Save" class="btn btn-primary pull-right" >Save</button>
-                         </div>
-
-                    {!! Form::close() !!}
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@endsection

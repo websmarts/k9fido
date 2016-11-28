@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Legacy\Client\Client;
 use App\Legacy\Product\ClientPrice;
+use App\Legacy\Staff\User;
+use App\Legacy\Staff\UserClient;
 use App\Queries\ClientListQuery;
 use Illuminate\Http\Request;
 
@@ -35,7 +37,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.client.create')->with('client', new Client);
     }
 
     /**
@@ -47,8 +49,19 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = Client::find($id);
+        $users = User::where('role', 'rep')->select('id', 'firstname', 'lastname')->get();
 
-        return view('admin.client.edit')->with('client', $client);
+        $salesreps = [];
+        $users->each(function ($item, $key) use (&$salesreps) {
+            if (!empty($item->firstname)) {
+                $salesreps[$item->id] = $item->firstname . ' ' . $item->lastname;
+            }
+
+        });
+
+        // dd($salesreps);
+
+        return view('admin.client.edit', compact('client', 'salesreps'));
     }
 
     /**
@@ -60,7 +73,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        // dd($request->all());
         $this->validate($request, ['name' => 'required']);
 
         $data = $request->except('_method', '_token');
@@ -70,8 +83,53 @@ class ClientController extends Controller
 
         $client->update($data);
 
+        // Update user clients table
+        $this->updateRepClientsList($id, $data['salesrep']);
+
         flash('Client updated', 'success');
         return redirect()->route('client.edit', $id);
+
+    }
+
+    private function updateRepClientsList($clientId, $salesRepId)
+    {
+
+        // if $salesrepId is zero then remove any current entry
+        if ($salesRepId == 0) {
+            UserClient::where('client_id', $clientId)->delete();
+            return;
+        }
+
+        // if client_id / salesrep_id pair exists do nothing
+        $res = UserClient::where('client_id', $clientId)->first();
+        if (!is_null($res)) {
+            if ($res->salesrep_id == $salesRepId) {
+                return;
+            }
+            // if client_id / salesrep_id pair is incorrect then update
+            if ($res->salesrep_id != $salesRepId) {
+                $res->salesrep_id = $salesRepId;
+                $res->save();
+                return;
+            }
+        }
+
+        // if client_id does not have an entry then create one
+        if (is_null($res)) {
+            $userClient = new UserClient;
+            $userClient->client_id = $clientId;
+            $userClient->salesrep_id = $salesRepId;
+            $userClient->save();
+        }
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, ['name' => 'required']);
+        $client = Client::updateOrCreate($request->except('_token'));
+        flash('Client created', 'success');
+
+        return redirect()->route('client.edit', $client->client_id);
 
     }
 
