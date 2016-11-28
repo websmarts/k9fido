@@ -37,7 +37,20 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('admin.client.create')->with('client', new Client);
+        $users = User::where('role', 'rep')->select('id', 'firstname', 'lastname')->get();
+
+        $salesreps = [];
+        $users->each(function ($item, $key) use (&$salesreps) {
+            if (!empty($item->firstname)) {
+                $salesreps[$item->id] = $item->firstname . ' ' . $item->lastname;
+            }
+
+        });
+
+        $client = new Client;
+
+        $clients = Client::lists('name', 'client_id')->toArray();
+        return view('admin.client.create', compact('client', 'salesreps', 'clients', 'client'));
     }
 
     /**

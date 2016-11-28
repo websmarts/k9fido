@@ -1,4 +1,4 @@
- <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         {!! Form::label('name', 'Name', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('name', null,  array('class' => 'form-control')) !!}
@@ -6,6 +6,19 @@
                         @if ($errors->has('name'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+
+                     <div class="form-group{{ $errors->has('parent') ? ' has-error' : '' }}">
+                        {!! Form::label('parent', 'Parent company', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::select('parent',  [''=>'Select if has parent company ....'] + $clients,null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('parent'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('parent') }}</strong>
                             </span>
                         @endif
                         </div>
@@ -75,8 +88,24 @@
                         @endif
                         </div>
                     </div>
+<?php
+$states = ['VIC', 'NSW', 'QLD', 'NT', 'WA', 'SA', 'TAS', 'OTHER'];
+?>
+                    <div class="form-group{{ $errors->has('postcode') ? ' has-error' : '' }}">
+                        {!! Form::label('state', 'State', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::select('state', $states, null,  array('class' => 'form-control')) !!}
 
-                    <div class="form-group{{ $errors->has('phone_area_code') ? ' has-error' : '' }}">
+
+                        @if ($errors->has('postcode'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('state') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group{{ $errors->has('phone_area_code') ? ' has-error' : '' }}">
                         {!! Form::label('phone_area_code', 'Phone area code', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('phone_area_code', null,  array('class' => 'form-control')) !!}
@@ -87,7 +116,7 @@
                             </span>
                         @endif
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                         {!! Form::label('phone', 'Phone', array('class' => 'col-md-4 control-label')) !!}
@@ -142,7 +171,7 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('contacts') ? ' has-error' : '' }}">
-                        {!! Form::label('contacts', 'Contacts', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('contacts', 'Contacts - owner', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('contacts', null,  array('class' => 'form-control')) !!}
 
@@ -153,8 +182,32 @@
                         @endif
                         </div>
                     </div>
+                    <div class="form-group{{ $errors->has('contacts_2') ? ' has-error' : '' }}">
+                        {!! Form::label('contacts_2', 'Contacts - instore', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::text('contacts_2', null,  array('class' => 'form-control')) !!}
 
-                    <div class="form-group{{ $errors->has('call_interval') ? ' has-error' : '' }}">
+                        @if ($errors->has('contacts_2'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('contacts_2') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('contacts_3') ? ' has-error' : '' }}">
+                        {!! Form::label('contacts_3', 'Contacts - ordering', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::text('contacts_3', null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('contacts_3'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('contacts_3') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group{{ $errors->has('call_interval') ? ' has-error' : '' }}">
                         {!! Form::label('call_interval', 'Call interval', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('call_interval', null,  array('class' => 'form-control')) !!}
@@ -165,9 +218,9 @@
                             </span>
                         @endif
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group{{ $errors->has('alert') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group{{ $errors->has('alert') ? ' has-error' : '' }}">
                         {!! Form::label('alert', 'Alert', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('alert', null,  array('class' => 'form-control')) !!}
@@ -178,12 +231,13 @@
                             </span>
                         @endif
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group{{ $errors->has('salesrep') ? ' has-error' : '' }}">
                         {!! Form::label('salesrep', 'Salesrep', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('salesrep', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('salesrep', [0=>'Select rep...'] + $salesreps, null,  array('class' => 'form-control')) !!}
+
 
                         @if ($errors->has('salesrep'))
                             <span class="help-block">
@@ -219,7 +273,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('longitude') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group{{ $errors->has('longitude') ? ' has-error' : '' }}">
                         {!! Form::label('longitude', 'Longitude', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('longitude', null,  array('class' => 'form-control')) !!}
@@ -230,9 +284,9 @@
                             </span>
                         @endif
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group{{ $errors->has('latitude') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group{{ $errors->has('latitude') ? ' has-error' : '' }}">
                         {!! Form::label('latitude', 'Latitude', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('latitude', null,  array('class' => 'form-control')) !!}
@@ -243,9 +297,9 @@
                             </span>
                         @endif
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group{{ $errors->has('sales_rating') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group{{ $errors->has('sales_rating') ? ' has-error' : '' }}">
                         {!! Form::label('sales_rating', 'Sales rating', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('sales_rating', null,  array('class' => 'form-control')) !!}
@@ -256,9 +310,9 @@
                             </span>
                         @endif
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group{{ $errors->has('client_type') ? ' has-error' : '' }}">
+                   <!--  <div class="form-group{{ $errors->has('client_type') ? ' has-error' : '' }}">
                         {!! Form::label('client_type', 'Client type', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('client_type', null,  array('class' => 'form-control')) !!}
@@ -269,7 +323,7 @@
                             </span>
                         @endif
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group{{ $errors->has('call_frequency') ? ' has-error' : '' }}">
                         {!! Form::label('call_frequency', 'Call frequency', array('class' => 'col-md-4 control-label')) !!}
@@ -284,7 +338,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('call_planning_note') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group{{ $errors->has('call_planning_note') ? ' has-error' : '' }}">
                         {!! Form::label('call_planning_note', 'Call planning note', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('call_planning_note', null,  array('class' => 'form-control')) !!}
@@ -295,10 +349,10 @@
                             </span>
                         @endif
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group{{ $errors->has('login_user') ? ' has-error' : '' }}">
-                        {!! Form::label('login_user', 'Login user', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('login_user', 'Login user (web)', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('login_user', null,  array('class' => 'form-control')) !!}
 
@@ -311,7 +365,7 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('login_pass') ? ' has-error' : '' }}">
-                        {!! Form::label('login_pass', 'Login pass', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('login_pass', 'Login pass (web)', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('login_pass', null,  array('class' => 'form-control')) !!}
 
@@ -323,10 +377,18 @@
                         </div>
                     </div>
 
+
+                    <?php
+$onlineStatusOptions = [
+    '' => 'Select option ...',
+    'active' => 'Active',
+    'pendibg_activation' => 'Pending activation',
+]
+?>
                     <div class="form-group{{ $errors->has('online_status') ? ' has-error' : '' }}">
-                        {!! Form::label('online_status', 'Online status', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('online_status', 'Online status (web)', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('online_status', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('online_status', $onlineStatusOptions, null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('online_status'))
                             <span class="help-block">
@@ -337,7 +399,7 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('online_validation_key') ? ' has-error' : '' }}">
-                        {!! Form::label('online_validation_key', 'Online validation key', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('online_validation_key', 'Online validation key (web)', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('online_validation_key', null,  array('class' => 'form-control')) !!}
 
@@ -350,7 +412,7 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('online_contact') ? ' has-error' : '' }}">
-                        {!! Form::label('online_contact', 'Online contact', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('online_contact', 'Online contact (web)', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('online_contact', null,  array('class' => 'form-control')) !!}
 
@@ -362,10 +424,60 @@
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('email_1') ? ' has-error' : '' }}">
+                        {!! Form::label('email_1', 'Email (1) contact', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::text('email_1', null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('email_1'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email_1') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('email_2') ? ' has-error' : '' }}">
+                        {!! Form::label('email_2', 'Email (2) contact', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::text('email_2', null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('email_2'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email_2') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('email_3') ? ' has-error' : '' }}">
+                        {!! Form::label('email_3', 'Email (3) contact', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::text('email_3', null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('email_3'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email_3') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+
+<?php
+$levelOptions = [
+    'AAA' => 'AAA',
+    'AA' => 'AA',
+    'A' => 'A',
+    'B' => 'B',
+    'C' => 'C',
+    'D' => 'D',
+    'E' => 'E',
+    'F' => 'F',
+
+];?>
+
                     <div class="form-group{{ $errors->has('level') ? ' has-error' : '' }}">
                         {!! Form::label('level', 'Level', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('level', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('level', [''=>'Select level ...'] + $levelOptions, null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('level'))
                             <span class="help-block">
@@ -375,24 +487,18 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('parent') ? ' has-error' : '' }}">
-                        {!! Form::label('parent', 'Parent', array('class' => 'col-md-4 control-label')) !!}
-                        <div class="col-md-6">
-                        {!! Form::text('parent', null,  array('class' => 'form-control')) !!}
-
-                        @if ($errors->has('parent'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('parent') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
+<?php
+$customFreightOptions = [
+    '0' => 'No',
+    '1' => 'Yes',
+];
+?>
 
                     <div class="form-group{{ $errors->has('custom_freight') ? ' has-error' : '' }}">
 
                         {!! Form::label('custom_freight', 'Custom freight', array('class' => 'col-md-4 control-label', 'method' => 'patch')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('custom_freight', null,  array('class' => 'form-control')) !!}
+                        {!! Form::select('custom_freight',$customFreightOptions,  null,  array('class' => 'form-control')) !!}
 
                         @if ($errors->has('custom_freight'))
                             <span class="help-block">
