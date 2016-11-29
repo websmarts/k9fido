@@ -35,7 +35,7 @@
      <div class="row">
         <div class="col-md-6 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Bill of Material: {{ dump($product->bom)  }}</div>
+                <div class="panel-heading">Bill of Material: {{-- dump($product->bom)  --}}</div>
 
                 <div class="panel-body">
                     <table class="table table-striped">
