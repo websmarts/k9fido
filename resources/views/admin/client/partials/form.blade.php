@@ -89,7 +89,17 @@
                         </div>
                     </div>
 <?php
-$states = ['VIC', 'NSW', 'QLD', 'NT', 'WA', 'SA', 'TAS', 'OTHER'];
+$states = [
+    '' => 'Select State ....',
+    'VIC' => 'VIC',
+    'NSW' => 'NSW',
+    'QLD' => 'QLD',
+    'NT' => 'NT',
+    'WA' => 'WA',
+    'SA' => 'SA',
+    'TAS' => 'TAS',
+    'OTHER' => 'OTHER',
+];
 ?>
                     <div class="form-group{{ $errors->has('postcode') ? ' has-error' : '' }}">
                         {!! Form::label('state', 'State', array('class' => 'col-md-4 control-label')) !!}
