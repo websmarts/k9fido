@@ -66,6 +66,7 @@ class Product extends Model
         'core_product',
         'low_stock_level',
         'rrp',
+        'product_note',
     ];
 
     /**
