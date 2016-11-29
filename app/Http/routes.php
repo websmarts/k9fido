@@ -23,14 +23,14 @@ Route::get('test/{typeid}', 'ProductTypeImageController@doSortIfRequired');
 
 // sorts a productTypeImage list
 
-Route::get('/', function () {
+// Route::get('/', function () {
 
-    //return \Auth::guard('web')->user();
-    return view('welcome');
-});
+//     //return \Auth::guard('web')->user();
+//     return view('welcome');
+// });
 
 Route::auth();
-
+Route::get('/', ['as' => 'welcome', 'uses' => 'HomeController@welcome']);
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 // FILTER LISTS

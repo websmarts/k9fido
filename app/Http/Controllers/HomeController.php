@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'xwelcome']);
     }
 
     /**
@@ -40,5 +40,14 @@ class HomeController extends Controller
         $exportOrders = $orders->where('status', 'picked');
 
         return view('home', compact('newOrders', 'pickOrders', 'parkOrders', 'exportOrders', 'basketOrders'));
+    }
+
+    public function welcome()
+    {
+        // if (!\Auth::guard('web')->user()) {
+        //     return view('welcome');
+        // }
+        return $this->index();
+
     }
 }
