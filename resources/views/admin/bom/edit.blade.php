@@ -6,13 +6,13 @@
 
 
      <div class="row">
-        <div class="col-md-6 col-md-offset-1">
+        <div class="col-md-8 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Bill of Material for: {{ $id }} {{-- dump($bom)  --}}</div>
+                <div class="panel-heading">Bill of Material for: {{ $parent->product_code }} {{-- dump($bom)  --}}</div>
 
                 <div class="panel-body">
                 <p>NOTE: Set QTY to zero to delete an item from the BoM</p>
-                   {{ Form::open( ['route' => ['bom.update', $id], 'method'=>'put'] ) }}
+                   {{ Form::open( ['route' => ['bom.update', $parent->id], 'method'=>'put'] ) }}
                    <table class="table table-striped">
                         <thead>
                         <tr>

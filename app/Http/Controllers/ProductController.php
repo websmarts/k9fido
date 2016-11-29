@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::applyUserFilter()
+        $products = Product::with('bom')->applyUserFilter()
             ->select('id', 'description', 'product_code', 'status')
             ->orderBy('product_code', 'asc')
             ->paginate(15);

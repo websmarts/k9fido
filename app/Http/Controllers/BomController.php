@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Legacy\Product\Bom;
+use App\Legacy\Product\Product;
 use Illuminate\Http\Request;
 
 class BomController extends Controller
@@ -57,9 +58,10 @@ class BomController extends Controller
      */
     public function edit($id)
     {
-        $bom = Bom::where('parent_product_code', $id)->orderby('item_product_code', 'asc')->get();
+        $parent = Product::find($id);
+        $bom = Bom::where('parent_product_code', $parent->product_code)->orderby('item_product_code', 'asc')->get();
         // dd($bom);
-        return view('admin.bom.edit', compact('bom', 'id'));
+        return view('admin.bom.edit', compact('bom', 'parent'));
     }
 
     /**
@@ -71,14 +73,15 @@ class BomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $parent = Product::find($id);
         $items = collect($request->input('item'));
         foreach ($items as $k => $i) {
             if ($k < 0) {
                 $k = null;
             }
 
-            $i['parent_product_code'] = $id;
+            $i['parent_product_code'] = $parent->product_code;
 
             // Delete an existing item if qty is zero or less
             if ($i['item_qty'] < 1) {
