@@ -11,6 +11,7 @@
                 <div class="panel-heading">Bill of Material for: {{ $id }} {{-- dump($bom)  --}}</div>
 
                 <div class="panel-body">
+                <p>NOTE: Set QTY to zero to delete an item from the BoM</p>
                    {{ Form::open( ['route' => ['bom.update', $id], 'method'=>'put'] ) }}
                    <table class="table table-striped">
                         <thead>
