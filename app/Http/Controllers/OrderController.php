@@ -83,6 +83,7 @@ class OrderController extends Controller
         $this->orderService->addOrderItems($items['new']);
         $this->orderService->updateOrderStatus($orderId, $request->input('status'));
         $this->orderService->updateOrderExportedStatus($orderId, $request->input('exported'));
+        $this->orderService->updateOrderFreightCharge($orderId, $request->input('freight_charge'));
 
         flash('Order updated', 'success');
         return redirect(route('order.edit', ['id' => $orderId]));

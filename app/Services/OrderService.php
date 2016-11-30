@@ -320,6 +320,12 @@ class OrderService
         }
     }
 
+    public function updateOrderFreightCharge($orderId, $freight = 0)
+    {
+        $freight = (float) $freight;
+        return Order::find($orderId)->update(['freight_charge' => $freight]);
+    }
+
     public function deleteOrder($orderId, $restock = true)
     {
         $order = Order::with('items.product.bom')->find($orderId);

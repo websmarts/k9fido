@@ -45,6 +45,7 @@ class Order extends Model
         'longitude',
         'latitude',
         'order_contact',
+        'freight_charge',
         'exported',
 
     ];

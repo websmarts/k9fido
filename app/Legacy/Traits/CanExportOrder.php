@@ -73,6 +73,9 @@ trait CanExportOrder
             $lines[$n]['postcode'] = $order->client->postcode;
             $lines[$n]['parent_company'] = !is_null($order->client->parentGroup) ? $order->client->parentGroup->name : '';
 
+            $lines[$n]['order_contact'] = !is_null($order->order_contact) ? $order->order_contact : '';
+            $lines[$n]['freight_charge'] = $order->freight_charge;
+
             $n++;
         }
 
@@ -124,7 +127,7 @@ trait CanExportOrder
         $o .= ','; // Inclusive
         $o .= ','; // Invoice #
         $o .= ','; // Date - order date dd/mm/yyyy, leave blank and myob put
-        $o .= ','; // Customer PO
+        $o .= $this->qc($l['order_contact']) . ','; // Customer PO - insert order_contact
         $o .= ','; // Ship
         $o .= ','; // Delivery Statu
         $o .= $this->qc($l['Item Number']) . ','; // Item Number
@@ -158,11 +161,11 @@ trait CanExportOrder
         $o .= ','; // Non GST Amount
         $o .= '$' . number_format(($invprice_plusgst - $invprice) / 100, 5, '.', '') . ','; // GST Amount provide at least 3 decimal places
         $o .= ','; // LCT Amount
-        $o .= ','; // Freight Amount
+        $o .= number_format($l['freight_charge'], 2, '.', '') . ','; // Freight Amount
         $o .= ','; // Inc Tax Freight Amount
         $o .= 'GST,'; // Freight Tax Code
         $o .= ','; // Freight Non Gst Amount
-        $o .= ','; // Freight GST Amount
+        $o .= number_format((float) $l['freight_charge'] / 10, 2, '.', '') . ','; // Freight GST Amount - set to 10% of Freight Amount field above
         $o .= ','; // Freight LCT Amount
         $o .= 'O,'; // Sales Status O for order
         $o .= ','; // Currency Code

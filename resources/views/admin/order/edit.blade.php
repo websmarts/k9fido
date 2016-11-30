@@ -31,6 +31,9 @@
                     <div class="col-xs-2"><label>Order date</label></div>
                     <p class="col-xs-10">{{ date('j-m-Y',strtotime($order->modified)) }}</p>
 
+                    <div class="col-xs-2"><label>Order contact</label></div>
+                    <p class="col-xs-10">{{ $order->order_contact }}&nbsp;</p>
+
                     <div class="col-xs-2"><label>Instructions</label></div>
                     <p class="col-xs-10">{{ $order->instructions }}&nbsp;</p>
 
@@ -49,6 +52,13 @@
                     <div class="col-xs-2"><label>Exported status</label></div>
                     <div class="col-md-3 col-xs-10">
                     {{ Form::select('exported',Appdata::get('order.exported.options'),$order->exported, ['class'=>'form-control']) }}
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:15px;">
+                    <div class="col-xs-2"><label>Freight charge</label></div>
+                    <div class="col-md-3 col-xs-10">
+                    {{ Form::text('freight_charge',$order->freight_charge, ['class'=>'form-control']) }}
                     </div>
                 </div>
 
