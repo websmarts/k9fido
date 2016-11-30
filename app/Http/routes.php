@@ -65,11 +65,15 @@ Route::get('category/{id}/delete', [
 Route::resource('typecategory', 'TypeCategoryController');
 
 //ORDER ROUTES
+Route::get('order/download', [
+    'as' => 'order.download', 'uses' => 'OrderController@download']);
 Route::resource('order', 'OrderController');
 Route::get('order/{id}/pick', [
     'as' => 'order.pick', 'uses' => 'OrderController@pick']);
 Route::get('order/{id}/export', [
     'as' => 'order.export', 'uses' => 'OrderController@export']);
+Route::post('order/batchexport', [
+    'as' => 'order.batchexport', 'uses' => 'OrderController@batchexport']);
 
 //ORDER ITEM ROUTES
 Route::get('orderitem/{orderId}/{productCode}/edit', [

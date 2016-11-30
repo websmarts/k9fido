@@ -54,6 +54,7 @@ class Product extends Model
         'length',
         'shipping_volume',
         'shipping_weight',
+        'actual_weight',
         'shipping_container',
         'display_order',
         'barcode',

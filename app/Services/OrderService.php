@@ -170,11 +170,6 @@ class OrderService
         )->keyBy('product_code');
     }
 
-    public function exportOrder($id)
-    {
-        return $this->export($this->getOrderById($id));
-    }
-
     public function deleteOrderItems($items)
     {
         foreach ($items as $item) {

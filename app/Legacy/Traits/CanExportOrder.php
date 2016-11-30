@@ -4,13 +4,28 @@ namespace App\Legacy\Traits;
 trait CanExportOrder
 {
 
-    public function export($order)
+    public function export($id)
     {
         $o = '';
         $header = 'Co./Last Name,First Name,Addr 1 - Line 1,           - Line 2,           - Line 3,           - Line 4,Inclusive,Invoice #,Date,Customer PO,Ship Via,Delivery Status,Item Number,Quantity,Description,Price,Inc-Tax Price,Discount,Total,Inc-Tax Total,Job,Comment,Journal Memo,Salesperson Last Name,Salesperson First Name,Shipping Date,Referral Source,Tax Code,Non-GST Amount,GST Amount,LCT Amount,Freight Amount,Inc-Tax Freight Amount,Freight Tax Code,Freight Non-GST Amount,Freight GST Amount,Freight LCT Amount,Sale Status,Currency Code,Exchange Rate,Terms - Payment is Due,           - Discount Days,           - Balance Due Days,           - % Discount,           - % Monthly Charge,Amount Paid,Payment Method,Payment Notes,Name on Card,Card Number,Expiry Date,Authorisation Code,BSB,Account Number,Drawer/Account Name,Cheque Number,Category,Location ID,Card ID,Record ID' . "\r\n";
 
-        $o = $this->get_order_export_data($order);
-        $filename = $order->order_id;
+        if (is_array($id)) {
+            $n = 0;
+            foreach ($id as $orderId) {
+                if ($n > 0) {
+                    // insert blank line
+                    $o .= ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\r\n";
+                }
+                $o .= $this->get_order_export_data($this->getOrderById($orderId));
+                $n++;
+
+            }
+            $filename = "multiple_" . time();
+        } else {
+
+            $o = $this->get_order_export_data($order = $this->getOrderById($id));
+            $filename = $order->order_id;
+        }
 
         $o = $header . $o;
 

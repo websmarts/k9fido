@@ -25,7 +25,7 @@
                     @endif
 
                     @if(isSet($exportOrders) )
-                        @include('admin.lists.orders',['title'=>'Orders ready to be exported to MYOB', 'data'=>$exportOrders])
+                        @include('admin.lists.exportorders',['title'=>'Orders ready to be exported to MYOB', 'data'=>$exportOrders])
                     @endif
 
 

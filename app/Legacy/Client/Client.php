@@ -72,6 +72,7 @@ class Client extends Model
         'parent',
         'custom_freight',
         'freight_notes',
+        'client_note',
 
     ];
 

@@ -105,13 +105,7 @@
                     <div class="form-group{{ $errors->has('qty_ordered') ? ' has-error' : '' }}">
                         {!! Form::label('qty_ordered', 'Qty ordered', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('qty_ordered', null,  array('class' => 'form-control', 'disabled'=>'disabled')) !!}
-
-                        @if ($errors->has('qty_ordered'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('qty_ordered') }}</strong>
-                            </span>
-                        @endif
+                        {{ $product->qty_ordered }}
                         </div>
                     </div>
 
@@ -219,6 +213,19 @@
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('length') ? ' has-error' : '' }}">
+                        {!! Form::label('length', 'Length (cm)', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::text('length', null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('length'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('length') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('width') ? ' has-error' : '' }}">
                         {!! Form::label('width', 'Width (cm)', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
@@ -245,30 +252,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('length') ? ' has-error' : '' }}">
-                        {!! Form::label('length', 'Length (cm)', array('class' => 'col-md-4 control-label')) !!}
-                        <div class="col-md-6">
-                        {!! Form::text('length', null,  array('class' => 'form-control')) !!}
-
-                        @if ($errors->has('length'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('length') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
 
                     <div class="form-group{{ $errors->has('shipping_volume') ? ' has-error' : '' }}">
                         <!-- {!! Form::label('shipping_volume', 'Shipping volume( Calculated field = WxH*L / 1,000,000 )', array('class' => 'col-md-4 control-label')) !!} -->
                         <label for="shipping_volume" class="col-md-4 control-label">Shipping volume <br /><span>( Calculated field = WxH*L / 1,000,000 )<span></label>
                         <div class="col-md-6">
-                        {!! Form::text('shipping_volume', null,  array('class' => 'form-control')) !!}
+                        {{ $product->shipping_volume }}
 
-                        @if ($errors->has('shipping_volume'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('shipping_volume') }}</strong>
-                            </span>
-                        @endif
                         </div>
                     </div>
 
@@ -276,11 +266,19 @@
                         <!-- {!! Form::label('shipping_weight', 'Shipping weight ( Calculated as Shipping Volume x 250 )', array('class' => 'col-md-4 control-label')) !!} -->
                         <label for="shipping_weight" class="col-md-4 control-label">Shipping weight <br /><span>( Calculated as Shipping Volume x 250 )<span></label>
                         <div class="col-md-6">
-                        {!! Form::text('shipping_weight', null,  array('class' => 'form-control')) !!}
+                        {{ $product->shipping_weight }}
 
-                        @if ($errors->has('shipping_weight'))
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('actual_weight') ? ' has-error' : '' }}">
+                        {!! Form::label('actual_weight', 'Actual weight (grams)', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::text('actual_weight', null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('actual_weight'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('shipping_weight') }}</strong>
+                                <strong>{{ $errors->first('actual_weight') }}</strong>
                             </span>
                         @endif
                         </div>

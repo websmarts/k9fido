@@ -99,6 +99,7 @@ class ProductController extends Controller
         $qty = \DB::connection('k9homes')->select($sql, [$product->product_code]);
 
         $product->qty_ordered = $qty[0]->qty_ordered;
+
         // dd($product);
 
         return view('admin.product.edit', compact('product', 'productTypes'));
@@ -113,6 +114,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
+
         $product = Product::find($id);
 
         // check if delete is being called for
@@ -128,8 +131,12 @@ class ProductController extends Controller
 
         $data = $request->all();
         //dd($data);
-        // Reset the displayed value of qty_ordered to zero
+        // Reset the calculated displayed value of qty_ordered to zero
         $data['qty_ordered'] = 0;
+
+        // set the shipping_volume and shipping_weight
+        $data['shipping_volume'] = $data['length'] * $data['width'] * $data['height'] / 1000000;
+        $data['shipping_weight'] = $data['shipping_volume'] * 250;
 
         $product->update($data);
 

@@ -1,5 +1,5 @@
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                        {!! Form::label('name', 'Name', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('name', 'Trading name', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('name', null,  array('class' => 'form-control')) !!}
 
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                        {!! Form::label('city', 'City', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('city', 'Suburb/City', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('city', null,  array('class' => 'form-control')) !!}
 
@@ -336,7 +336,7 @@ $states = [
                     </div> -->
 
                     <div class="form-group{{ $errors->has('call_frequency') ? ' has-error' : '' }}">
-                        {!! Form::label('call_frequency', 'Call frequency', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('call_frequency', 'Call frequency/cycle (days)', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('call_frequency', null,  array('class' => 'form-control')) !!}
 
@@ -539,6 +539,19 @@ $customFreightOptions = [
                         @if ($errors->has('status'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('status') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('client_note') ? ' has-error' : '' }}">
+                        {!! Form::label('client_note', 'Client note', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::textarea('client_note', null ,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('client_note'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('client_note') }}</strong>
                             </span>
                         @endif
                         </div>
