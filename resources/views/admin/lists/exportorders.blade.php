@@ -29,5 +29,5 @@
 
                     </tbody>
                     </table>
-                    <button type="submit" value="Export" class="btn btn-primary">Batch export</button>
+                    <button type="submit" value="Export" class="btn btn-primary">Export checked orders</button>
                     {{ Form::close() }}

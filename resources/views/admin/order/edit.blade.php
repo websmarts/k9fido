@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="row" style="margin-top:15px;">
-                    <div class="col-xs-2"><label>Freight charge</label></div>
+                    <div class="col-xs-2"><label>Freight charge (00.00 dollars)</label></div>
                     <div class="col-md-3 col-xs-10">
                     {{ Form::text('freight_charge',$order->freight_charge, ['class'=>'form-control']) }}
                     </div>

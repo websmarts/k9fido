@@ -36,12 +36,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-2">Freight</div>
+                    <div class="col-xs-2">Freight code</div>
                     <p class="col-xs-9">{{ empty($freight->code) ? ' - ' : $freight->code }}
                     @if(isSet($freight->notes))
                     <br /> {{ $freight->notes }}
                     @endif
                     </p>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-2">Freight ($)</div>
+                    <p class="col-xs-9">{{ number_format($order->freight_charge,2) }}</p>
                 </div>
 
                 <div class="row">
