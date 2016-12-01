@@ -23,11 +23,12 @@
                             <td width="20"><a href="{{ route('order.show', ['id' => $order->id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
                         </tr>
                         @endforeach
+                        <tr><td colspan="5"><button type="submit" value="Export" class="btn btn-primary">Export checked orders</button></td></tr>
                     @else
                         <tr><td colspan="4">List is currently empty</td></tr>
                     @endif
 
                     </tbody>
                     </table>
-                    <button type="submit" value="Export" class="btn btn-primary">Export checked orders</button>
+
                     {{ Form::close() }}
