@@ -1,3 +1,10 @@
+.navbar-module {
+  background-color: #0c0c0c; }
+  .navbar-module a {
+    color: #ffffff; }
+  .navbar-module a:hover {
+    color: #333333; }
+
 body {
   font-family: 'arial'; }
 

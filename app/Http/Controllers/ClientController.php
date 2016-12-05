@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Legacy\Client\Client;
-use App\Legacy\Product\ClientPrice;
 use App\Legacy\Staff\User;
 use App\Legacy\Staff\UserClient;
 use App\Queries\ClientListQuery;
@@ -25,7 +24,7 @@ class ClientController extends Controller
     public function index()
     {
 
-        $clients = ClientListQuery::perform(12);
+        $clients = ClientListQuery::perform(12); // set rows_per_page
 
         return view('admin.client.index')->with('clients', $clients);
     }
@@ -130,52 +129,6 @@ class ClientController extends Controller
 
         return redirect()->route('client.edit', $client->client_id);
 
-    }
-
-    public function pricing($clientId)
-    {
-        $items = ClientPrice::with('product')
-            ->where('client_id', $clientId)
-            ->get();
-
-        // Transfrom prices into format for Vue.js app
-        /**
-         * id, product_code, client_price, std_price
-         */
-        $prices = $items->map(function ($item, $key) {
-            return [
-                'id' => $item->id,
-                'product_code' => $item->product_code,
-                'client_price' => $item->client_price,
-                'std_price' => $item->product->price,
-            ];
-        });
-        dd($prices);
-        // $client = Client::find($clientId);
-        // return view('admin.client.pricing', compact('prices', 'client'));
-    }
-
-    public function storePrice(Request $request)
-    {
-        $clientId = $request->input('client_id');
-        $productCode = $request->input('product_code');
-        $price = $request->input('client_price');
-
-        $clientPrice = ClientPrice::firstOrNew([
-            'client_id' => $clientId,
-            'product_code' => $productCode,
-
-        ]);
-
-        if (is_null($clientPrice->product)) {
-            return ['result' => 404];
-        }
-
-        $clientPrice->client_price = $price;
-
-        $clientPrice->save();
-
-        return $clientPrice;
     }
 
     private function getSalesReps()

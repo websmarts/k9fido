@@ -62,16 +62,11 @@
 
                 <hr class="hidden-print" style="clear:both">
 
-
-
-
                 @if($order->exported !='yes')
                 <a class="hidden-print" href="{{ route('order.export', ['id' => $order->id] ) }}"><button class="btn btn-success pull-right">Export Order</button></a>
                 @endif
 
                 <a class="hidden-print" href="{{ route('order.delete', ['id' => $order->id] ) }}"><button class="btn btn-warning pull-left">Delete Order</button></a>
-
-
                 </div>
             </div>
         </div>
@@ -90,6 +85,7 @@
                         <th class="c5">P/O qty</th>
                         <th class="c6">Unit Price</th>
                         <th class="c7">Ext price</th>
+                        <th>S</th>
                         <th class="c8" >M%</th>
                         <th class="c9">C%</th>
                     </tr>
@@ -113,7 +109,7 @@ usort($items, function ($a, $b) {
                     <td class="c5">{{ $i->qty_supplied }}/{{ $i->qty }}</td>
                     <td class="c6">{{ number_format($i->price/100,2) }}</td>
                     <td class="c7">{{ number_format($i->ext_price/100,2) }}</td>
-
+                    <td>{{ $i->pricing_strategy }}</td>
 
                     <td class="c8">{{ $i->markup != 0 ? number_format($i->markup * 100,1).'%' : '' }}</td>
                     <td class="c9">{{ $i->custom_discount }}</td>

@@ -73,19 +73,23 @@ class OrderService
         foreach ($orderItems as $item) {
             $customDiscount = null;
             $i = new \stdClass();
+
             if (isset($clientprices[$item->product_code])) {
                 if ($clientprices[$item->product_code]->client_price == $item->price) {
-                    $strategy = 'special_client_price';
-                    $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
+                    $strategy = '#s'; //'special_client_price';
+                    // $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
                 }
             } else if (($item->product->qty_break > 0) && ($item->qty >= $item->product->qty_break)) {
                 if ($item->price == ($item->product->price * (1 - ($item->product->qty_discount / 100)))) {
-                    $strategy = 'quantity_discount';
+                    $strategy = '#q'; //'quantity_discount';
                 }
             } else if ($item->price != $item->product->price) {
-                $strategy = 'custom_pricing';
+                $strategy = '#c'; //'custom_pricing';
+                // $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
 
             }
+
+            $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
             // Markup
             $markup = '';
             if ($item->price > 0) {

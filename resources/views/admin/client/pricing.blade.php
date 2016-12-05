@@ -5,29 +5,13 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
 
-
+                <h3>Edit Client Prices</h3>
                 <div id="app">
-                <pre>@{{ $data.newprices | json }}</pre>
-                <div class="row">
-                    <div class="col-sm-3"><input v-model="product_code"></div>
-                    <div class="col-sm-3"><input v-model="client_price"></div>
-                    <div class="col-sm-6"><button @click="addItem()">Add Item</button></div>
-                <div>
-                <div id="list">
-
-
-                  <div v-for="price in newprices" track-by="id" class="row">
-                    <div class="col-sm-3">@{{ price.product_code }}</div>
-
-                    <div class="col-sm-3"><input v-model="price.client_price" @blur="doneEdit(price)" ></div>
-
-                  </div>
-
-              </div>
+                    <client-prices
+                        json_prices='{!! $prices->toJson() !!}'
+                        json_client='{{ $client->toJson() }}'
+                        url='{{ route("client.price.ajax")}}'></client-prices>
                 </div>
-
-
-
 
         </div>
     </div>
@@ -35,12 +19,8 @@
 @endsection
 
 @section('script')
-<script>
-var client_id = {{ $client->client_id }};
-var prices = {!! json_encode($prices->toArray()) !!};
-var url = "{{ route('client.price')}}";
-</script>
-<script src="/js/main.js"></script>
+
+<script src="{{ elixir('js/clientprices.js') }}"></script>
 
 
 @endsection

@@ -86,8 +86,17 @@ Route::post('ajax/pickorder/{id}', 'OrderController@pickorderStore');
 
 //CLIENT ROUTES
 Route::resource('client', 'ClientController');
-Route::get('client/{id}/pricing', ['as' => 'client.pricing', 'uses' => 'ClientController@pricing']);
+
+// CLIENT PRICING ROUTES
+Route::get('client/{id}/pricing', ['as' => 'client.pricing', 'uses' => 'ClientPricingController@index']);
 //Route::post('client/{id}/pricing', ['as' => 'client.pricing', 'uses' => 'ClientController@storePricing']);
-Route::post('ajax/client/price', ['as' => 'client.price', 'uses' => 'ClientController@storePrice']);
+Route::post('ajax/client/price', ['as' => 'client.price.ajax', 'uses' => 'ClientPricingController@ajax']);
+
 // STAFF ROUTES
 Route::resource('staff', 'StaffController');
+
+//PROSPECTOR
+Route::get('prospector', [
+    'as' => 'prospector.index', 'uses' => 'Prospector\HomeController@index']);
+Route::get('prospector/accounts', [
+    'as' => 'prospector.accounts.index', 'uses' => 'Prospector\AccountsController@index']);
