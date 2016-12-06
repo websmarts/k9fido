@@ -1,5 +1,5 @@
 <h3>{{ $title }}</h3>
-                    {{ Form::open( ['route' => ['order.batchexport'], 'method'=>'post'] ) }}
+                    {{ Form::open( ['route' => ['export.batchexport'], 'method'=>'post'] ) }}
                     <table class="table table-striped">
                     <thead>
                     <tr>

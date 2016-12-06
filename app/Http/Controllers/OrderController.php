@@ -105,31 +105,6 @@ class OrderController extends Controller
         return redirect(route('order.index'));
     }
 
-    public function export($id)
-    {
-        session(['exportorders' => $id]);
-        return view('admin.order.export', compact('id'));
-
-    }
-
-    public function batchexport(Request $request)
-    {
-        //dd($request->input('exportorders'));
-        $id = $request->input('exportorders');
-        session(['exportorders' => $id]);
-        return view('admin.order.export', compact('id'));
-    }
-    public function download(Request $request)
-    {
-
-        $order = session('exportorders');
-        //dd($order);
-        if ($order) {
-            return $this->orderService->export($order);
-        }
-        return view('admin.order.noexports');
-    }
-
     public function pick($id)
     {
         $order = Order::with('client')->find($id);

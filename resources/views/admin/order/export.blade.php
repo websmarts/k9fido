@@ -9,7 +9,7 @@
 
 @section('script')
 <script>
-var url = "{{ route('order.download') }}";
+var url = "{{ route('export.download') }}";
 //console.log(url)
 
 window.location = url;

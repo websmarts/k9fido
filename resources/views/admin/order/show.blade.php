@@ -62,11 +62,15 @@
 
                 <hr class="hidden-print" style="clear:both">
 
+
+
                 @if($order->exported !='yes')
-                <a class="hidden-print" href="{{ route('order.export', ['id' => $order->id] ) }}"><button class="btn btn-success pull-right">Export Order</button></a>
+                <a class="hidden-print" href="{{ route('export.myob', ['id' => $order->id] ) }}"><button class="btn btn-success pull-right">MYOB Export</button></a>
                 @endif
 
                 <a class="hidden-print" href="{{ route('order.delete', ['id' => $order->id] ) }}"><button class="btn btn-warning pull-left">Delete Order</button></a>
+                &nbsp;&nbsp;
+                <a class="hidden-print" href="{{ route('export.detail', ['id' => $order->id] ) }}"><button class="btn btn-success">Detail Export</button></a>
                 </div>
             </div>
         </div>
