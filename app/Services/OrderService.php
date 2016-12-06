@@ -69,16 +69,18 @@ class OrderService
         $totalItemsCost = 0;
         $totalItemsPrice = 0;
         $items = [];
-        $strategy = '';
+
         foreach ($orderItems as $item) {
+            $strategy = '';
             $customDiscount = null;
             $i = new \stdClass();
-
+            //dd($item);
             if (isset($clientprices[$item->product_code])) {
                 if ($clientprices[$item->product_code]->client_price == $item->price) {
                     $strategy = '#s'; //'special_client_price';
                     // $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
                 }
+
             } else if (($item->product->qty_break > 0) && ($item->qty >= $item->product->qty_break)) {
                 if ($item->price == ($item->product->price * (1 - ($item->product->qty_discount / 100)))) {
                     $strategy = '#q'; //'quantity_discount';
@@ -110,6 +112,7 @@ class OrderService
             $totalItemsCost += $item->qty * $item->product->cost;
             $totalItemsPrice += $i->ext_price;
         }
+        // dump($items);
         return (compact('order', 'freight', 'items', 'totalItemsCost', 'totalItemsPrice'));
     }
 
