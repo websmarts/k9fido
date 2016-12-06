@@ -31,7 +31,7 @@ class ExportController extends Controller
         $o = '';
         if ($order->items->count()) {
             foreach ($order->items as $item) {
-                $o .= $item->product->description . ',' .
+                $o .= $this->cleanString($item->product->description) . ',' .
                 $item->product->size . ',' .
                 number_format($item->price / 100, 2) . ',' .
                 $item->product_code . ',' .
@@ -46,6 +46,17 @@ class ExportController extends Controller
         header('Content-Disposition: attachement; filename="' . $order->order_id . '_items.txt"');
         echo $o;
         exit;
+
+    }
+    protected function cleanString($str)
+    {
+
+        // quote commas in csv
+        $str = trim($str); //remove any newlines
+        $str = strip_tags($str);
+
+        // return str_replace(',','","',$str); // changed 21/09/2015 because commas in addresses were screwing things up on export.
+        return str_replace(',', ';', $str); // replace comms with semi colons
 
     }
 
