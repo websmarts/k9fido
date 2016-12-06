@@ -112,7 +112,7 @@ usort($items, function ($a, $b) {
                     <td>{{ $i->pricing_strategy }}</td>
 
                     <td class="c8">{{ $i->markup != 0 ? number_format($i->markup * 100,1).'%' : '' }}</td>
-                    <td class="c9">{{ $i->custom_discount }}</td>
+                    <td class="c9">{{ $i->custom_discount != 0 ? $i->custom_discount :'' }}</td>
 
                 </tr>
                 @endforeach
