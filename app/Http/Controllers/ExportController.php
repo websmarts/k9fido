@@ -44,7 +44,7 @@ class ExportController extends Controller
         // output as csv file.
         header('Content-Type: application/csv');
         header('Content-Disposition: attachement; filename="' . $order->order_id . '_items.txt"');
-        echo $o;
+        echo $header . $o;
         exit;
 
     }
