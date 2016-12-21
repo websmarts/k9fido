@@ -54,5 +54,5 @@ $( function() {
 
 
     // flash message fader
-    $('.Alert').delay( 3000 ).fadeOut( 400 );
+    $('.Alert').delay( 3000 ).slideUp();
 });

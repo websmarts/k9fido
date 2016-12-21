@@ -33,7 +33,7 @@
                 this.saveItems('parked');
             },
             saveOrder() {
-                console.log('Save the order');
+                // console.log('Save the order');
                 this.saveItems('picked');
             },
             saveItems(status) {
@@ -84,11 +84,14 @@
           this.$http.get(pageVar.url).then( (response) => {
             // Success callback
             _.forEach(response.body.data, (value) => {
+
+                // init a few values we need
                 value.scanned_barcode = '';
                 value.status = "incomplete";
                 value.input ='';
                 value.picked_qty ='';
                 value.error = false;
+                
                 this.items.push(value);
             });
 

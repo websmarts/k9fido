@@ -131,6 +131,7 @@ class OrderController extends Controller
             $x->id = $i->id;
             $x->qty = $i->qty;
             $x->qty_supplied = $i->qty_supplied;
+            $x->product_note = $i->product->product_note;
 
             $result['data'][] = $x;
         }

@@ -3,8 +3,8 @@
       <h3>{{ item.product_code }}<span class="pull-right" v-show="!barcodeCheck()">Barcode: {{ item.barcode }}</span></h3>
       <h4 v-html="item.description"></h4>
       <div>Qty to pick:{{ item.qty - item.qty_supplied }} ({{ item.qty }}) <input type="number" v-bind:id="itemId(item.id)" v-model="item.input" class="input" v-on:input.prevent="itemInput" />
-     
-      </div>       
+      </div>
+      <div class="product_note" v-if="item.product_note">{{ item.product_note }}</div>       
   </div>
 </template>
 
@@ -94,3 +94,11 @@ export default {
 }
 
 </script>
+
+<style>
+.product_note {
+  background: #ffffff;
+  color: #ff0000;
+}
+
+</style>
