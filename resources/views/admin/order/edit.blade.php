@@ -62,6 +62,10 @@
                     </div>
                 </div>
 
+                <div style="padding:10px; text-align:center">
+                    <button type="submit" value="Update" class="btn btn-primary ">Update</button>
+                    </div>
+
                 <hr>
 
                 <div>Ordered Items</div>
