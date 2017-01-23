@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Legacy\Category\Category;
+use App\Legacy\Category\CategoryType;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -98,10 +99,11 @@ class CategoryController extends Controller
     public function delete($id)
     {
         // any types assigned to category?
-        if ($this->productTypes($id)->count() > 0) {
-            flash('Cannot delete category as it contains products', 'error');
-            return redirect()->route('category.index');
-        }
+
+        // if ($this->productTypes($id)->count() > 0) {
+        //     flash('Cannot delete category as it contains products', 'error');
+        //     return redirect()->route('category.index');
+        // }
 
         // any sub-categories?
         if ($this->subCategories($id)->count() > 0) {
@@ -111,6 +113,7 @@ class CategoryController extends Controller
 
         // Okay to delete the category
         Category::find($id)->delete();
+        CategoryType::where('catid', $id)->delete();
 
         flash('Category deleted', 'success');
 

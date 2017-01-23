@@ -17,6 +17,7 @@
 			<div class="form-group">
 				<label for="categories[]" >Display Categories</label>
 				<select class="form-control" id="categories" name="categories[]" multiple="multiple" size="20">
+				<option value=0 >----None----</option>
 				@foreach($categories as $category)
 
 				<option {{ $type->categories->contains($category->id) ? ' selected ' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>

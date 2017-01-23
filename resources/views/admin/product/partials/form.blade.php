@@ -1,7 +1,8 @@
-<div class="form-group{{ $errors->has('product_code') ? ' has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('product_code') ? ' has-error' : '' }}">
                         {!! Form::label('product_code', 'Product code', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('product_code', null,  array('class' => 'form-control')) !!}
+                        <?php $key = $product->id ? 'disabled' : 'enabled';?>
+                        {!! Form::text('product_code', null,  array('class' => 'form-control', $key =>'true')) !!}
 
                         @if ($errors->has('product_code'))
                             <span class="help-block">
