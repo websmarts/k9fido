@@ -102,7 +102,7 @@ usort($items, function ($a, $b) {
 });
 
 ?>
-
+@if(count($items > 0))
                 @foreach($items as $i)
                 <?php $customDiscount = '';?>
                 <tr>
@@ -127,9 +127,10 @@ usort($items, function ($a, $b) {
                 <td colspan="2">&nbsp;</td>
                 </tr>
 
-                <tr><td align="right" colspan="8">{{ number_format(($totalItemsPrice-$totalItemsCost)*100/$totalItemsPrice,1) }}%<br /><i>note:<br /> #q = qty discount<br /> #s = Special client price <br /> #c Custom price entered </i> </td>
+                <tr><td align="right" colspan="8">{{ $totalItemsPrice > 0 ?  number_format(($totalItemsPrice-$totalItemsCost)*100/$totalItemsPrice,1) : '-' }}%<br /><i>note:<br /> #q = qty discount<br /> #s = Special client price <br /> #c Custom price entered </i> </td>
                 <td>&nbsp;</td>
                 </tr>
+@endif
                 </tbody>
                 </table>
             </div>
