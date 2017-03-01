@@ -125,6 +125,10 @@ class ClientController extends Controller
     {
         $this->validate($request, ['name' => 'required']);
         $client = Client::updateOrCreate($request->except('_token'));
+
+        // Update user clients table
+        $this->updateRepClientsList($client->client_id, $request->salesrep);
+
         flash('Client created', 'success');
 
         return redirect()->route('client.edit', $client->client_id);
