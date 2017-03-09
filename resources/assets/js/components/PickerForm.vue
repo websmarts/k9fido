@@ -8,8 +8,11 @@
             
         </template>
         <div class="buttons">
+        <div v-show="complete" class="order-picked">Order picking complete</div>
+        <div v-show="overPicked" class="order-over-picked">Order has been over picked</div>
+
         <a class="btn btn-success pull-right" v-on:click="parkOrder">Park Order</a>
-        <a class="btn btn-primary pull-left" v-on:click="saveOrder">Save Order</a>
+        <a class="btn btn-primary pull-left"  v-on:click="saveOrder">Save Order</a>
         </div>
         </fieldset>
     </form>
@@ -21,11 +24,31 @@
         props: ['orderId'],
         data() {
           return {
-                items: []
+                items: [],
             };
         },
         components: {
             item: require('./pickerItem.vue')
+        },
+        computed: {
+            complete() {
+                // Find the next item that has not been picked and give it focus.
+                if( !this.items.length) {
+                    return false;
+                }
+                return !_.filter(this.items, function(item){
+                    return item.qty != (item.qty_supplied + item.picked_qty)
+                }).length;
+            },
+            overPicked() {
+                // Find the next item that has not been picked and give it focus. 
+                if(this.items.length < 1) {
+                    return false;
+                }
+                return _.filter(this.items, function(item){
+                    return item.qty < (item.qty_supplied + parseInt(item.picked_qty) )
+                }).length;
+            },
         },
         methods: {
 
@@ -33,7 +56,22 @@
                 this.saveItems('parked');
             },
             saveOrder() {
-                // console.log('Save the order');
+   
+                // Check for overpicked first
+                if(this.overPicked) {
+                    if(!confirm('Really, this order has been OVER picked')) {
+                        return;
+                    }     
+                }
+
+                // check for exact picking
+                if(!this.complete) {
+                    if(!confirm('Really, this order is NOT FULLY picked')) {
+                        return;
+                    }     
+                }
+
+
                 this.saveItems('picked');
             },
             saveItems(status) {
@@ -61,11 +99,14 @@
                     alert('server error encountered');
                 });
             },
+            
             focusNextItem() {
                 // Find the next item that has not been picked and give it focus.
+                this.complete = true;
                 _.forEach(this.items, function(item){
                     if(item.qty != (item.qty_supplied + item.picked_qty)){
                         $('#item_'+item.id).focus();
+                        this.complete = false;
                         return false;
                     }
                 });
@@ -157,6 +198,18 @@
 }
 .buttons {
     margin-top: 15px;
+}
+.order-picked {
+    background: green;
+    color: #ffffff;
+    padding:5px;
+    margin:10px;
+}
+.order-over-picked {
+    background: orange;
+    color: #ffffff;
+    padding:5px;
+    margin:10px;
 }
 
 </style>
