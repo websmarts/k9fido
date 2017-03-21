@@ -17,25 +17,10 @@ class ClientPricingController extends Controller
 
     public function index($clientId)
     {
-        $items = ClientPrice::with('product')
-            ->where('client_id', $clientId)
-            ->get();
-
-        // Transfrom prices into format for Vue.js app
-        /**
-         * id, product_code, client_price, std_price
-         */
-        $prices = $items->map(function ($item, $key) {
-            return [
-                'id' => $item->id,
-                'product_code' => $item->product_code,
-                'client_price' => $item->client_price,
-                'std_price' => $item->product->price,
-            ];
-        });
+        //$prices = $this->clientPrices($clientId);
         // dd($prices);
         $client = Client::find($clientId);
-        return view('admin.client.pricing', compact('prices', 'client'));
+        return view('admin.client.pricing', compact('client'));
     }
     /**
      * Handles all the ajax requests for Client Pricing
@@ -58,36 +43,112 @@ class ClientPricingController extends Controller
         }
         return ['result' => 404];
 
-        // $clientId = $request->input('client_id');
-        // $productCode = $request->input('product_code');
-        // $price = $request->input('client_price');
+    }
 
-        // $clientPrice = ClientPrice::firstOrNew([
-        //     'client_id' => $clientId,
-        //     'product_code' => $productCode,
-
-        // ]);
-
-        // if (is_null($clientPrice->product)) {
-        //     return ['result' => 404];
-        // }
-
-        // $clientPrice->client_price = $price;
-
-        // $clientPrice->save();
-
-        // return $clientPrice;
+    protected function get_client_prices(Request $request)
+    {
+        $clientId = $request->input('client_id');
+        return $this->clientPrices($clientId);
     }
 
     protected function add_product(Request $request)
     {
-        $productCode = $request->input('add_product_code');
-        $product = Product::where('product_code', $productCode)->select('product_code', 'price')->get();
-        if ($product) {
-            return $product->toJson();
+        $productCode = $request->input('product_code');
+        $price = $request->input('client_price');
+        $clientId = $request->input('client_id');
+        $updateClientIds = $this->getAllUpdateIds($clientId);
+
+        foreach ($updateClientIds as $cid) {
+            // get if already exists
+            $clientPrice = ClientPrice::where([
+                ['client_id', '=', $cid],
+                ['product_code', '=', $productCode],
+            ])->first();
+
+            if (!$clientPrice) {
+                $clientPrice = new ClientPrice;
+                $clientPrice->client_id = $cid;
+                $clientPrice->product_code = $productCode;
+            }
+
+            $clientPrice->client_price = $price;
+
+            $clientPrice->save();
         }
-        return ['result' => 404];
-        // return collect($request->all())->toJson();
+
+        return $this->clientPrices($clientId);
+
+    }
+
+    protected function delete_product(Request $request)
+    {
+        $productCode = $request->input('product_code');
+        $clientId = $request->input('client_id');
+        $updateClientIds = $this->getAllUpdateIds($clientId);
+
+        foreach ($updateClientIds as $cid) {
+            ClientPrice::where([
+                ['client_id', '=', $cid],
+                ['product_code', '=', $productCode],
+            ])->delete();
+        }
+
+        return $this->clientPrices($clientId);
+    }
+
+    protected function getAllUpdateIds($clientId)
+    {
+        $children = Client::where('parent', $clientId)->select('client_id')->get();
+
+        $updateClientIds = $children->pluck('client_id')->all();
+        $updateClientIds[] = $clientId;
+        return $updateClientIds;
+    }
+
+    protected function update_prices(Request $request)
+    {
+        $clientId = $request->input('client_id');
+
+        $updateClientIds = $this->getAllUpdateIds($clientId);
+
+        // Update the ClientPrice record
+        $updates = $request->input('updates');
+
+        if (count($updates)) {
+            foreach ($updates as $update) {
+                foreach ($updateClientIds as $cid) {
+                    $item = ClientPrice::where([
+                        ['client_id', '=', $cid],
+                        ['product_code', '=', $update['product_code']],
+                    ])->update(['client_price' => $update['price']]);
+                }
+
+            }
+        }
+
+        return $this->clientPrices($clientId);
+    }
+
+    protected function clientPrices($clientId)
+    {
+        $items = ClientPrice::with('product')
+            ->where('client_id', $clientId)
+            ->get();
+
+        // Transfrom prices into format for Vue.js app
+        /**
+         * id, product_code, client_price, std_price
+         */
+        $prices = $items->map(function ($item, $key) {
+            return [
+                'id' => $item->id,
+                'product_code' => $item->product_code,
+                'client_price' => $item->client_price,
+                'std_price' => $item->product->price,
+            ];
+        });
+
+        return $prices;
     }
 
 }

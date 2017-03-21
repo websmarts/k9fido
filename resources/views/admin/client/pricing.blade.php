@@ -8,7 +8,6 @@
                 <h3>Edit Client Prices</h3>
                 <div id="app">
                     <client-prices
-                        json_prices='{!! $prices->toJson() !!}'
                         json_client='{{ $client->toJson() }}'
                         url='{{ route("client.price.ajax")}}'></client-prices>
                 </div>
