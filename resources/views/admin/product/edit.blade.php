@@ -69,6 +69,22 @@
         </div>
 
     </div>
+@if(count($clients > 0))
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Clients with Special Pricing </div>
+
+                <div class="panel-body">
+                    @foreach ($clients as $c )
+                    <div> <a href="{{ route('client.pricing', ['id' => $c->client_id] ) }}"> Edit prices</a>&nbsp; {{$c->name}}</div>
+                    @endforeach
+
+                </div>
+            </div>
+        </div>
+    </div>
+ @endif
 
 
 </div>

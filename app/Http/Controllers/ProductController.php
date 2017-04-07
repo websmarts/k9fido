@@ -84,6 +84,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+
         $product = Product::find($id);
 
         $productTypes = $this->getProductTypes();
@@ -101,8 +102,22 @@ class ProductController extends Controller
         $product->qty_ordered = $qty[0]->qty_ordered;
 
         // dd($product);
+        // Clients with a special price for this product
+        $cps = $product->clientprices;
+        //dd($cps);
+        $clients = [];
+        foreach ($cps as $cp) {
+            // $clients[$cp->client_id] = Client::find($cp->client_id);
+            // ignore children
+            $c = $cp->client;
+            if ($c->parent == 0) {
+                $clients[$cp->client_id] = $c;
+            }
 
-        return view('admin.product.edit', compact('product', 'productTypes'));
+        }
+        //dd($clients);
+
+        return view('admin.product.edit', compact('product', 'productTypes', 'clients'));
     }
 
     /**

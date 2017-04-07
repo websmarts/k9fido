@@ -2,6 +2,8 @@
 
 namespace App\Legacy\Product;
 
+use App\Legacy\Client\Client;
+use App\Legacy\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class ClientPrice extends Model
@@ -42,6 +44,10 @@ class ClientPrice extends Model
     {
         return $this->hasOne(Product::class, 'product_code', 'product_code')
             ->select(['product_code', 'price']);
+    }
+    public function client()
+    {
+        return $this->hasOne(Client::class, 'client_id', 'client_id')->select(['client_id', 'name', 'parent']);
     }
 
 }

@@ -86,4 +86,12 @@ class Product extends Model
         return $this->hasMany(Bom::class, 'parent_product_code', 'product_code');
     }
 
+    public function clientprices()
+    {
+
+        return $this->hasMany(ClientPrice::class, 'product_code', 'product_code');
+        //->select(['product_code', 'client_id']);
+
+    }
+
 }
