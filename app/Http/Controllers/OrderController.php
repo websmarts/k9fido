@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Legacy\Order\Item;
@@ -119,8 +118,13 @@ class OrderController extends Controller
     public function pickorderGet($id)
     {
         $order = Order::with('items.product')->find($id);
+
+        // Sort order Items
+
+        $sorted = $order->items->sortBy('product_code');
+
         $result['data'] = [];
-        foreach ($order->items as $i) {
+        foreach ($sorted as $i) {
             if ($i->qty_supplied >= $i->qty) {
                 continue;
             }
@@ -135,6 +139,9 @@ class OrderController extends Controller
 
             $result['data'][] = $x;
         }
+
+        // Sort $result['data'] array by product code
+
         $result['status'] = 'success';
         return $result;
     }

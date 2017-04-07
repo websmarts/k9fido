@@ -134,8 +134,9 @@
                 value.error = false;
                 
                 this.items.push(value);
-            });
 
+            });
+            // Sort items by product_code asc
             
 
           }, (response) => {
