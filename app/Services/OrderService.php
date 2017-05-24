@@ -82,8 +82,9 @@ class OrderService
                 }
 
             } else if (($item->product->qty_break > 0) && ($item->qty >= $item->product->qty_break)) {
-                if ($item->price == ($item->product->price * (1 - ($item->product->qty_discount / 100)))) {
+                if ($item->price == round(($item->product->price * (1 - ($item->product->qty_discount / 100))))) {
                     $strategy = '#q'; //'quantity_discount';
+
                 }
             } else if ($item->price != $item->product->price) {
                 $strategy = '#c'; //'custom_pricing';
