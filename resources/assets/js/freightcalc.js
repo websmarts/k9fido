@@ -1,0 +1,172 @@
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * include Vue and Vue Resource. This gives a great starting point for
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+// Vue.filter('measured', {
+//   // model -> view
+//   // formats the value when updating the input element.
+//   read: function(val) {
+//     return val.toFixed(2)
+//   },
+//   // view -> model
+//   // formats the value when updating the data.
+//   write: function(val, oldVal) {
+//     var number = +val.replace(/[^\d.]/g, '')
+//     return isNaN(number) ? 0 : number
+//   }
+// })
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the body of the page. From here, you may begin adding components to
+ * the application, or feel free to tweak this setup for your needs.
+ */
+
+Vue.config.devtools = true;
+
+//Vue.component('Clientquotes', require('./components/Clientquotes.vue'));
+
+const app  = new Vue({
+    el: '#app',
+    data: {
+    	
+    	location: '',
+    	postcode: '',
+    	suburb: '',
+    	statecode: '',
+    	newPackage:{},
+    	packages: [],
+    	companies: {},
+    	quotes: [], //{ company: 'Big freight Co', method: 'Fastex', cost: 456 },
+    	inputMessage: ''
+    },
+    computed: {
+    	actualWeight: function() {
+    		return _.sumBy(this.packages, function(o) {
+    			let weight = parseFloat(o['weight'])
+    			if (! isNaN(weight) ) {
+    				return weight
+    			}
+    		})
+    	},
+    	cubicWeight: function() {
+    		return _.sumBy(this.packages, function(o) {
+    			let volume = (parseFloat(o['length']) * parseFloat(o['width']) * parseFloat(o['height']) ) * 250/1000000
+    			if (! isNaN(volume) ) {
+    				return volume
+    			}	
+    		})
+    	},
+
+
+
+    },
+    methods: {
+    	quoteTotal: function(quotes) {
+    		//console.log(quotes[1].cost)
+
+    		return _.sum(_.map(quotes,'cost'))
+		  
+    	},
+    	companyQuotes: function(companyKey){
+    		// find all quotes with companyKey
+    		let quotes = _.find(this.quotes, function(quote){
+    			return quote.company == companyKey
+    		})
+    		console.log(companyKey, quotes)
+    		return quotes
+
+    	},
+    	formKeyup: function() {
+    		this.inputMessage = ''
+    	},
+    	addPackage: function () {
+
+    		//console.log(this.newPackage['length'])
+    		if(
+    			(typeof this.newPackage['length'] !== 'undefined') && (parseFloat(this.newPackage['length']) > 0 ) &&
+    			(typeof this.newPackage['width'] !== 'undefined') && (parseFloat(this.newPackage['width']) > 0 ) &&
+    			(typeof this.newPackage['height'] !== 'undefined') && (parseFloat(this.newPackage['height']) > 0 ) &&
+    			(typeof this.newPackage['weight'] !== 'undefined') && (parseFloat(this.newPackage['weight']) > 0 )
+    		) {
+    			this.newPackage.id = this.packages.length + 1 
+    			this.packages.push(this.newPackage)
+	      		this.newPackage = {};
+
+	      		// make remote call - just to test - use get quotes button me thinks
+	      		
+	      		this.remote({
+	      			packages: this.packages,
+	      			postcode: this.postcode,
+	      			suburb: this.suburb,
+	      			statecode: this.statecode
+	      		}
+	      		);
+
+    		} else {
+    			//alert ("package data entered is not valid")
+    			this.inputMessage = 'Invalid input, try again ...'
+    		}
+    		
+	      	
+    	},
+
+    	packageData: function(item) {
+    		return 'L: ' + item['length'] +  ' W: ' + item['width'] + ' H: ' + item['height'] + ' Kg: ' + item['weight'];
+    	},
+    	
+	    remote(data){
+	    	let url = '/freight/quote';
+			return this.$http.post(url, data).then((response) => {
+			// success callback
+			//console.log(response.body.quotes);
+			let quotes = response.body.quotes;
+			this.companies = response.body.companies;
+			this.quotes = quotes;
+			// _.each(quotes, function(quote,company){
+			// 	console.log(quote)
+			//     this.quotes.push(quote);
+			// }.bind(this));
+
+			}, (response) => {
+			// error callback
+			//console.log(response);
+			});
+	    },
+	    
+      querySearchAsync(queryString, cb) {
+      	//let queryStringLength = typeof queryString.length !== 'undefned' ? queryString.length : 0
+      	//console.log(queryString.length);
+      	if( queryString.length < 3 ){
+      		 cb([{'value':'min three characters'}])
+      		 return;
+      	}
+
+       let url = '/freight/location?postcode=' + queryString
+			return this.$http.get(url).then((response) => {
+			// success callback
+			// console.log(response.body);
+			let options = response.body;
+			cb(options)
+
+			}, (response) => {
+			// error callback
+			//console.log(response);
+			});
+      },
+      handleLocationSelect(item) {
+        // value ='postcode, suburb, state'
+        let loc = item.value.split(',');
+        this.postcode = loc[0].trim()
+        this.suburb = loc[1].trim()
+        this.statecode = loc[2].trim()
+      }
+
+    }, // end of methods
+    
+
+    
+});

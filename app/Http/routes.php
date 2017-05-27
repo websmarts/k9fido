@@ -104,3 +104,14 @@ Route::get('prospector', [
     'as' => 'prospector.index', 'uses' => 'Prospector\HomeController@index']);
 Route::get('prospector/accounts', [
     'as' => 'prospector.accounts.index', 'uses' => 'Prospector\AccountsController@index']);
+
+// Freight Calculator
+Route::get('freight/location', [
+    'as' => 'freight.location', 'uses' => 'FreightCalculatorController@searchForLocation']); // ajax data for location autocomplete
+Route::get('freight', [
+    'as' => 'freight.index', 'uses' => 'FreightCalculatorController@index']);
+Route::post('freight/quote', [
+    'as' => 'freight.quote', 'uses' => 'FreightCalculatorController@quote']);
+
+// test route for hunter api testing
+Route::get('hunter', 'FreightCalculatorController@hunter');

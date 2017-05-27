@@ -17,8 +17,9 @@ elixir(mix => {
 		.webpack('main.js')
 		.webpack('orderpicker.js')
 		.webpack('clientprices.js')
+		.webpack('freightcalc.js')
 		.scripts(['app.js','SimpleAjaxUploader.js'])
 		.copy('resources/assets/js/imageuploader.js', 'public/js/imageuploader.js')
-		.version(['css/app.css','js/all.js','js/main.js','js/orderpicker.js','js/clientprices.js']);
+		.version(['css/app.css','js/all.js','js/main.js','js/orderpicker.js','js/clientprices.js','js/freightcalc.js']);
 });
 

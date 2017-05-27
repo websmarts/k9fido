@@ -14,3 +14,4 @@
     <script src="{{ elixir('js/main.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script src="{{ elixir('js/all.js') }}"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>

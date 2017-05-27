@@ -1,7 +1,8 @@
 {
   "css/app.css": "css/app-7545f0b788.css",
   "js/all.js": "js/all-074ca1f6f3.js",
-  "js/clientprices.js": "js/clientprices-885cf0532f.js",
-  "js/main.js": "js/main-9965b409de.js",
-  "js/orderpicker.js": "js/orderpicker-076c1e5e8f.js"
+  "js/clientprices.js": "js/clientprices-97fc147a29.js",
+  "js/freightcalc.js": "js/freightcalc-de7178e51d.js",
+  "js/main.js": "js/main-ae269dc8dc.js",
+  "js/orderpicker.js": "js/orderpicker-e156448c17.js"
 }
