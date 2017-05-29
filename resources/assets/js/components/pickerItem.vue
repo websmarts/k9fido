@@ -14,16 +14,21 @@ export default {
   methods: {
     itemInput: function() {
         // console.log(this)
-        // Check if input concontains the barcode string
+        // Check if input contains the barcode string
         let inputString = String(this.item.input);
         let barcodeString = String(this.item.barcode);
+        let isBarcode = -1;
 
         //console.log([inputString.length, barcodeString.length]);
 
-        let position = inputString.indexOf(barcodeString);
+        // skip if barcode is set to 0 - ie no barcode
+        if(parseInt(barcodeString) !== 0 ) {
+          isBarcode = inputString.indexOf(barcodeString);
+        } 
+        
         
         // console.log(position);
-        if(position > -1) {
+        if(isBarcode > -1) {
           // input contains the correct barcode ignore the rest
           this.item.input = parseInt(barcodeString);
         }
@@ -59,7 +64,7 @@ export default {
 
 
         if (this.isPicked()){
-          this.$emit('picked');
+          this.$emit('picked',this.item.product_code);
         }
         
     },

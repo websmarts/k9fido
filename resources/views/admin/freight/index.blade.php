@@ -85,12 +85,12 @@
 	             		<template v-for="(methods,companyKey) in quotes">
 	             		<tr><td colspan=3 v-text="companyKey"></td></tr>
 
-	             		<template v-for="(quotes,methodKey) in methods">
+	             		<template v-for="(m_quotes,methodKey) in methods">
 	             		<tr><td>&nbsp;</td><td colspan=2 v-text="methodKey"></td></tr>
-	             			<template v-for="quote in quotes">
-	             			<tr><td>&nbsp;</td><td v-text="quote.package_id"></td><td v-text="quote.cost"></td></tr>
+	             			<template v-for="m_quote in m_quotes.quotes">
+	             			<tr><td>&nbsp;</td><td v-text="m_quote.package_id"></td><td v-text="m_quote.cost"></td></tr>
 	             			</template>
-	             			<tr><td colspan="2"></td><td v-text="quoteTotal(quotes)"></td></tr>
+	             			<tr><td colspan="2" v-text="m_quotes.missed_packages.length"></td><td v-text="m_quotes.total"></td></tr>
 
 	             		</template>
 

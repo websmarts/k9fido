@@ -40,6 +40,8 @@ const app  = new Vue({
     	newPackage:{},
     	packages: [],
     	companies: {},
+    	lowestTotalQuote: {},
+    	lowestPackageQuote: {},
     	quotes: [], //{ company: 'Big freight Co', method: 'Fastex', cost: 456 },
     	inputMessage: ''
     },
@@ -67,8 +69,32 @@ const app  = new Vue({
     methods: {
     	quoteTotal: function(quotes) {
     		//console.log(quotes[1].cost)
+    		// This function gets called at the end
+    		// of each table section for company-method-package_quotes list
+    		// So here is a goo point to check if
+    		// the current quote is a complete quote for all
+    		// packages and if so is it the lowest all-up cost
+    		// Also check if the quote for each package is the
+    		// lowest quote for that particular package
 
-    		return _.sum(_.map(quotes,'cost'))
+    		// Current lowestTotalQuote
+    		var currentQuoteTotal = _.chain(quotes)
+			    					.map('cost')
+			    					.sum()
+			    					.value()
+
+
+    		//var currentQuoteTotal =  _.sum(_.map(quotes,'cost'))
+
+    		// Check if current quote covers all packages
+    		var allPackages = _.every(this.packages, function(p){
+    			return _.find(quotes, function(o){
+    				return o.package_id == p.id
+    			} )
+    		})
+    		console.log('All Packages', allPackages)
+
+    		return currentQuoteTotal.toFixed(2)
 		  
     	},
     	companyQuotes: function(companyKey){
@@ -124,6 +150,33 @@ const app  = new Vue({
 			// success callback
 			//console.log(response.body.quotes);
 			let quotes = response.body.quotes;
+
+			// for every company/method/quotes list
+			// total quote list cost and assig to
+			// company/method/total
+			var self = this
+			 _.each(quotes, function(q) {
+				_.each(q, function(fmethod, fcompany) {
+					fmethod['total'] = _.chain(fmethod.quotes)
+										.map('cost')
+										.sum()
+										.value()
+
+					var package_ids = _.map(self.packages,'id')
+					var quote_package_ids = 	_.chain(fmethod.quotes)
+												.map('package_id')
+												.value()
+
+					// console.log('pids', package_ids)
+
+					// console.log('qpids', quote_package_ids)
+
+					fmethod['missed_packages'] = _.difference(package_ids,quote_package_ids)
+
+					
+				})
+			})
+
 			this.companies = response.body.companies;
 			this.quotes = quotes;
 			// _.each(quotes, function(quote,company){

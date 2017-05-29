@@ -76,10 +76,12 @@ class FreightCalculatorController extends Controller
         // -company
         // ---method
         // -----packages
+
         $r = [];
         foreach ($quotes as $q) {
-            $r[$q['company']][$q['method']][$q['package_id']] = $q;
+            $r[$q['company']][$q['method']]['quotes'][$q['package_id']] = $q;
         }
+
         return $r;
     }
     private function validPackage($company, $package)

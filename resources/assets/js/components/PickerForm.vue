@@ -24,7 +24,7 @@
         props: ['orderId'],
         data() {
           return {
-                items: [],
+                items: []
             };
         },
         components: {
@@ -100,16 +100,48 @@
                 });
             },
             
-            focusNextItem() {
-                // Find the next item that has not been picked and give it focus.
-                this.complete = true;
+            focusNextItem(lastItemProductCode) {
+               
+                // Find the next item that has not been picked and give it focus.              
+                var allPicked = true // assume all items in list have been picked
+                 
+                // Try to find and item to focus AFTER the lastItemId
+                var size = _.size(this.items)
+                
+                var found = false
+                var counter = 0
                 _.forEach(this.items, function(item){
+                    counter++
+                    if(item.product_code == lastItemProductCode ){
+                        if(counter == size){ // The last item was the last item in the list
+                            return false 
+                        }
+                        found = true // to indicate we have now iterated up to the last item scanned
+                        return true
+                    }
+                     if (!found) { // ignore all items up to and before the last item scanned
+                        return true
+                    }
+                    
                     if(item.qty != (item.qty_supplied + item.picked_qty)){
                         $('#item_'+item.id).focus();
-                        this.complete = false;
-                        return false;
+                        return allPicked = false;// early exit from iteration loop
+                         
                     }
                 });
+
+                // if not able to find a focus in loop above w'ell now try the lot
+                // as a last ditch effort       
+                if(allPicked) {
+                    _.forEach(this.items, function(item){
+                        if(item.qty != (item.qty_supplied + item.picked_qty)){
+                            $('#item_'+item.id).focus();
+                            return false;
+                        }
+                    });
+                    
+                }
+               
             },
             handleResize() {
                 alert('window resized');
