@@ -9,6 +9,7 @@
 
                 <div class="panel-body">
                      <div class="panel-body">
+                     <a href="/freight" class="btn">Freight calculator</a>
                     @if(isSet($basketOrders) )
                     @include('admin.lists.orders',['title'=>'Order baskets', 'data'=>$basketOrders])
                     @endif
