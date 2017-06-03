@@ -113,5 +113,9 @@ Route::get('freight', [
 Route::post('freight/quote', [
     'as' => 'freight.quote', 'uses' => 'FreightCalculatorController@quote']);
 
+// Client search for ajax autocomplete selectors
+Route::get('clientlookup/', [
+    'as' => 'clientlookup', 'uses' => 'ClientLookupController@index']); // ajax data for client lookup autocomplete
+
 // test route for hunter api testing
 Route::get('hunter', 'FreightCalculatorController@hunter');

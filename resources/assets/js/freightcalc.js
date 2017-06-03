@@ -33,10 +33,12 @@ const app  = new Vue({
     el: '#app',
     data: {
     	
-    	location: '',
+    	client: '',
+        location: '',
     	postcode: '',
     	suburb: '',
     	statecode: '',
+        locationValid: false,
     	newPackage:{},
     	packages: [],
     	companies: {},
@@ -122,15 +124,7 @@ const app  = new Vue({
     			this.packages.push(this.newPackage)
 	      		this.newPackage = {};
 
-	      		// make remote call - just to test - use get quotes button me thinks
 	      		
-	      		this.remote({
-	      			packages: this.packages,
-	      			postcode: this.postcode,
-	      			suburb: this.suburb,
-	      			statecode: this.statecode
-	      		}
-	      		);
 
     		} else {
     			//alert ("package data entered is not valid")
@@ -139,6 +133,23 @@ const app  = new Vue({
     		
 	      	
     	},
+        getQuotes: function() {
+            // make remote call - just to test - use get quotes button me thinks
+            // If location is set
+            // AND
+            // Package count > 0
+            if(this.locationValid && this.packages.length > 0){
+                // make the remote call to get the quotes
+                this.remote({
+                    packages: this.packages,
+                    postcode: this.postcode,
+                    suburb: this.suburb,
+                    statecode: this.statecode
+                });
+            }
+
+                
+        },
 
     	packageData: function(item) {
     		return 'L: ' + item['length'] +  ' W: ' + item['width'] + ' H: ' + item['height'] + ' Kg: ' + item['weight'];
@@ -189,20 +200,65 @@ const app  = new Vue({
 			//console.log(response);
 			});
 	    },
+        querySearchAsync(queryString, cb) {
+        //let queryStringLength = typeof queryString.length !== 'undefned' ? queryString.length : 0
+        //console.log(queryString.length);
+        if( queryString.length < 3 ){
+             cb([{'value':'min three characters'}])
+             return;
+        }
+
+       let url = '/freight/location?postcode=' + queryString
+            return this.$http.get(url).then((response) => {
+            // success callback
+            // console.log(response.body);
+            let options = response.body;
+            cb(options)
+
+            }, (response) => {
+            // error callback
+            //console.log(response);
+            });
+      },
+      handleLocationSelect(item) {
+        // value ='postcode, suburb, state'
+        let loc = item.value.split(',')
+        this.postcode = loc[0].trim()
+        this.suburb = loc[1].trim()
+        this.statecode = loc[2].trim()
+
+        if (    this.postcode.length > 2 &&
+                this.suburb.length > 3 &&
+                this.statecode.length > 1 ){
+            // set locationValid
+            this.locationValid = true
+        }
+
+        // clear out quotes as they could be invalid
+        this.quotes = []
+      },
+
+     
 	    
-      querySearchAsync(queryString, cb) {
+      lookupClientAsync(queryString, cb) {
       	//let queryStringLength = typeof queryString.length !== 'undefned' ? queryString.length : 0
       	//console.log(queryString.length);
       	if( queryString.length < 3 ){
       		 cb([{'value':'min three characters'}])
       		 return;
       	}
-
-       let url = '/freight/location?postcode=' + queryString
+         
+            let url = '/clientlookup?q=' + queryString
 			return this.$http.get(url).then((response) => {
 			// success callback
-			// console.log(response.body);
-			let options = response.body;
+			console.log(response.body);
+			let results = response.body;
+
+            let options = _.map(results, function(r) {
+                return { value: r.name + ', ' + r.postcode + ', ' + r.city  + ', ' + r.state }
+            })
+
+            console.log(options)
 			cb(options)
 
 			}, (response) => {
@@ -210,12 +266,22 @@ const app  = new Vue({
 			//console.log(response);
 			});
       },
-      handleLocationSelect(item) {
+      handleClientSelect(item) {
         // value ='postcode, suburb, state'
-        let loc = item.value.split(',');
-        this.postcode = loc[0].trim()
-        this.suburb = loc[1].trim()
-        this.statecode = loc[2].trim()
+        let loc = item.value.split(',')
+        this.postcode = loc[1].trim()
+        this.suburb = loc[2].trim()
+        this.statecode = loc[3].trim()
+
+        if (    this.postcode.length > 2 &&
+                this.suburb.length > 3 &&
+                this.statecode.length > 1 ){
+            // set locationValid
+            this.locationValid = true
+        }
+
+        // clear out quotes as they could be invalid
+        this.quotes = []
       }
 
     }, // end of methods

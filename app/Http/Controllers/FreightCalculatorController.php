@@ -115,6 +115,7 @@ class FreightCalculatorController extends Controller
 
     public function hunter($to, $package)
     {
+        $quotes = [];
         $url = 'https://sandbox.hunterexpress.com.au/sandbox/rest/hxws/quote/get-quote';
         $url = 'https://sandbox.hunterexpress.com.au:443/sandbox/rest/hxws/quote/get-quote';
         $username = 'hxws';
@@ -122,7 +123,7 @@ class FreightCalculatorController extends Controller
         $data = '{
 						"customerCode": "DUMMY",
 						"fromLocation": {
-						 "suburbName": "HEIDELBERG HEIGHTS",
+						 "suburbName": "HEIDELBERG WEST",
 						 "postCode": "3081",
 						 "state": "VIC"
 						},
@@ -134,7 +135,7 @@ class FreightCalculatorController extends Controller
 						"goods": [
 						 {
 						   "pieces": "1",
-						   "weight": "' . $package['weight'] . '",
+						   "weight": "' . ceil($package['weight']) . '",
 						   "width": "' . $package['width'] . '",
 						   "height": "' . $package['height'] . '",
 						   "depth": "' . $package['length'] . '",
@@ -157,18 +158,21 @@ class FreightCalculatorController extends Controller
         // extract any quote options
         $options = json_decode($body);
 
+        if (isset($options->errorCode)) {
+            return $quotes;
+        }
         //dd($options);
+        if (count($options)) {
+            foreach ($options as $o) {
+                $quote['package_id'] = $package['id'];
+                $quote['company'] = 'hunter';
+                //$quote['serviceCode'] = $o->serviceCode;
+                $quote['method'] = $o->serviceName;
+                $quote['cost'] = $o->fee;
+                // $quote['etd'] = $o->etd;
+                $quotes[] = $quote;
 
-        $quotes = [];
-        foreach ($options as $o) {
-            $quote['package_id'] = $package['id'];
-            $quote['company'] = 'hunter';
-            //$quote['serviceCode'] = $o->serviceCode;
-            $quote['method'] = $o->serviceName;
-            $quote['cost'] = $o->fee;
-            // $quote['etd'] = $o->etd;
-            $quotes[] = $quote;
-
+            }
         }
 
         return $quotes;
