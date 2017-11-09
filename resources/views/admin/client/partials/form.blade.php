@@ -91,6 +91,7 @@
 <?php
 $states = [
     '' => 'Select State ....',
+
     'VIC' => 'VIC',
     'NSW' => 'NSW',
     'QLD' => 'QLD',
@@ -98,6 +99,7 @@ $states = [
     'WA' => 'WA',
     'SA' => 'SA',
     'TAS' => 'TAS',
+    'ACT' => 'ACT',
     'OTHER' => 'OTHER',
 ];
 ?>
