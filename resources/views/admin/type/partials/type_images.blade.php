@@ -8,7 +8,7 @@
      @if ($images->count())
         <ul id="sortable" class="sortable">
          @foreach ($images as $i)
-         <li id="item-{{ $i->id }}"><img src="{{ url('/source/tn/'.$i->filename.'?'.$i->updated_at) }}" /> {{ $i->filename }} </li>
+         <li id="item-{{ $i->id }}"><img src="{{ url('/source/tn/'.$i->filename.'?'.$i->updated_at->timestamp) }}" /> {{ $i->filename }} </li>
 
          @endforeach
          </ul>
