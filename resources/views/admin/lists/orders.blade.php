@@ -1,3 +1,4 @@
+
 <h3>{{ $title }}</h3>
                     <table class="table table-striped">
                     <thead>
@@ -16,7 +17,8 @@
                             <td>{{ $order->id}}</td>
                             <td>{{ date('j-m-Y',strtotime($order->modified)) }}</td>
 
-                            <td>{{ $order->client->name }}</td>
+                            <td>
+                                {{$order->client ? $order->client->name : 'NO CLIENT ATTACHED TO ORDER'}}</td>
                             <td width="20"><a href="{{ route('order.show', ['id' => $order->id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
                         </tr>
                         @endforeach
