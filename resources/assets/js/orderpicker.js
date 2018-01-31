@@ -15,7 +15,7 @@
 
 Vue.config.devtools = true;
 
-Vue.component('PickerForm', require('./components/PickerForm.vue'));
+Vue.component('PickerForm', require('./components/PickerForm2.vue'));
 
 const app  = new Vue({
     el: '#app',

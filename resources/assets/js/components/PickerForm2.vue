@@ -1,10 +1,10 @@
 <template>
     <form class="pickerform">
     <fieldset>
-        <h2>Picking order# {{orderId}}</h2>
+        <h2>(P2)Picking order# {{orderId}}</h2>
         <template v-for="item in items">
 
-            <item :item="item" v-on:picked="focusNextItem"></item>
+            <item :item="item"  v-on:picked="focusNextItem"></item>
             
         </template>
         <div class="buttons">
@@ -100,8 +100,16 @@
                 });
             },
             
-            focusNextItem(lastItemProductCode) {
+            focusNextItem(payload) {
+              
+                console.log('payload forNextItem',payload)
+
+                let item = _.find(this.items,['product_code',payload.product_code])
+                item.picked_qty = payload.picked_qty
+                item.scanned_barcode = payload.scanned_barcode
+                item.input = payload.input
                
+               let lastItemProductCode = payload.product_code
                 // Find the next item that has not been picked and give it focus.              
                 var allPicked = true // assume all items in list have been picked
                  
