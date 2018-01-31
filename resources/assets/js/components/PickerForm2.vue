@@ -102,7 +102,7 @@
             
             focusNextItem(payload) {
               
-                console.log('payload forNextItem',payload)
+                //console.log('payload forNextItem',payload)
 
                 let item = _.find(this.items,['product_code',payload.product_code])
                 item.picked_qty = payload.picked_qty

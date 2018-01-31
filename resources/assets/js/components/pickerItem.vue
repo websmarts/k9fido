@@ -16,7 +16,7 @@ export default {
         // console.log(this)
         // Check if input contains the barcode string
         let inputString = String(this.item.input);
-        let barcodeString = String(this.item.barcode);
+        let barcodeString = String(this.item.barcode).trim().substring(0,12);
         let isBarcode = -1;
 
         //console.log([inputString.length, barcodeString.length]);

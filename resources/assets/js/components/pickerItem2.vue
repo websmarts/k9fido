@@ -31,9 +31,11 @@ export default {
         // Check if input contains the barcode string
         
         
-        let inputString = String(val);
-        let barcodeString = String(this.item.barcode);
+        let inputString = String(val).trim().substring(0,12); // remove white space & any checksum on the end
+
+        let barcodeString = String(this.item.barcode).trim().substring(0,12);
         let isBarcode = -1;
+
 
         //console.log([inputString.length, barcodeString.length]);
 
@@ -49,7 +51,7 @@ export default {
           this.input = parseInt(barcodeString);
         }
 
-        let value = isNaN(val) ? 0 : parseInt(val);
+        let value = isNaN(val) ? 0 : parseInt(inputString);
         
         
         // check if the barcode string is in the input value
