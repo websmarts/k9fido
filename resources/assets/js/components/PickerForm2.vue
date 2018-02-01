@@ -1,7 +1,7 @@
 <template>
     <form class="pickerform">
     <fieldset>
-        <h2>(P2)Picking order# {{orderId}}</h2>
+        <h2>Picking order# {{orderId}}</h2>
         <template v-for="item in items">
 
             <item :item="item"  v-on:picked="focusNextItem"></item>
@@ -115,7 +115,13 @@
                  
                 // Try to find and item to focus AFTER the lastItemId
                 var size = _.size(this.items)
-                
+
+                // If size == 1 then we are done as there is only one input
+                if(size == 1){
+                    return
+                }
+                //console.log('there are - ', size ,' items')
+
                 var found = false
                 var counter = 0
                 _.forEach(this.items, function(item){
