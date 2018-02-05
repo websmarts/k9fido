@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Legacy\Product\ClientPrice;
 use App\Legacy\Product\Product;
 use App\Legacy\Product\ProductType;
 use Illuminate\Http\Request;
@@ -110,7 +111,12 @@ class ProductController extends Controller
             // $clients[$cp->client_id] = Client::find($cp->client_id);
             // ignore children
             $c = $cp->client;
-            if ($c->parent == 0) {
+            if (!$c) {
+                ClientPrice::where('client_id', $cp->client_id)->delete();
+                continue;
+            }
+
+            if ($c && $c->parent == 0) {
                 $clients[$cp->client_id] = $c;
             }
 
