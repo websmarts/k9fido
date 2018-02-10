@@ -103,13 +103,13 @@ $states = [
     'OTHER' => 'OTHER',
 ];
 ?>
-                    <div class="form-group{{ $errors->has('postcode') ? ' has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
                         {!! Form::label('state', 'State', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::select('state', $states, null,  array('class' => 'form-control')) !!}
 
 
-                        @if ($errors->has('postcode'))
+                        @if ($errors->has('state'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('state') }}</strong>
                             </span>

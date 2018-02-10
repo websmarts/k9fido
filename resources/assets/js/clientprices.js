@@ -13,7 +13,7 @@
  * the application, or feel free to tweak this setup for your needs.
  */
 
-Vue.config.devtools = true;
+// Vue.config.devtools = true;
 
 Vue.component('ClientPrices', require('./components/ClientPrices.vue'));
 

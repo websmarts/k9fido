@@ -19,6 +19,7 @@ class ClientPricingController extends Controller
     {
         //$prices = $this->clientPrices($clientId);
         // dd($prices);
+        // Pricing details handled by vue component on the page
         $client = Client::find($clientId);
         return view('admin.client.pricing', compact('client'));
     }
@@ -54,26 +55,55 @@ class ClientPricingController extends Controller
     protected function add_product(Request $request)
     {
         $productCode = $request->input('product_code');
-        $price = $request->input('client_price');
         $clientId = $request->input('client_id');
-        $updateClientIds = $this->getAllUpdateIds($clientId);
-
-        foreach ($updateClientIds as $cid) {
-            // get if already exists
-            $clientPrice = ClientPrice::where([
-                ['client_id', '=', $cid],
-                ['product_code', '=', $productCode],
-            ])->first();
-
-            if (!$clientPrice) {
-                $clientPrice = new ClientPrice;
-                $clientPrice->client_id = $cid;
-                $clientPrice->product_code = $productCode;
+        $discount = $request->input('discount');
+        if ($discount > 1) {
+            //Chances are the user addeed discount as a % instead of a decimal fraction
+            // so convert it
+            if ($discount > 100) {
+                // What the !!! - give up
+                return $this->clientPrices($clientId);
             }
 
-            $clientPrice->client_price = $price;
+            // This should be okay now
+            $discount = $discount / 100;
+        }
+
+        $updateClientIds = $this->getAllUpdateIds($clientId);
+
+        $product = Product::where('product_code', $productCode)->first();
+
+        if (!$product) {
+            // bad product code entered
+
+            return $this->clientPrices($clientId);
+        }
+
+        if ($discount > 0) {
+            // Valid - so delete all existing client prices for client family
+            foreach ($updateClientIds as $cid) {
+                ClientPrice::where([
+                    ['client_id', '=', $cid],
+                    ['product_code', '=', $productCode],
+                ])->delete();
+            }
+        }
+
+        foreach ($updateClientIds as $cid) {
+
+            $clientPrice = ClientPrice::create([
+                'client_id' => $cid,
+                'product_code' => $productCode,
+                'discount' => $discount,
+
+            ]);
+
+            // now add the std_price and the calculated client_price and then save
+            $clientPrice->std_price = $clientPrice->product->price;
+            $clientPrice->client_price = $clientPrice->product->price * (1 - $discount);
 
             $clientPrice->save();
+
         }
 
         return $this->clientPrices($clientId);
@@ -111,16 +141,32 @@ class ClientPricingController extends Controller
 
         $updateClientIds = $this->getAllUpdateIds($clientId);
 
+        // Delete all existing client_pricing info for
+        // this client 'family'
+        foreach ($updateClientIds as $cid) {
+            ClientPrice::where('client_id', $cid)->delete();
+        }
+
         // Update the ClientPrice record
         $updates = $request->input('updates');
 
         if (count($updates)) {
             foreach ($updates as $update) {
                 foreach ($updateClientIds as $cid) {
-                    $item = ClientPrice::where([
-                        ['client_id', '=', $cid],
-                        ['product_code', '=', $update['product_code']],
-                    ])->update(['client_price' => $update['price']]);
+
+                    $item = ClientPrice::create(
+                        [
+                            'client_id' => $cid,
+                            'product_code' => $update['product_code'],
+                            'discount' => $update['discount'],
+                        ]
+                    );
+
+                    $item->std_price = $item->product->price;
+                    $item->client_price = $item->product->price * (1 - $update['discount']);
+
+                    $item->save();
+
                 }
 
             }
@@ -135,17 +181,29 @@ class ClientPricingController extends Controller
             ->where('client_id', $clientId)
             ->get();
 
+        //return response()->json($items->toArray());
+
         // Transfrom prices into format for Vue.js app
         /**
          * id, product_code, client_price, std_price
          */
         $prices = $items->map(function ($item, $key) {
-            return [
-                'id' => $item->id,
-                'product_code' => $item->product_code,
-                'client_price' => $item->client_price,
-                'std_price' => $item->product->price,
-            ];
+            // Check if item.product is null
+            if ($item->product) {
+                return [
+                    'id' => $item->id,
+                    'product_code' => $item->product_code,
+                    'latest_std_price' => $item->product->price,
+                    'client_price' => $item->client_price,
+                    'std_price' => $item->std_price,
+                    'discount' => $item->discount,
+                ];
+            } else {
+                // A Product no longer exists with this product_code in product table
+                // Delete do some cleanup and DELETE all client_prices with this product_code
+                ClientPrice::where('product_code', $item->product_code)->delete();
+            }
+
         });
 
         return $prices;

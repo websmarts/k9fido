@@ -13,7 +13,8 @@
  * the application, or feel free to tweak this setup for your needs.
  */
 
-Vue.config.devtools = true;
+// Vue.config.devtools = true
+
 
 Vue.component('PickerForm', require('./components/PickerForm2.vue'));
 

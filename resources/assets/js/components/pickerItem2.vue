@@ -7,7 +7,9 @@
           :id="itemId(item.id)" 
           :value="input" 
           class="input" 
-          @input.prevent="itemInput($event.target.value)" />
+          @input="itemInput($event.target.value)" 
+          ref="user_input"
+          />
       </div>
       <div class="product_note" v-if="item.product_note">{{ item.product_note }}</div>       
   </div>
@@ -15,73 +17,88 @@
 
 <script>
 export default {
-  props: ['item'],
+  props: ['item','autofocus'],
   data() {
     return {
       qty: this.item.qty,
       qty_supplied: this.item.qty_supplied,
       input: this.item.input,
-      scanned_barcode: this.item.scanned_barcode,
-      picked_qty: this.item.picked_qty
+      picked_qty: this.item.picked_qty,
+      barcodeString: this.item.barcode.toString(),
+      scan_match: false,
     }
   },
   methods: {
     itemInput: function(val) {
-        //console.log("VAL",val)
-        // Check if input contains the barcode string
-        
-        
-        let inputString = String(val).trim().substring(0,12); // remove white space & any checksum on the end
 
-        let barcodeString = String(this.item.barcode).trim().substring(0,12);
-        let isBarcode = -1;
+      //input = isNaN(input) ? 0 : input,
+      //console.log('isNaN=',isNaN(input))
 
+      let strInput = val.toString().trim()
 
-        //console.log([inputString.length, barcodeString.length]);
+      //console.log('isNaN.toString()trim()=',isNaN(input))
+  
+      //console.log('input=|',input,'|')
 
-        // skip if barcode is set to 0 - ie no barcode
-        if(parseInt(barcodeString) !== 0 ) {
-          isBarcode = inputString.indexOf(barcodeString);
-        } 
-        
-        
-        // console.log(position);
-        if(isBarcode > -1) {
-          // input contains the correct barcode ignore the rest
-          this.input = parseInt(barcodeString);
-        }
-
-        let value = isNaN(val) ? 0 : parseInt(inputString);
-        
-        
-        // check if the barcode string is in the input value
-        if(this.item.barcode === value) {
-            this.scanned_barcode = this.item.barcode // set flag to show we have seen the correct barcode
-
-            if((this.item.qty - this.item.qty_supplied) > this.picked_qty) { 
-                this.picked_qty++
-            }
+  
+        if(this.item.barcode == 0 ) {
+          if(this.isScannerInput(val)){
+            // console.log('do nothing as erroneous scanner input')
+            this.$forceUpdate() // remove the offending input characters
+            return
+          }
+          this.picked_qty =  val < 1 ? null : val // no negetive numbers and null if zero
+          this.input = this.picked_qty
+          this.$forceUpdate() // important to update input
         } else {
-            if(this.barcodeCheck()){ // True if scanned barcode  eq product barcode
-                
-                if (value > 0 ){
-                    this.picked_qty = value
-                }
-            }
+          //console.log('Barcode is not zero')
+         
+          //console.log('string input',strInput);
+          //console.log('barcode string',this.barcodeString)
+          // We need to match the item barcode
+          let inputContainsBarcode = strInput.indexOf(this.barcodeString)
+
+          //console.log('inputContainsBarcode',inputContainsBarcode)
+
+          if (! this.scan_match && inputContainsBarcode > -1){ // first matching barcode scan
+            //console.log('scan match is NOT set and input contains barcode')
+            this.scan_match = true;
+            this.picked_qty = 1
+            this.input = this.picked_qty
+
+          } else if (this.scan_match && inputContainsBarcode > -1) { // additional matching barcode scann
+            //console.log('scan match is true yet and  input contains barcode')
+            this.picked_qty++
+            this.input = this.picked_qty
+
+          } else if (this.scan_match && inputContainsBarcode < 0) { // input is just a qty after a previous matching scan 
+            //console.log('previous scan match so treating input as a pick qty')
             
-        }
-        //console.log('value:' + value)
-        // check if input looks like a qty and not a barcode value
-        if(value > 0){
-          //console.log('setting input to picked qty:'+ this.item.picked_qty)
-            this.input = this.picked_qty > 0 ? this.picked_qty : '';
-        } else {
-            this.picked_qty = '';
-            this.input ='';
-        }
+            // Do not accept input less than zero
+             
 
 
-        if (this.isPicked()){
+            if (!this.isScannerInput(val)) {
+              // The test above filters out the case there an incorrect scan is made in the input AFTER a match has 
+              // already been made. 
+
+              this.picked_qty = val < 1 ? null : val // no negetive numbers and null if zero 
+              this.input = this.picked_qty
+            } 
+            this.$forceUpdate()
+
+          } else {
+            //console.log('just returning because barcode is not zero and input has no barcode match yet')
+            this.$forceUpdate()
+            return
+          }
+         
+        }
+        // Could add source ie scanner or typed input to payload if
+        // we decide the auto advancing is an issue when qty is manually being typed in and 
+        // is equal to or exceeds the qty to be picked
+        // eg payolad.source : 'scanner' || 'keypress'
+         
           let payload = {
             product_code: this.item.product_code,
             scanned_barcode: this.scanned_barcode,
@@ -90,36 +107,54 @@ export default {
 
           }
           this.$emit('picked',payload);
-        }
+        
+        
+      
         
     },
-    
+    isPicked() {
+        return this.quantityCheck() && this.barcodeCheck()
+    },
+    isOverPicked() {
+      return this.barcodeCheck()  && ( (this.item.qty - this.qty_supplied) < this.picked_qty )
+    },
     quantityCheck() {
         return (this.item.qty - this.qty_supplied) == this.picked_qty
         
     },
     barcodeCheck() {
-         return this.item.barcode === this.scanned_barcode
+         return this.scan_match || ! this.item.barcode // we have a barcode match or the barcode is 0
       
     },
     itemId(id) {
       return "item_" + id;
-    },
-    isPicked() {
-        return this.quantityCheck() && this.barcodeCheck()
-    },
-    
-    
-
+    },  
+    isScannerInput(val){
+      let strInput = val.toString()
+      return strInput.length > 7 // anything more than 7 chars is considered a scanned input val
+    }
   },
   computed: {
     picked() { // class setter based on picked status
-      let picked = this.isPicked();
-      return {
-            complete: picked  
+      if (this.isPicked()) {
+        return {
+            complete: true  
         }
+      }
+
+      if(this.isOverPicked()){
+        return {
+            complete: false,
+            overpicked: true  
+        }
+      }  
+    },  
+  },
+  mounted() {
+    if(this.autofocus){
+      this.$refs.user_input.focus()
+      //this.$nextTick(() => this.$refs.user_input.focus())
     }
-    
   }
 }
 
@@ -130,5 +165,6 @@ export default {
   background: #ffffff;
   color: #ff0000;
 }
+
 
 </style>

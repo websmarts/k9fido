@@ -19,6 +19,8 @@
 |
  */
 
+Route::get('testy/', 'ClientPricingController@add_product');
+
 Route::get('test/{typeid}', 'ProductTypeImageController@doSortIfRequired');
 
 // sorts a productTypeImage list
@@ -30,6 +32,7 @@ Route::get('test/{typeid}', 'ProductTypeImageController@doSortIfRequired');
 // });
 
 Route::auth();
+Route::get('ecatgw', 'Auth\EcatalogGatewayController@index'); // links from eCat
 Route::get('/', ['as' => 'welcome', 'uses' => 'HomeController@welcome']);
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 

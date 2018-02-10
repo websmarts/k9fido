@@ -37,6 +37,8 @@ class ClientPrice extends Model
         'client_id',
         'product_code',
         'client_price',
+        'std_price',
+        'discount',
 
     ];
 

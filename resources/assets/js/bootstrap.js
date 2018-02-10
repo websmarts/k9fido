@@ -17,7 +17,8 @@ require('bootstrap-sass');
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = require('vue');
+Vue = require('vue');
+
 require('vue-resource');
 
 /**
@@ -31,3 +32,10 @@ Vue.http.interceptors.push((request, next) => {
 
     next();
 });
+
+Vue.config.productionTip = false
+
+Vue.config.devtools = true
+Vue.config.debug = true
+Vue.config.silent = false
+

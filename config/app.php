@@ -160,6 +160,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Barryvdh\Debugbar\ServiceProvider::class,
+
     ],
 
     /*
@@ -211,6 +213,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
         'Appdata' => App\Facades\ApplicationConfiguration::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 

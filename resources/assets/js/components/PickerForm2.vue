@@ -1,21 +1,23 @@
 <template>
-    <form class="pickerform">
+    <div class="pickerform" >
     <fieldset>
         <h2>Picking order# {{orderId}}</h2>
-        <template v-for="item in items">
+        
 
-            <item :item="item"  v-on:picked="focusNextItem"></item>
+        <template v-for="(item,index) in items">
+
+            <item :item="item"  :autofocus="!index" v-on:picked="pickInput" :key='item.id'></item>
             
         </template>
         <div class="buttons">
-        <div v-show="complete" class="order-picked">Order picking complete</div>
-        <div v-show="overPicked" class="order-over-picked">Order has been over picked</div>
+        <div v-show="complete" class="order-picked">Order now picked</div>
+        <div v-show="overPicked" class="order-over-picked">One or more items have been over picked</div>
 
         <a class="btn btn-success pull-right" v-on:click="parkOrder">Park Order</a>
         <a class="btn btn-primary pull-left"  v-on:click="saveOrder">Save Order</a>
         </div>
         </fieldset>
-    </form>
+    </div>
                 
 </template>
 
@@ -37,16 +39,16 @@
                     return false;
                 }
                 return !_.filter(this.items, function(item){
-                    return item.qty != (item.qty_supplied + item.picked_qty)
+                    return item.qty > (item.qty_supplied + item.picked_qty)
                 }).length;
             },
             overPicked() {
                 // Find the next item that has not been picked and give it focus. 
-                if(this.items.length < 1) {
-                    return false;
-                }
+                // if(this.items.length < 1) {
+                //     return false;
+                // }
                 return _.filter(this.items, function(item){
-                    return item.qty < (item.qty_supplied + parseInt(item.picked_qty) )
+                    return (item.qty - item.qty_supplied)  < parseInt(item.picked_qty) 
                 }).length;
             },
         },
@@ -100,7 +102,7 @@
                 });
             },
             
-            focusNextItem(payload) {
+            pickInput(payload) {
               
                 //console.log('payload forNextItem',payload)
 
@@ -108,6 +110,11 @@
                 item.picked_qty = payload.picked_qty
                 item.scanned_barcode = payload.scanned_barcode
                 item.input = payload.input
+
+                // return if picked_qty is under-picked
+                if ((item.qty - item.qty_supplied) > item.picked_qty) {
+                    return
+                }
                
                let lastItemProductCode = payload.product_code
                 // Find the next item that has not been picked and give it focus.              
@@ -117,9 +124,9 @@
                 var size = _.size(this.items)
 
                 // If size == 1 then we are done as there is only one input
-                if(size == 1){
-                    return
-                }
+                // if(size == 1){
+                //     //return
+                // }
                 //console.log('there are - ', size ,' items')
 
                 var found = false
@@ -173,13 +180,14 @@
             _.forEach(response.body.data, (value) => {
 
                 // init a few values we need
-                value.scanned_barcode = '';
-                value.status = "incomplete";
-                value.input ='';
-                value.picked_qty ='';
-                value.error = false;
+                value.scanned_barcode = ''
+                value.status = "incomplete"
+                value.input =''
+                value.picked_qty = 0
+                value.error = false
+                // value.barcode = 0 // just for testing 
                 
-                this.items.push(value);
+                this.items.push(value)
 
             });
             // Sort items by product_code asc
@@ -214,6 +222,9 @@
 }
 .pickerform div.item.complete {
     border-left: 8px solid #999;
+}
+.pickerform div.item.overpicked {
+    border-left: 8px solid #f99;
 }
 .pickerform input.input {
     width: 9em;
@@ -253,8 +264,8 @@
     margin:10px;
 }
 .order-over-picked {
-    background: orange;
-    color: #ffffff;
+    background: #f99;
+    color: #000;
     padding:5px;
     margin:10px;
 }

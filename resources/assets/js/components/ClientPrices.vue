@@ -4,24 +4,29 @@
       <div class="row" v-if="message">
         <div class="col-sm-12 message"><span  v-text="message"></span></div>
       </div>
-      <div class="row">
-        <div class="col-sm-3">Product code</div>
-        <div class="col-sm-3">Std price</div>
-        <div class="col-sm-3">Client price</div>
-        <div class="col-sm-3">Updated price</div>
-      </div>
-      <div class="row">
-        
-        <div class="col-sm-3"><input type="text" v-model="add_product_code" ></div>
-        <div class="col-sm-3 col-sm-offset-3"><input type="text" v-model="add_product_price" ></div>
-        <div class="col-sm-3"><button class="btn" @click="addProduct">Add product</button></div>
+      
+      <div class="row" style="background: #eee;padding-top:10px;padding-bottom: 8px;">
+       
+        <div class="col-sm-4"><input type="text" v-model="add_product_code" > Product code</div>
+
+        <div class="col-sm-3"><input type="text" v-model="add_product_discount" > Discount</div>
+        <div class="col-sm-2 col-md-offset-2"><button class="btn btn-primary" @click="addProduct">Add client price</button></div>
         
       </div>
+      <div class="row">
+        <div class="col-sm-2"><strong>Product code</strong></div>
+        <div class="col-sm-2"><strong>Std price : latest</strong> </div>
+        <div class="col-sm-2"><strong>Discount</strong></div>
+        <div class="col-sm-2"><strong>Client price</strong></div>
+        <div class="col-sm-3"><strong>Updated discount</strong></div>
+      </div>
+      
       <div v-for="price in prices" track-by="id" class="row">
-        <div class="col-sm-3">{{ price.product_code }}</div>
-        <div class="col-sm-3">{{ price.std_price }}</div>
-        <div class="col-sm-3">{{ price.client_price }}</div>
-        <div class="col-sm-3"><input v-model="price.updated_price"> <i @click="deleteProduct(price.product_code)" class="fa fa-minus-circle" aria-hidden="true"></i></i></div>
+        <div class="col-sm-2">{{ price.product_code }}</div>
+        <div class="col-sm-2">{{ price.std_price }}<span v-if="price.std_price != price.latest_std_price"> : {{ price.latest_std_price }}</span></div>
+        <div class="col-sm-2">{{ price.discount.toFixed(3) }}<span v-if="price.std_price != price.latest_std_price"> : {{ newDiscount(price) }}</span> </div>
+        <div class="col-sm-2">{{ price.client_price }}</div>
+        <div class="col-sm-3"><input v-model="price.updated_discount"> <i @click="deleteProduct(price.product_code)" class="fa fa-minus-circle" aria-hidden="true"></i></i></div>
         
 
       </div>
@@ -38,18 +43,23 @@ export default {
       prices:[],
       client:{},
       add_product_code: '',
-      add_product_price: 0,
+      add_product_discount: null,
       message: ''
     };
   },
   methods: {
+
+    newDiscount(price) {
+      
+      return (1-(price.client_price/price.latest_std_price)).toFixed(3)
+    },
     
     saveChanges() {
       let updates = [];
       _.each(this.prices, function(price){
-        if(price.client_price !== price.updated_price){
-          updates.push({product_code: price.product_code,price: price.updated_price});
-        }
+        
+          updates.push({product_code: price.product_code,discount: price.updated_discount});
+        
       })
 
       if(updates.length > 0) {
@@ -70,7 +80,7 @@ export default {
       let data={  
         client_id: this.client.client_id,
         product_code: this.add_product_code,
-        client_price: this.add_product_price,
+        discount: this.add_product_discount,
         action: 'add_product',
       };
 
@@ -81,7 +91,7 @@ export default {
 
       // Clear ouit the input fields
       this.add_product_code ='';
-      this.add_product_price = 0;
+      this.add_product_discount = null;
     },
     deleteProduct(productCode) {
       let data={
@@ -112,7 +122,7 @@ export default {
         let prices = response.body;
         this.prices = [];
         _.each(prices, function(price){
-            price.updated_price = price.client_price;
+            price.updated_discount = price.discount;
             this.prices.push(price);
         }.bind(this));
 

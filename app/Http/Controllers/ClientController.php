@@ -71,8 +71,11 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
-        $this->validate($request, ['name' => 'required']);
+
+        $this->validate($request, [
+            'name' => 'required',
+            'state' => 'required',
+        ]);
 
         $data = $request->except('_method', '_token');
         $data['modified'] = date("Y-m-d H:i:s");
