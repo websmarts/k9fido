@@ -9,7 +9,7 @@
        
         <div class="col-sm-4"><input type="text" v-model="add_product_code" > Product code</div>
 
-        <div class="col-sm-3"><input type="text" v-model="add_product_discount" > Discount</div>
+        <div class="col-sm-3"><input type="text" v-model="add_product_discount" placeholder="0.XXX"> Discount</div>
         <div class="col-sm-2 col-md-offset-2"><button class="btn btn-primary" @click="addProduct">Add client price</button></div>
         
       </div>
