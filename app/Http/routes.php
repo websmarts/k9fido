@@ -41,6 +41,7 @@ Route::post('filter/{name}', 'FilterController@index');
 
 // PRODUCT ROUTES
 Route::resource('product', 'ProductController');
+Route::get('product/{id}/orders', 'ProductController@orders');
 
 // BOM ROUTES
 Route::resource('bom', 'BomController');

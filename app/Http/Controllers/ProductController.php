@@ -177,6 +177,25 @@ class ProductController extends Controller
         //
     }
 
+/**
+ * Get orders where product is on order
+ * @method orders
+ * @param  [type] $id [description]
+ * @return [type]     [description]
+ */
+    public function orders($id)
+    {
+        $product = Product::find($id);
+
+        $sql = 'SELECT soi.* FROM system_orders so
+                LEFT JOIN system_order_items soi ON so.order_id = soi.order_id
+                WHERE so.`status` != "picked" AND soi.qty - soi.qty_supplied > 0
+                AND soi.product_code = ?';
+        $orders = \DB::connection('k9homes')->select($sql, [$product->product_code]);
+
+        return view('admin.product.orders', compact('orders', 'product'));
+    }
+
     protected function getProductTypes()
     {
         return ProductType::orderBy('name', 'asc')->lists('name', 'typeid')->toArray();
