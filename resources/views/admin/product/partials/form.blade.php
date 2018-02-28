@@ -106,7 +106,10 @@
                     <div class="form-group{{ $errors->has('qty_ordered') ? ' has-error' : '' }}">
                         {!! Form::label('qty_ordered', 'Qty ordered', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {{ $product->qty_ordered }} <a href="/product/{{ $product->id }}/orders">Show orders</a>
+                        {{ $product->qty_ordered }}
+                        @if($product->qty_ordered > 0)
+                            <a href="/product/{{ $product->id }}/orders">Show orders</a>
+                        @endif
                         </div>
                     </div>
 
