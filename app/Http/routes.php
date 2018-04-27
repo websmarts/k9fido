@@ -23,6 +23,8 @@ Route::get('testy/', 'ClientPricingController@add_product');
 
 Route::get('test/{typeid}', 'ProductTypeImageController@doSortIfRequired');
 
+// Route::get('reports', 'ProductReportsController@index');
+
 // sorts a productTypeImage list
 
 // Route::get('/', function () {
