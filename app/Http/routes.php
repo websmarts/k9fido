@@ -125,3 +125,8 @@ Route::get('clientlookup/', [
 
 // test route for hunter api testing
 Route::get('hunter', 'FreightCalculatorController@hunter');
+
+// Stock Adjuster
+Route::get('stockadjust', 'StockAdjustController@index');
+Route::post('stockadjust/find', 'StockAdjustController@find');
+Route::post('stockadjust/{product}', 'StockAdjustController@update');

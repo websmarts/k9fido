@@ -82,7 +82,7 @@ class ClientController extends Controller
 
         $client = Client::find($id); //->update($data);
 
-        $client->update($data);
+        $client = $client->update($data);
 
         // Update user clients table
         $this->updateRepClientsList($id, $data['salesrep']);
