@@ -35,6 +35,7 @@ Vue.http.interceptors.push((request, next) => {
 
 Vue.config.productionTip = false
 
+// Dev settings
 // Vue.config.devtools = true
 // Vue.config.debug = true
 // Vue.config.silent = false

@@ -1,17 +1,31 @@
 <template>
   <div>
   <h3>Stock Adjuster</h3>
+  <p>{{product_find_key}}</p>
   <p>Enter Barcode OR a Product Code and then click the <strong>Find item</strong> button</p>
   <div :class="{error: error}">{{message}}</div>
   
     <div style="display:flex">
       <div style="flex:1">Barcode:</div>
-      <div style="flex:1"><input @keydown="clearStatus" type="number" style="width:8em" v-model="barcode" ref="barcode_input" /></div>
+      <div style="flex:1"><input 
+        name="barcode" 
+        type="number"
+        :value="barcode" 
+        ref="barcode_input"
+        @input="barcodeInput($event.target.value)" 
+        @focus="focusOn($event.target)" 
+        style="width:8em"  /></div>
     </div>
 
     <div style="display:flex;width:100%;">
-      <div style="flex:1">Product code:</div>
-      <div style="flex:1"><input @keydown="clearStatus" type="text" style="width:8em" v-model="product_code" /></div>
+      <div style="flex:1">Product code:({{ product_id }})</div>
+      <div style="flex:1"><input 
+        name="product_code" 
+        ref="product_code_input" 
+        type="text":value="product_code" 
+        @input="productCodeInput($event.target.value)" 
+        @focus="focusOn($event.target)" 
+        style="width:8em" /></div>
     </div>
     
     <div style="display:flex;width:100%;">
@@ -38,7 +52,7 @@
 
     <div  style="display:flex; width:100%; padding:5px">
       <div style="flex:2">&nbsp;Shelf count:</div>
-      <div style="flex:1"><input style="width:4em" type="text" v-model="qty_onshelf" /></div>
+      <div style="flex:1"><input style="width:4em" type="text" ref="qty_on_shelf" v-model="qty_onshelf" /></div>
       <div style="flex:1"><button :disabled="! product_id > 0" :class="{updated: updated}" @click="adjustItem">Adjust</button>&nbsp;</div>
     </div>
 
@@ -53,6 +67,7 @@ export default {
       autofocus: true,
       barcode: null,
       product_code:null,
+      product_find_key: null,
       qty_on_order: 0,
       qty_instock: 0,
       qty_onshelf: 0,
@@ -64,18 +79,37 @@ export default {
     }
   },
   methods: {
-    clearStatus() {
-      this.updated = false
-      this.loaded = false
-      this.error = false
+    barcodeInput(val){
+      let input = val.toString().trim()
+      // remove checksum digit if present
 
-      this.clearForm()
+      this.barcode = input.substring(0,12)
 
+      if(this.barcode.length == 12 && !this.loaded){
+        this.findItem()
+      } else {
+        this.clearForm()
+      }
     },
+    productCodeInput(val){
+      this.product_code = val.toString().trim()
+    },
+    focusOn(input){
+      //console.log('focus is on ',input.name)
+      if(this.loaded){
+        this.clearForm()
+        this.barcode = null
+        this.product_code = null
+        //this.$forceUpdate()
+        //this.$nextTick(() => this.$forceUpdate())
+      }
+    },
+   
     findItem() {
+          
           let data = { 
               // _token: K9homes.csrfToken, 
-              barcode: this.barcode,
+              barcode: (this.barcode !== null && this.barcode.length == 12 ) ? this.barcode : null,
               product_code: this.product_code
           }
 
@@ -97,7 +131,10 @@ export default {
               }   
 
               this.loaded = true 
-              this.error = false        
+              this.error = false  
+
+              // Move focus
+              this.$refs.qty_on_shelf.focus()      
 
           }, (response) => {
               // error callback
@@ -139,16 +176,18 @@ export default {
               //alert('server error encountered');
           });
       },
+      
       clearForm() {
         this.qty_instock = 0
         this.qty_on_order = 0
         this.qty_onshelf = 0
-        this.barcode = null
-        this.product_code = null
+        // this.barcode = null
+        // this.product_code = null
         this.product_id = 0
 
         this.updated = false
         this.loaded = false
+        this.error = false
       }
     
   },
