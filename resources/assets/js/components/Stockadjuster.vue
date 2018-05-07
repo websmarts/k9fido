@@ -119,7 +119,7 @@ export default {
               let product = response.body
               this.product_id = product.id
               this.qty_instock = product.qty_instock
-              this.qty_on_order = product.qty_ordered
+              this.qty_on_order = product.ordered
               // default shelf qty to the combo of both
               this.qty_onshelf = parseInt(product.qty_instock) + parseInt(product.qty_ordered)
 
@@ -156,18 +156,15 @@ export default {
               let product = response.body
               this.product_id = product.id
               this.qty_instock = product.qty_instock
-              this.qty_on_order = product.qty_ordered
+              this.qty_on_order = product.ordered
               // default shelf qty to the combo of both
               this.qty_onshelf = parseInt(product.qty_instock) + parseInt(product.qty_ordered)
 
-              if(this.product_code === null)  {
-                this.product_code = product.product_code
-              }
-              if(this.barcode === null)  {
-                this.barcode = product.barcode
-              }   
-              this.updated = true   
-              this.error = false      
+              this.clearForm()
+              this.barcode = null
+              this.product_code = null
+              this.$refs.barcode_input.focus()
+              
 
           }, (response) => {
               // error callback
