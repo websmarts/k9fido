@@ -46,7 +46,7 @@
     </div>
 
     <div style="display:flex;width:100%">
-      <div style="flex:1">Expected shelf qty:</div>
+      <div style="flex:1">Exp shelf qty:</div>
       <div style="flex:1">{{ qty_instock }}</div>
     </div>
 
