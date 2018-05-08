@@ -52,7 +52,7 @@ class StockAdjustController extends Controller
         $sql = 'SELECT SUM(SOI.qty) AS ordered FROM
                 system_orders SO
                 LEFT JOIN system_order_items SOI ON SO.order_id = SOI.order_id
-                WHERE SO.status IN ("saved","parked")
+                WHERE SO.status IN ("saved","parked","printed")
                 AND SOI.product_code = ? ';
 
         $onOrderQty = DB::connection('k9homes')->select($sql, [$productCode]);
