@@ -1,7 +1,7 @@
 <template>
   <div>
   <h3>Stock Adjuster</h3>
-  <p>{{product_find_key}}</p>
+  
   <p>Enter Barcode OR a Product Code and then click the <strong>Find item</strong> button</p>
   <div :class="{error: error}">{{message}}</div>
   
@@ -18,7 +18,7 @@
     </div>
 
     <div style="display:flex;width:100%;">
-      <div style="flex:1">Product code:({{ product_id }})</div>
+      <div style="flex:1">Product code:</div>
       <div style="flex:1"><input 
         name="product_code" 
         ref="product_code_input" 
@@ -41,13 +41,13 @@
     </div>
 
     <div style="display:flex;width:100%">
-      <div style="flex:1">Qty in-stock:</div>
+      <div style="flex:1">Qty available:</div>
       <div style="flex:1">{{ qty_instock }}</div>
     </div>
 
     <div style="display:flex;width:100%">
-      <div style="flex:1">Exp shelf qty:</div>
-      <div style="flex:1">{{ qty_instock }}</div>
+      <div style="flex:1">Shelf qty:</div>
+      <div style="flex:1">{{ qty_instock + qty_on_order }}</div>
     </div>
 
     <div  style="display:flex; width:100%; padding:5px">
