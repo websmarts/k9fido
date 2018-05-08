@@ -121,7 +121,7 @@ export default {
               this.qty_instock = product.qty_instock
               this.qty_on_order = product.ordered
               // default shelf qty to the combo of both
-              this.qty_onshelf = parseInt(product.qty_instock) + parseInt(product.ordered)
+              this.qty_instock = parseInt(product.qty_instock)
 
               if(this.product_code === null)  {
                 this.product_code = product.product_code
