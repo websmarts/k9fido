@@ -93,14 +93,17 @@ class ProductController extends Controller
         // Get the total of items ordered on all un-picked orders
         // get list of all any system_order_items for this product where
         // the status of the order status is not 'picked'
-        $sql = 'SELECT SUM(soi.qty - soi.qty_supplied) as qty_ordered FROM system_orders so
-                LEFT JOIN system_order_items soi ON so.order_id = soi.order_id
-
-                WHERE so.`status` != "picked"
-                AND soi.product_code = ?';
+        $sql = 'SELECT SUM(SOI.qty) AS ordered FROM
+                system_orders SO
+                LEFT JOIN system_order_items SOI ON SO.order_id = SOI.order_id
+                WHERE SO.status IN ("saved","parked","printed")
+                AND SOI.product_code = ? ';
         $qty = \DB::connection('k9homes')->select($sql, [$product->product_code]);
 
-        $product->qty_ordered = $qty[0]->qty_ordered;
+        $product->qty_ordered = $qty[0]->ordered;
+
+        // fabricate shelf qty as  = available + ordered
+        $product->qty_onshelf = $product->qty_instock + $product->qty_ordered;
 
         // dd($product);
         // Clients with a special price for this product
@@ -152,6 +155,11 @@ class ProductController extends Controller
 
         $data = $request->all();
         //dd($data);
+
+        // recalc instock figure by subtracting the qty ordered from the onshelf value
+        $data['qty_instock'] = $data['qty_onshelf'] - $data['qty_ordered'];
+        unset($data['qty_onshelf']);
+
         // Reset the calculated displayed value of qty_ordered to zero
         $data['qty_ordered'] = 0;
 

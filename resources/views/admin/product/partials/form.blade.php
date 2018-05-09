@@ -90,28 +90,40 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('qty_instock') ? ' has-error' : '' }}">
-                        {!! Form::label('qty_instock', 'Qty instock', array('class' => 'col-md-4 control-label')) !!}
+                    <div class="form-group{{ $errors->has('qty_ordered') ? ' has-error' : '' }}">
+                        {!! Form::label('qty_ordered', 'Qty on order', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
-                        {!! Form::text('qty_instock', null,  array('class' => 'form-control')) !!}
+                            {!! Form::hidden('qty_ordered', null,  array('class' => 'form-control')) !!}
 
-                        @if ($errors->has('qty_instock'))
+                        {{ $product->qty_ordered }}
+                        @if($product->qty_ordered > 0)
+                           &nbsp;&nbsp; <a href="/product/{{ $product->id }}/orders">Show orders</a>
+                        @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('qty_instock') ? ' has-error' : '' }}">
+                        {!! Form::label('qty_instock', 'Qty available', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {{ $product->qty_instock }}
+
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('qty_onshelf') ? ' has-error' : '' }}">
+                        {!! Form::label('qty_onshelf', 'Qty shelf', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::text('qty_onshelf', null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('qty_onshelf'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('qty_instock') }}</strong>
+                                <strong>{{ $errors->first('qty_onshelf') }}</strong>
                             </span>
                         @endif
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('qty_ordered') ? ' has-error' : '' }}">
-                        {!! Form::label('qty_ordered', 'Qty ordered', array('class' => 'col-md-4 control-label')) !!}
-                        <div class="col-md-6">
-                        {{ $product->qty_ordered }}
-                        @if($product->qty_ordered > 0)
-                            <a href="/product/{{ $product->id }}/orders">Show orders</a>
-                        @endif
-                        </div>
-                    </div>
+
 
                     <div class="form-group{{ $errors->has('special') ? ' has-error' : '' }}">
                         {!! Form::label('special', 'Special', array('class' => 'col-md-4 control-label')) !!}

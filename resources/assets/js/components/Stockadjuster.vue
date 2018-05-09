@@ -18,7 +18,7 @@
     </div>
 
     <div style="display:flex;width:100%;">
-      <div style="flex:1">Product code:</div>
+      <div style="flex:1">P.code:</div>
       <div style="flex:1"><input 
         name="product_code" 
         ref="product_code_input" 
@@ -37,23 +37,23 @@
 
     <div style="display: flex;width:100%">
       <div style="flex:1">Qty on order:</div>
-      <div style="flex:1">{{ qty_on_order }}</div>
+      <div style="flex:1">{{ qty_ordered }}</div>
     </div>
 
     <div style="display:flex;width:100%">
       <div style="flex:1">Qty available:</div>
-      <div style="flex:1">{{ qty_instock }}</div>
+      <div style="flex:1">{{ qty_available }}</div>
     </div>
 
     <div style="display:flex;width:100%">
-      <div style="flex:1">Shelf qty:</div>
-      <div style="flex:1">{{ qty_instock + qty_on_order }}</div>
+      <div style="flex:1">Qty shelf:</div>
+      <div style="flex:1">{{ qty_onshelf }}</div>
     </div>
 
     <div  style="display:flex; width:100%; padding:5px">
-      <div style="flex:2">&nbsp;Shelf count:</div>
-      <div style="flex:1"><input style="width:4em" type="text" ref="qty_on_shelf" v-model="qty_onshelf" /></div>
-      <div style="flex:1"><button :disabled="! product_id > 0" :class="{updated: updated}" @click="adjustItem">Adjust</button>&nbsp;</div>
+      
+      <div style="flex:1"><input style="width:4em" type="text" ref="qty_on_shelf" v-model="adjusted_qty_onshelf" /></div>
+      <div style="flex:2"><button :disabled="! product_id > 0" :class="{updated: updated}" @click="adjustItem">Actual shelf qty</button>&nbsp;</div>
     </div>
 
 
@@ -64,13 +64,14 @@
 export default {
   data() {
     return {
-      autofocus: true,
+      
       barcode: null,
       product_code:null,
       product_find_key: null,
-      qty_on_order: 0,
-      qty_instock: 0,
+      qty_ordered: 0,
+      qty_available: 0,
       qty_onshelf: 0,
+      adjusted_qty_onshelf: 0,
       product_id: 0,
       updated: false,
       loaded: false,
@@ -118,10 +119,12 @@ export default {
               // console.log(response);
               let product = response.body
               this.product_id = product.id
-              this.qty_instock = product.qty_instock
-              this.qty_on_order = product.ordered
+              this.qty_available = parseInt(product.qty_instock)
+              this.qty_ordered = parseInt(product.ordered)
               // default shelf qty to the combo of both
-              this.qty_instock = parseInt(product.qty_instock)
+              
+              this.qty_onshelf = parseInt(product.qty_instock) + parseInt(product.ordered)
+              this.adjusted_qty_onshelf = this.qty_onshelf
 
               if(this.product_code === null)  {
                 this.product_code = product.product_code
@@ -147,7 +150,7 @@ export default {
         
         let data = { 
               // _token: K9homes.csrfToken, 
-              qty_instock: this.qty_onshelf
+              qty_instock: this.adjusted_qty_onshelf - this.qty_ordered
           }
 
           this.$http.post(pageVar.url + '/'+this.product_id, data ).then( (response) => {
@@ -155,10 +158,11 @@ export default {
               // console.log(response);
               let product = response.body
               this.product_id = product.id
-              this.qty_instock = product.qty_instock
-              this.qty_on_order = product.ordered
+              this.qty_available = parseInt(product.qty_instock)
+              this.qty_ordered = parseInt(product.ordered)
               // default shelf qty to the combo of both
-              this.qty_onshelf = parseInt(product.qty_instock) + parseInt(product.qty_ordered)
+              this.qty_onshelf = this.qty_available + this.qty_ordered
+              this.adjusted_qty_onshelf = this.qty_onshelf
 
               this.clearForm()
               this.barcode = null
@@ -175,9 +179,10 @@ export default {
       },
       
       clearForm() {
-        this.qty_instock = 0
-        this.qty_on_order = 0
+        this.qty_available = 0
+        this.qty_ordered = 0
         this.qty_onshelf = 0
+        this.adjusted_qty_onshelf = 0
         // this.barcode = null
         // this.product_code = null
         this.product_id = 0
@@ -185,14 +190,16 @@ export default {
         this.updated = false
         this.loaded = false
         this.error = false
+
+        this.$refs.barcode_input.focus()
       }
     
   },
   mounted() {
-    if(this.autofocus){
-      this.$refs.barcode_input.focus()
-      //this.$nextTick(() => this.$refs.user_input.focus())
-    }
+    
+    this.$refs.barcode_input.focus()
+    //this.$nextTick(() => this.$refs.user_input.focus())
+    
   }
 }
 
