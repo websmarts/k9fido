@@ -1,5 +1,9 @@
 <?php
 
+if (env('APP_ENV') === 'production') {
+    URL::forceSchema('https');
+}
+
 // \Event::listen('Illuminate\Database\Events\QueryExecuted', function ($query) {
 //     echo '<pre>';
 //     var_dump($query->sql);
