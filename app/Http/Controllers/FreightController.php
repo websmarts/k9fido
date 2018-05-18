@@ -246,7 +246,7 @@ class FreightController extends Controller
         $table = "freight_rates_toll";
         \DB::delete('delete from ' . $table);
         foreach ($zones as $zone) {
-            $postcodes = \DB::connection('k9homes')->select('select pcode from freight_zones where zone=? limit 10', [$zone]);
+            $postcodes = \DB::connection('k9homes')->select('select pcode from freight_zones where zone=?', [$zone]);
 
             foreach ($postcodes as $postcode) {
                 \DB::insert('insert into freight_rates_toll
