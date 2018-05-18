@@ -56,7 +56,9 @@ class ClientPricingController extends Controller
     {
         $productCode = $request->input('product_code');
         $clientId = $request->input('client_id');
-        $discount = $request->input('discount');
+
+        $discount = (float) $request->input('discount'); // its maybe a string
+
         if ($discount > 1) {
             //Chances are the user addeed discount as a % instead of a decimal fraction
             // so convert it
@@ -72,6 +74,9 @@ class ClientPricingController extends Controller
         $updateClientIds = $this->getAllUpdateIds($clientId);
 
         $product = Product::where('product_code', $productCode)->first();
+        // The following line was added to ensure the product_code used in the
+        // client_prices table is exactly the same as that used in the product table
+        $productCode = $product->product_code;
 
         if (!$product) {
             // bad product code entered
@@ -79,8 +84,10 @@ class ClientPricingController extends Controller
             return $this->clientPrices($clientId);
         }
 
-        if ($discount > 0) {
+        if ($discount > -1) {
             // Valid - so delete all existing client prices for client family
+            // if the is zero we just delete the special price
+            // but if the discount is greater than zero the next step will add the special prices again
             foreach ($updateClientIds as $cid) {
                 ClientPrice::where([
                     ['client_id', '=', $cid],
@@ -88,22 +95,23 @@ class ClientPricingController extends Controller
                 ])->delete();
             }
         }
+        if ($discount > 0) {
+            foreach ($updateClientIds as $cid) {
 
-        foreach ($updateClientIds as $cid) {
+                $clientPrice = ClientPrice::create([
+                    'client_id' => $cid,
+                    'product_code' => $productCode,
+                    'discount' => (float) $discount,
 
-            $clientPrice = ClientPrice::create([
-                'client_id' => $cid,
-                'product_code' => $productCode,
-                'discount' => $discount,
+                ]);
 
-            ]);
+                // now add the std_price and the calculated client_price and then save
+                $clientPrice->std_price = $clientPrice->product->price;
+                $clientPrice->client_price = $clientPrice->product->price * (1 - $discount);
 
-            // now add the std_price and the calculated client_price and then save
-            $clientPrice->std_price = $clientPrice->product->price;
-            $clientPrice->client_price = $clientPrice->product->price * (1 - $discount);
+                $clientPrice->save();
 
-            $clientPrice->save();
-
+            }
         }
 
         return $this->clientPrices($clientId);
@@ -153,19 +161,21 @@ class ClientPricingController extends Controller
         if (count($updates)) {
             foreach ($updates as $update) {
                 foreach ($updateClientIds as $cid) {
+                    $discount = (float) $update['discount'];
+                    if ($discount > 0) {
+                        $item = ClientPrice::create(
+                            [
+                                'client_id' => $cid,
+                                'product_code' => $update['product_code'],
+                                'discount' => $discount,
+                            ]
+                        );
 
-                    $item = ClientPrice::create(
-                        [
-                            'client_id' => $cid,
-                            'product_code' => $update['product_code'],
-                            'discount' => $update['discount'],
-                        ]
-                    );
+                        $item->std_price = $item->product->price;
+                        $item->client_price = $item->product->price * (1 - $update['discount']);
 
-                    $item->std_price = $item->product->price;
-                    $item->client_price = $item->product->price * (1 - $update['discount']);
-
-                    $item->save();
+                        $item->save();
+                    }
 
                 }
 
