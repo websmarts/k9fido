@@ -9,9 +9,29 @@ class FreightService
         return new static;
     }
 
+    public function getFreightRates($postcode)
+    {
+        // $postcode = "3038"; //testing value
+        $services = ['toll', 'eparcel', 'auspost', 'if', 'tmcc'];
+        foreach ($services as $service) {
+            $data[$service] = $this->getRates($service, $postcode);
+        }
+        return $data;
+    }
+
+    protected function getRates($service, $postcode)
+    {
+        $table = "freight_rates_" . $service;
+        $results = \DB::connection('mysql')->select('select * from ' . $table . ' where postcode=?', [$postcode]);
+
+        if ($results && isset($results[0])) {
+            return $results[0];
+        }
+    }
+
+    // Legacy system for Toll only code
     public function getFreightCode($postcode)
     {
-
         $zones = \DB::connection('k9homes')
             ->select("select `zone` from freight_zones where `pcode`='{$postcode}' limit 1");
         //dd($zones);
@@ -26,4 +46,5 @@ class FreightService
         }
 
     }
+
 }

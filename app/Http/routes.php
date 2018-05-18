@@ -1,14 +1,10 @@
 <?php
 
-if (env('APP_ENV') === 'production') {
-    URL::forceSchema('https');
-}
-
 // \Event::listen('Illuminate\Database\Events\QueryExecuted', function ($query) {
 //     echo '<pre>';
 //     var_dump($query->sql);
 //     echo '</pre>';
-//     // var_dump($query->bindings);
+//     var_dump($query->bindings);
 //     // var_dump($query->time);
 // });
 
@@ -116,19 +112,19 @@ Route::get('prospector/accounts', [
     'as' => 'prospector.accounts.index', 'uses' => 'Prospector\AccountsController@index']);
 
 // Freight Calculator
-Route::get('freight/location', [
-    'as' => 'freight.location', 'uses' => 'FreightCalculatorController@searchForLocation']); // ajax data for location autocomplete
-Route::get('freight', [
-    'as' => 'freight.index', 'uses' => 'FreightCalculatorController@index']);
-Route::post('freight/quote', [
-    'as' => 'freight.quote', 'uses' => 'FreightCalculatorController@quote']);
+// Route::get('freight/location', [
+//     'as' => 'freight.location', 'uses' => 'FreightCalculatorController@searchForLocation']); // ajax data for location autocomplete
+// Route::get('freight', [
+//     'as' => 'freight.index', 'uses' => 'FreightCalculatorController@index']);
+// Route::post('freight/quote', [
+//     'as' => 'freight.quote', 'uses' => 'FreightCalculatorController@quote']);
 
 // Client search for ajax autocomplete selectors
 Route::get('clientlookup/', [
     'as' => 'clientlookup', 'uses' => 'ClientLookupController@index']); // ajax data for client lookup autocomplete
 
-// test route for hunter api testing
-Route::get('hunter', 'FreightCalculatorController@hunter');
+// test route for freight testing
+Route::get('freight/{postcode?}', 'FreightController@index');
 
 // Stock Adjuster
 Route::get('stockadjust', 'StockAdjustController@index');

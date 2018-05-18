@@ -4,7 +4,9 @@
 <div class="container order_container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
+            @include('admin.order.freight_table')
             <div class="panel panel-default">
+
                 <div class="panel-heading" style="overflow: hidden">Purchase Order:  {{ $order->order_id  }}
 
                  @if($order->status == 'printed')
@@ -36,13 +38,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-2">Freight code</div>
-                    <p class="col-xs-9">{{ empty($freight->code) ? ' - ' : $freight->code }}
-                    @if(isSet($freight->notes))
-                    <br /> {{ $freight->notes }}
+                    <div class="col-xs-2">Freight info</div>
+                    <p class="col-xs-9">{{ empty($oldfreight->code) ? ' - ' : $oldfreight->code }}
+                    @if(isSet($oldfreight->notes))
+                    <br /> {{ $oldfreight->notes }}
                     @endif
                     </p>
                 </div>
+
+
+
+
 
                 <div class="row">
                     <div class="col-xs-2">Freight ($)</div>

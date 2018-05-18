@@ -64,8 +64,8 @@ class OrderService
         $order = $this->getOrderById($orderId);
         $orderItems = $this->getOrderItemsWithProduct($orderId);
         $clientprices = $this->clientPrices($order->client->client_id);
-        $freight = $this->getFreightInformation($order->client);
-
+        $freight = $this->newGetFreightInformation($order->client);
+        $oldfreight = $this->getFreightInformation($order->client);
         $totalItemsCost = 0;
         $totalItemsPrice = 0;
         $items = [];
@@ -76,25 +76,24 @@ class OrderService
             $i = new \stdClass();
             //dd($item);
             if (isset($clientprices[$item->product_code])) {
-                
+
                 if ($clientprices[$item->product_code]->client_price == $item->price) {
                     $strategy = '#s'; //'special_client_price';
                     // $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
                 }
 
-            } else if (($item->product->qty_break > 0) 
-                && ($item->qty >= $item->product->qty_break) 
+            } else if (($item->product->qty_break > 0)
+                && ($item->qty >= $item->product->qty_break)
                 && ($item->price == round(($item->product->price * (1 - ($item->product->qty_discount / 100)))))) {
-                         
-                    $strategy = '#q'; //'quantity_discount';         
+
+                $strategy = '#q'; //'quantity_discount';
 
             } else if ($item->price != $item->product->price) {
-                
+
                 $strategy = '#c'; //'custom_pricing';
                 // $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
 
             }
-           
 
             $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
             // Markup
@@ -119,9 +118,18 @@ class OrderService
             $totalItemsPrice += $i->ext_price;
         }
         // dump($items);
-        return (compact('order', 'freight', 'items', 'totalItemsCost', 'totalItemsPrice'));
+        return (compact('order', 'freight', 'oldfreight', 'items', 'totalItemsCost', 'totalItemsPrice'));
     }
+    protected function newGetFreightInformation($client)
+    {
 
+        $freight = FreightService::create()->getFreightRates($client->postcode);
+
+        if ($client->custom_freight > 0) {
+            $freight['notes'] = $client->freight_notes;
+        }
+        return $freight;
+    }
     protected function getFreightInformation($client)
     {
         $result = new \stdClass();
