@@ -19,9 +19,9 @@ class FreightController extends Controller
 
     public function index($postcode = "3000")
     {
-        $this->loadTollRates();
-        $this->loadEparcelRates();
-        $this->loadAuspostRates();
+        // $this->loadTollRates();
+        // $this->loadEparcelRates();
+        // $this->loadAuspostRates();
         $this->loadIFRates();
         $this->loadTmccRates();
         dd('done');

@@ -558,3 +558,18 @@ $customFreightOptions = [
                         @endif
                         </div>
                     </div>
+
+                    <!-- Delete Client support -->
+                    <div class="form-group{{ $errors->has('merge_company') ? ' has-error' : '' }}">
+                        {!! Form::label('merge_company', 'Merge company', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                            <p>If you click on the DELETE option below and IF you have selected a MERGE-TO client here, then all the order information will be merged into the merge-to client when the client is deleted. If no merge-to client is selected then the all information for the client is simply deleted from the system</p>
+                        {!! Form::select('merge_company',  [''=>'Select if merging company ....'] + $clients,null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('merge_company'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('merge_company') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>

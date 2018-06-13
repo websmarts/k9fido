@@ -21,8 +21,13 @@
 
 
                     <div class="col-md-12">
-                         <button type="submit"  value="Save" class="btn btn-primary pull-right" >Save</button>
-                         </div>
+                        <input type="submit"  name ="b" value="Save" class="btn btn-primary pull-right" />
+
+                        <input type="submit"  name ="b" value="Delete" class="btn btn-warning pull-left" />
+                        &nbsp;Delete key: <input type="text" name="delete_key" value="" />
+                    </div>
+
+
 
                     {!! Form::close() !!}
 

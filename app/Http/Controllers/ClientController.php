@@ -58,6 +58,7 @@ class ClientController extends Controller
         $salesreps = $this->getSalesReps();
 
         $clients = Client::lists('name', 'client_id')->toArray();
+        asort($clients);
 
         return view('admin.client.edit', compact('client', 'salesreps', 'clients'));
     }
@@ -79,6 +80,18 @@ class ClientController extends Controller
 
         $data = $request->except('_method', '_token');
         $data['modified'] = date("Y-m-d H:i:s");
+
+        /**
+         * Check for the Delete button
+         */
+        if (strtolower($request->delete_key) == 'fido' && strtolower($request->b) == 'delete') {
+            $mergeCompanyId = (int) $request->merge_company;
+
+            if ($mergeCompanyId) {
+                return $this->mergeCompanies($id, $mergeCompanyId);
+            }
+            return $this->deleteCompany($id);
+        }
 
         $client = Client::find($id); //->update($data);
 
@@ -133,7 +146,6 @@ class ClientController extends Controller
         $this->updateRepClientsList($client->client_id, $request->salesrep);
 
         flash('Client created', 'success');
-
         return redirect()->route('client.edit', $client->client_id);
 
     }
@@ -150,6 +162,84 @@ class ClientController extends Controller
 
         });
         return $salesreps;
+    }
+
+    private function deleteCompany($id)
+    {
+        // Delete system orders and system order items
+        $sql = '    DELETE system_orders,system_order_items
+                    FROM system_orders
+                    INNER JOIN system_order_items ON system_orders.order_id=system_order_items.order_id
+                    WHERE system_orders.client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        $sql = '    DELETE FROM system_orders where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete from client_prices table
+        $sql = '    DELETE FROM client_prices where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete from clientstock table
+        $sql = '    DELETE FROM clientstock where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete form contact_history table
+        $sql = '    DELETE FROM contact_history where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete from notify_me table
+        $sql = '    DELETE FROM notify_me where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete from user_clients table
+        $sql = '    DELETE FROM user_clients where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete Client
+        $sql = '    DELETE FROM clients where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        flash('Client deleted', 'success');
+        return redirect()->route('client.index');
+    }
+
+    private function mergeCompanies($id, $mergeToId)
+    {
+
+        $client1 = Client::find($id);
+        $client2 = Client::find($mergeToId);
+
+        // Update system orders
+        $sql = '   UPDATE system_orders SET client_id=? WHERE client_id=?';
+        \DB::connection('k9homes')->update($sql, [$mergeToId, $id]);
+
+        // Update from client_prices table
+        $sql = '    DELETE FROM client_prices where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete from clientstock table
+        $sql = '    DELETE FROM clientstock where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete form contact_history table
+        $sql = '    DELETE FROM contact_history where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete from notify_me table
+        $sql = '    DELETE FROM notify_me where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete from user_clients table
+        $sql = '    DELETE FROM user_clients where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        // Delete Client
+        $sql = '    DELETE FROM clients where client_id=' . $id;
+        \DB::connection('k9homes')->delete($sql);
+
+        flash('Success - merged ' . $client1->name . ' with ' . $client2->name, 'success');
+        return redirect()->route('client.index');
     }
 
 }
