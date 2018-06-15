@@ -140,6 +140,7 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['name' => 'required']);
+        //dd($request->all());
         $client = Client::updateOrCreate($request->except('_token'));
 
         // Update user clients table

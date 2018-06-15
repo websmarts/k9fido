@@ -560,6 +560,7 @@ $customFreightOptions = [
                     </div>
 
                     <!-- Delete Client support -->
+                    @if($client->id)
                     <div class="form-group{{ $errors->has('merge_company') ? ' has-error' : '' }}">
                         {!! Form::label('merge_company', 'Merge company', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
@@ -573,3 +574,4 @@ $customFreightOptions = [
                         @endif
                         </div>
                     </div>
+                    @endif

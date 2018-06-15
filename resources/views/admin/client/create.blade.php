@@ -17,12 +17,12 @@
                          </div>
 
 
-                    @include('admin.client.partials.form');
+                    @include('admin.client.partials.form')
 
 
                     <div class="col-md-12">
                          <button type="submit"  value="Save" class="btn btn-primary pull-right" >Save</button>
-                         </div>
+                    </div>
 
                     {!! Form::close() !!}
 
