@@ -277,11 +277,16 @@ class OrderService
         if (!$product) {
             return;
         }
-        // dd(['product' => $product->bom, 'adjust' => $adjust]);
+        
+        //dd(['product' => $product->bom, 'adjust' => $adjust]);
         // if product is a BOM then restock each BOM item_qty times the adjustment
         if ($product->bom->count()) {
+           // dd($product->bom->count());
             foreach ($product->bom as $bomItem) {
-                $this->updateStockQuantity($bomItem->product, $bomItem->qty * $adjust);
+                //dd($bomItem);
+                $bomItemProduct = Product::where('product_code',$bomItem->item_product_code)->first();
+                //dd($bomItemProduct);
+                $this->updateStockQuantity($bomItemProduct, $bomItem->item_qty * $adjust);
             }
         } else {
             $product->qty_instock += $adjust;

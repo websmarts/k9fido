@@ -48,14 +48,15 @@ class FreightController extends Controller
                     //\Log::info('Skipping:' . $postcode);
                     continue;
                 }
-
-                \DB::insert('insert into ' . $table . ' (postcode,rate1,rate2,rate3) values (?,?,?,?)',
-                    [
-                        $postcode,
-                        $value->rate1 * 100,
-                        $value->rate2 * 100,
-                        $value->rate3 * 100,
-                    ]);
+                if ($value->rate1 > 0 && $value->rate2 > 0 && $value->rate3 > 0) {
+                    \DB::insert('insert into ' . $table . ' (postcode,rate1,rate2,rate3) values (?,?,?,?)',
+                        [
+                            $postcode,
+                            $value->rate1 * 100,
+                            $value->rate2 * 100,
+                            $value->rate3 * 100,
+                        ]);
+                }
             }
         }
     }
@@ -68,7 +69,7 @@ class FreightController extends Controller
         $ratesFilePath = storage_path("imports/freight/if/rates.xlsx");
         $ratesdata = Excel::load($ratesFilePath, function ($reader) {
         })->get();
-        // dd($ratesdata);
+        //dd($ratesdata);
 
         $table = "freight_rates_if";
         \DB::delete('delete from ' . $table);
@@ -80,14 +81,16 @@ class FreightController extends Controller
                     //\Log::info('Skipping:' . $postcode);
                     continue;
                 }
+                if ($value->rate1 > 0 || $value->rate2 > 0 || $value->rate3 > 0) {
+                    \DB::insert('insert into ' . $table . ' (postcode,rate1,rate2,rate3) values (?,?,?,?)',
+                        [
+                            $postcode,
+                            $value->rate1 * 100,
+                            $value->rate2 * 100,
+                            $value->rate3 * 100,
+                        ]);
 
-                \DB::insert('insert into ' . $table . ' (postcode,rate1,rate2,rate3) values (?,?,?,?)',
-                    [
-                        $postcode,
-                        $value->rate1 * 100,
-                        $value->rate2 * 100,
-                        $value->rate3 * 100,
-                    ]);
+                }
             }
         }
     }

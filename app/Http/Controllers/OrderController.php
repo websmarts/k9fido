@@ -99,6 +99,7 @@ class OrderController extends Controller
     public function destroy($id)
     {
         // Delete the order
+        
         $this->orderService->deleteOrder($id);
         flash('Order ' . $id . 'has been deleted', 'success');
         return redirect(route('order.index'));
