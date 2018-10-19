@@ -130,3 +130,9 @@ Route::get('freight/{postcode?}', 'FreightController@index');
 Route::get('stockadjust', 'StockAdjustController@index');
 Route::post('stockadjust/find', 'StockAdjustController@find');
 Route::post('stockadjust/{product}', 'StockAdjustController@update');
+
+// Analtyics
+Route::get('analytics',['as'=>'analytics.index','uses'=>'Analytics\HomeController@index']);
+Route::get('analytics/customers',['as'=>'analytics.customers','uses'=>'Analytics\CustomersController@index']);
+Route::get('analytics/orders',['as'=>'analytics.orders','uses'=>'Analytics\OrdersController@index']);
+

@@ -148,6 +148,8 @@ class ProductController extends Controller
             // Delete the product itself
             $product->delete();
 
+            // TODO Delete any special PRICING
+
             return redirect()->route('product.index');
         }
 
@@ -157,7 +159,7 @@ class ProductController extends Controller
         //dd($data);
 
         // recalc instock figure by subtracting the qty ordered from the onshelf value
-        $data['qty_instock'] = $data['qty_onshelf'] - $data['qty_ordered'];
+        $data['qty_instock'] = (int) $data['qty_onshelf'] - (int) $data['qty_ordered'];
         unset($data['qty_onshelf']);
 
         // Reset the calculated displayed value of qty_ordered to zero
@@ -167,7 +169,25 @@ class ProductController extends Controller
         $data['shipping_volume'] = $data['length'] * $data['width'] * $data['height'] / 1000000;
         $data['shipping_weight'] = $data['shipping_volume'] * 250;
 
+        
+
+
         $product->update($data);
+
+        // TODO Check if pricing has changed and if so update all special pricing for product
+        $clientPrices = $product->clientprices()->get();
+        //dd($clientPrices);
+
+        $clientPrices->each(function($clientPrice,$key) {
+            if($clientPrice->product->price != $clientPrice->std_price){
+                // now add the std_price and the calculated client_price and then save
+                $clientPrice->std_price = $clientPrice->product->price;
+                $clientPrice->client_price = $clientPrice->product->price * (1 - $clientPrice->discount);
+
+                $clientPrice->save();
+                //dd($clientPrice);
+            }
+        });
 
         flash('Product updated ...', 'success');
 

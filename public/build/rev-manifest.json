@@ -1,9 +1,9 @@
 {
   "css/app.css": "css/app-b109fe07b6.css",
   "js/all.js": "js/all-074ca1f6f3.js",
-  "js/clientprices.js": "js/clientprices-b49bf4c6f3.js",
+  "js/clientprices.js": "js/clientprices-d243580835.js",
   "js/freightcalc.js": "js/freightcalc-ffce203247.js",
-  "js/main.js": "js/main-847f353ab3.js",
-  "js/orderpicker.js": "js/orderpicker-44d0813896.js",
-  "js/stockadjuster.js": "js/stockadjuster-a82f69cb1c.js"
+  "js/main.js": "js/main-4671c59984.js",
+  "js/orderpicker.js": "js/orderpicker-9026599674.js",
+  "js/stockadjuster.js": "js/stockadjuster-1b4cfcecac.js"
 }
