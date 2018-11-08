@@ -114,7 +114,8 @@ class Client extends Model
         // dd($this->salesrep);
         // return $user[0];
         
-        return $this->belongsTo('App\Legacy\Staff\User', 'salesrep', 'user_id');
+        
+        return $this->belongsTo('App\Legacy\Staff\User', 'salesrep', 'id');
     }
 
 }
