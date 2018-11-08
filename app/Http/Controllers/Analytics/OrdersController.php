@@ -73,6 +73,9 @@ class OrdersController extends Controller
         $orders = \App\Legacy\Order\Order::with(['client', 'items.product'])
         ->whereBetween('modified',[$this->start->format('Y-m-d'),$this->end->format('Y-m-d')])->get();
 
+
+        
+
         $sales=[];
         
         foreach ($orders as $o){

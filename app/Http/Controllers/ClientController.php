@@ -73,14 +73,6 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->validate($request, [
-            'name' => 'required',
-            'state' => 'required',
-        ]);
-
-        $data = $request->except('_method', '_token');
-        $data['modified'] = date("Y-m-d H:i:s");
-
         /**
          * Check for the Delete button
          */
@@ -92,12 +84,28 @@ class ClientController extends Controller
             }
             return $this->deleteCompany($id);
         }
+        
+        
+        
+        $this->validate($request, [
+            'name' => 'required',
+            'state' => 'required',
+            'postcode' => 'required'
+        ]);
+
+        $data = $request->except('_method', '_token');
+        $data['modified'] = date("Y-m-d H:i:s");
+
+        
 
         $client = Client::find($id); //->update($data);
 
         $client = $client->update($data);
 
         // Update user clients table
+        // Not sure why we do this because the concept of a 
+        // Client having more than one sales rep has never
+        // been implmented anywhere I can think of in FIDO or eCat
         $this->updateRepClientsList($id, $data['salesrep']);
 
         flash('Client updated', 'success');
@@ -116,6 +124,8 @@ class ClientController extends Controller
 
         // if client_id / salesrep_id pair exists do nothing
         $res = UserClient::where('client_id', $clientId)->first();
+
+        
         if (!is_null($res)) {
             if ($res->salesrep_id == $salesRepId) {
                 return;
@@ -139,7 +149,12 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required']);
+        
+        $this->validate($request, [
+            'name' => 'required',
+            'state' => 'required',
+            'postcode' => 'required'
+        ]);
         //dd($request->all());
         $client = Client::updateOrCreate($request->except('_token'));
 

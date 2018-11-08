@@ -11,9 +11,9 @@ class CustomersController extends Controller
     
     public $startMonth = 7;
 
-    public $startYear = 2017;
+    public $startYear = 2018;
 
-    public $endMonth = 6;
+    public $endMonth = 11;
 
     public $endYear = 2018;
 
@@ -114,9 +114,9 @@ class CustomersController extends Controller
         $sql = 'select 
             
         
-        sum(products.cost * system_order_items.qty ) as cost,
-        sum(system_order_items.qty * system_order_items.price) as total,
-        (sum(system_order_items.qty * system_order_items.price)-sum(products.cost * system_order_items.qty )) as gp 
+        sum(products.cost * system_order_items.qty /100) as cost,
+        sum(system_order_items.qty * system_order_items.price/100) as total,
+        (sum(system_order_items.qty * system_order_items.price)-sum(products.cost * system_order_items.qty )/100) as gp 
 
         from system_orders 
 
@@ -142,6 +142,8 @@ class CustomersController extends Controller
                 
 
         $result =  \DB::connection('k9homes')->select($sql);
+
+        
         return $result[0];
 
     }
@@ -175,6 +177,7 @@ class CustomersController extends Controller
         fputcsv($output, $header);
 
         foreach ($objects as $o) {
+            
 
             $entry = [];
 

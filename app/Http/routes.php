@@ -19,6 +19,8 @@
 |
  */
 
+ Route::get('updatedb/','DBUpdateController@index');
+
 Route::get('testy/', 'ClientPricingController@add_product');
 
 Route::get('test/{typeid}', 'ProductTypeImageController@doSortIfRequired');

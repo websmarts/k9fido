@@ -8,6 +8,7 @@
                 <div class="panel-heading">Edit Client: {{ $client->name  }}</div>
 
                 <div class="panel-body">
+                {{ dump($client) }}
 
 
                     {!! Form::model($client, array('route' => array('client.update', $client->client_id ), 'method' => 'patch' )) !!}
