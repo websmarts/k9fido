@@ -115,7 +115,7 @@ class Client extends Model
         // return $user[0];
         
         
-        return $this->belongsTo('App\Legacy\Staff\User', 'salesrep', 'id');
+        return \App\Legacy\Staff\User::find($this->salesrep);
     }
 
 }
