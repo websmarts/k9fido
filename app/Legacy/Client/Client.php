@@ -111,8 +111,9 @@ class Client extends Model
 
         $user = \DB::connection('k9homes')->select('select * from users where id=?', [$this->salesrep]);
 
-        dd($user);
+        dd($this->salesrep);
         return $user[0];
+        
 
     }
 
