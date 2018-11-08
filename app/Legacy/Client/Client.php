@@ -110,6 +110,8 @@ class Client extends Model
         // $user = \DB::connection('k9homes')->select('select * from users where id=?', [$res[0]->salesrep_id]);
 
         $user = \DB::connection('k9homes')->select('select * from users where id=?', [$this->salesrep]);
+
+        dd($user);
         return $user[0];
 
     }
