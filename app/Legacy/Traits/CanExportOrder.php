@@ -48,7 +48,7 @@ trait CanExportOrder
         $n = 0;
 
         $salesrep = $order->client->myrep();
-        // dd($salesrep->firstname);
+        // dd($salesrep);
         foreach ($order->items as $item) {
             // dump($this->client->name);
             // dump($this->client->parentClient);

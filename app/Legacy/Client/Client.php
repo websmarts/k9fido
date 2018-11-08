@@ -114,7 +114,7 @@ class Client extends Model
         // dd($this->salesrep);
         // return $user[0];
         
-        
+        //dd($this);
         return \App\Legacy\Staff\User::find($this->salesrep);
     }
 
