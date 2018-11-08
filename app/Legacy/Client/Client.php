@@ -109,12 +109,12 @@ class Client extends Model
 
         // $user = \DB::connection('k9homes')->select('select * from users where id=?', [$res[0]->salesrep_id]);
 
-        $user = \DB::connection('k9homes')->select('select * from users where id=?', [$this->salesrep]);
+        // $user = \DB::connection('k9homes')->select('select * from users where id=?', [$this->salesrep]);
 
-        dd($this->salesrep);
-        return $user[0];
+        // dd($this->salesrep);
+        // return $user[0];
         
-
+        return $this->belongsTo('App\Legacy\Staff\User', 'salesrep', 'user_id');
     }
 
 }
