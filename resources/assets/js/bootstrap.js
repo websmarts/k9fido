@@ -19,6 +19,8 @@ require('bootstrap-sass');
 
 Vue = require('vue');
 
+
+
 require('vue-resource');
 
 /**

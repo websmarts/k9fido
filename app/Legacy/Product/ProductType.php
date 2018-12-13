@@ -37,6 +37,7 @@ class ProductType extends Model
         'display_format',
         'type_description',
         'display_order',
+        'aus_made',
 
     ];
 

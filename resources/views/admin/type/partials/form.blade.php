@@ -52,3 +52,16 @@
         @endif
         </div>
     </div>
+
+    <div class="form-group{{ $errors->has('aus_made') ? ' has-error' : '' }}">
+        {!! Form::label('aus_made', 'Australian made', array('class' => 'col-md-4 control-label')) !!}
+        <div class="col-md-6">
+        {!! Form::select('aus_made', array('0'=>'No','1'=>'Yes'), null,  array('class' => 'form-control')) !!}
+
+        @if ($errors->has('aus_made'))
+            <span class="help-block">
+                <strong>{{ $errors->first('aus_made') }}</strong>
+            </span>
+        @endif
+        </div>
+    </div>

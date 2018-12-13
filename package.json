@@ -18,6 +18,7 @@
   "dependencies": {
     "jquery-ui": "^1.12.1",
     "vue-router": "^2.0.0",
+    "vuejs-datatable": "^1.7.0",
     "vuex": "^2.0.0"
   }
 }

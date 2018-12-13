@@ -138,3 +138,6 @@ Route::get('analytics',['as'=>'analytics.index','uses'=>'Analytics\HomeControlle
 Route::get('analytics/customers',['as'=>'analytics.customers','uses'=>'Analytics\CustomersController@index']);
 Route::get('analytics/orders',['as'=>'analytics.orders','uses'=>'Analytics\OrdersController@index']);
 
+// Call Planner
+Route::get('analytics/calls',['as'=>'analytics.calls','uses'=>'Analytics\CallController@index']);
+Route::get('analytics/call/{rep}',['as'=>'analytics.call','uses'=>'Analytics\CallController@plan']);

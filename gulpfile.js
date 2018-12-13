@@ -21,11 +21,13 @@ elixir(mix => {
     mix.sass('app.scss')
 		.webpack('main.js')
 		.webpack('orderpicker.js')
+		.webpack('call_planner.js')
 		.webpack('stockadjuster.js')
 		.webpack('clientprices.js')
 		.webpack('freightcalc.js')
 		.scripts(['app.js','SimpleAjaxUploader.js'])
 		.copy('resources/assets/js/imageuploader.js', 'public/js/imageuploader.js')
-		.version(['css/app.css','js/all.js','js/main.js','js/orderpicker.js','js/stockadjuster.js','js/clientprices.js','js/freightcalc.js']);
+		.copy('resources/assets/dist','public/dist')
+		.version(['css/app.css','js/all.js','js/main.js','js/call_planner.js','js/orderpicker.js','js/stockadjuster.js','js/clientprices.js','js/freightcalc.js']);
 });
 
