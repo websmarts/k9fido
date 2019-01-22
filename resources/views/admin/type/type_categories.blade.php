@@ -6,6 +6,8 @@
 
 	<h1>Type Categories Edit Form</h1>
 
+	<p style="color:red">Use CTRL Click to select multiple categories</p>
+
 	<h3>{{ $type->name }}</h3>
 
 
