@@ -69,12 +69,27 @@ class ProductController extends Controller
             'description' => 'required',
 
         ]);
+        // Should check if product code already exists
+        // before creating a new entry.
 
-        Product::create($request->all());
+        $product = Product::where('product_code',$request->input('product_code'))->first();
 
-        flash('Product saved', 'success');
+        if(!$product){
+            Product::create($request->all());
 
-        return redirect()->route('type.index');
+            flash('Product saved', 'success');
+            return redirect()->route('type.index');
+
+        } 
+
+        flash('Product code already exists');
+         return redirect()->back();
+
+        
+
+        
+
+        
     }
 
     /**
