@@ -40,9 +40,14 @@ class ClientController extends Controller
 
         $salesreps = $this->getSalesReps();
 
-        $clients = Client::lists('name', 'client_id')->toArray();
+        $clients = $this->clientsList();
 
         return view('admin.client.create', compact('client', 'salesreps', 'clients', 'client'));
+    }
+
+    protected function clientsList(){
+        return  Client::lists('name', 'client_id')->sort()->toArray();
+
     }
 
     /**
@@ -57,8 +62,7 @@ class ClientController extends Controller
 
         $salesreps = $this->getSalesReps();
 
-        $clients = Client::lists('name', 'client_id')->toArray();
-        asort($clients);
+        $clients =$this->clientsList();
 
         return view('admin.client.edit', compact('client', 'salesreps', 'clients'));
     }
@@ -77,16 +81,16 @@ class ClientController extends Controller
          * Check for the Delete button
          */
         if (strtolower($request->delete_key) == 'fido' && strtolower($request->b) == 'delete') {
-            $mergeCompanyId = (int) $request->merge_company;
+            $mergeCompanyId = (int)$request->merge_company;
 
             if ($mergeCompanyId) {
                 return $this->mergeCompanies($id, $mergeCompanyId);
             }
             return $this->deleteCompany($id);
         }
-        
-        
-        
+
+
+
         $this->validate($request, [
             'name' => 'required',
             'state' => 'required',
@@ -96,7 +100,7 @@ class ClientController extends Controller
         $data = $request->except('_method', '_token');
         $data['modified'] = date("Y-m-d H:i:s");
 
-        
+
 
         $client = Client::find($id); //->update($data);
 
@@ -110,7 +114,6 @@ class ClientController extends Controller
 
         flash('Client updated', 'success');
         return redirect()->route('client.edit', $id);
-
     }
 
     private function updateRepClientsList($clientId, $salesRepId)
@@ -125,7 +128,7 @@ class ClientController extends Controller
         // if client_id / salesrep_id pair exists do nothing
         $res = UserClient::where('client_id', $clientId)->first();
 
-        
+
         if (!is_null($res)) {
             if ($res->salesrep_id == $salesRepId) {
                 return;
@@ -149,7 +152,7 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $this->validate($request, [
             'name' => 'required',
             'state' => 'required',
@@ -163,7 +166,6 @@ class ClientController extends Controller
 
         flash('Client created', 'success');
         return redirect()->route('client.edit', $client->client_id);
-
     }
 
     private function getSalesReps()
@@ -175,7 +177,6 @@ class ClientController extends Controller
             if (!empty($item->firstname)) {
                 $salesreps[$item->id] = $item->firstname . ' ' . $item->lastname;
             }
-
         });
         return $salesreps;
     }
@@ -257,5 +258,4 @@ class ClientController extends Controller
         flash('Success - merged ' . $client1->name . ' with ' . $client2->name, 'success');
         return redirect()->route('client.index');
     }
-
 }
