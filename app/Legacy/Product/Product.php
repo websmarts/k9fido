@@ -2,6 +2,7 @@
 
 namespace App\Legacy\Product;
 
+use App\Legacy\Order\Item;
 use App\Legacy\Traits\UsersQueryFilter;
 use Illuminate\Database\Eloquent\Model;
 
@@ -70,6 +71,19 @@ class Product extends Model
         'product_note',
     ];
 
+    public function recentSales()
+    {
+        $sales = $this->sales()->get();
+
+        // sum up the qty * price
+
+        $total = $sales->reduce(function ($total, $item) {
+            return $total + ($item->qty * $item->price);
+        });
+
+        return $total;
+    }
+
     /**
      * Scope a query to only include filtered results.
      *
@@ -84,6 +98,11 @@ class Product extends Model
     public function bom()
     {
         return $this->hasMany(Bom::class, 'parent_product_code', 'product_code');
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(Item::class,'product_code','product_code');
     }
 
     public function clientprices()

@@ -43,6 +43,7 @@
                         <tr>
                             <th width="120">Product code</th>
                             <th>Description</th>
+                            <th>Sales($)</th>
                             <th></th>
                             <th>Status</th>
                             <th>&nbsp;</th>
@@ -53,6 +54,7 @@
                     <tr>
                     	<td>{{ $product->product_code }}</td>
                         <td>{!! $product->description !!}</td>
+                        <td>{{ $product->recentSales() ? number_format($product->recentSales()/100,0) : '' }}</td>
                         <td>{{ $product->bom->count() ? 'BOM' :'' }}</td>
                         <td>{{ $product->status }}</td>
                     	<td width="20"><a href="{{ route('product.edit', ['id' => $product->id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>

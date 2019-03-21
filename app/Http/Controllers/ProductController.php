@@ -30,6 +30,8 @@ class ProductController extends Controller
             ->select('id', 'description', 'product_code', 'status')
             ->orderBy('product_code', 'asc')
             ->paginate(15);
+            
+        
 
         $filterKey = 'products';
 
