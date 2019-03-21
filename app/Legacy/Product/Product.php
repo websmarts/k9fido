@@ -2,6 +2,7 @@
 
 namespace App\Legacy\Product;
 
+use Carbon\Carbon;
 use App\Legacy\Order\Item;
 use App\Legacy\Traits\UsersQueryFilter;
 use Illuminate\Database\Eloquent\Model;
@@ -71,13 +72,17 @@ class Product extends Model
         'product_note',
     ];
 
-    public function recentSales()
+    public function recentSales($period = -1)
     {
-        $sales = $this->sales()->get();
+        
+        
+
+        $sales = $this->sales($period)->get();
 
         // sum up the qty * price
 
         $total = $sales->reduce(function ($total, $item) {
+
             return $total + ($item->qty * $item->price);
         });
 
@@ -100,9 +105,17 @@ class Product extends Model
         return $this->hasMany(Bom::class, 'parent_product_code', 'product_code');
     }
 
-    public function sales()
+
+    public function sales($period = false)
     {
-        return $this->hasMany(Item::class,'product_code','product_code');
+        
+        $query =  $this->hasMany(Item::class,'product_code','product_code');
+
+        if($period > -1) {
+            $query->where('updated_at', '>' , Carbon::now()->subDays($period));
+        }
+
+        return $query;
     }
 
     public function clientprices()

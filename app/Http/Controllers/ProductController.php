@@ -30,6 +30,19 @@ class ProductController extends Controller
             ->select('id', 'description', 'product_code', 'status')
             ->orderBy('product_code', 'asc')
             ->paginate(15);
+
+
+
+        // Get total sales of product in sales_period
+        if( session()->has('sales_period')) {
+            $salesPeriod = session('sales_period');
+            foreach($products as $product) {
+                $product->salestotal = $product->recentSales($salesPeriod);
+            }
+        }
+
+
+        
             
         
 
@@ -244,5 +257,22 @@ class ProductController extends Controller
     protected function getProductTypes()
     {
         return ProductType::orderBy('name', 'asc')->lists('name', 'typeid')->toArray();
+    }
+
+    public function setSalesPeriod()
+    {
+        $key = 'sales_period';
+        $period = request($key);
+
+
+        if($period) {
+            request()->session()->put($key,$period);
+        } else {
+            request()->session()->forget($key);
+        }
+
+        return redirect()->back();
+        
+        
     }
 }

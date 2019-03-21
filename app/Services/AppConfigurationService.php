@@ -32,6 +32,17 @@ class AppConfigurationService
             'no' => 'No',
             'yes' => 'Yes',
         ],
+
+        //Sales  options
+        'sales.report.period.options' => [
+            null => 'None',
+            -1 =>'All',
+            180 => '180 days',
+            120 => '120 days',
+            90 => '90 days',
+            60 => '60 days',
+            30 => '30 days'
+        ],
     ];
 
     public function get($property)

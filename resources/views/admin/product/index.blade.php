@@ -7,6 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Products</h3>
 
+
                 <form method="POST" action="/filter/{{ $filterKey }}" class="form-inline">
                     <div class="form-group">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -15,7 +16,6 @@
 
                         <label>Status</label>
                         {!! Form::select('fkey[and]', Appdata::get('product.status.filter.options'),json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['and'],['class'=>'form-control']) !!}
-
 
                         <button type="submit" name="Filter" class="btn btn-default"><i class="fa fa-filter fa-1x"></i> Filter list</button>
 
@@ -26,6 +26,16 @@
 
                     </div>
                 </form>
+
+                <form method="POST" action="/product/setsalesperiod" class="form-inline">
+
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    
+                    
+                    {!! Form::select( 'sales_period', Appdata::get('sales.report.period.options'),session('sales_period'),['class'=>'form-control'] ) !!}
+                    <button type="submit" name="Filter" class="btn btn-default"><i class="fa fa-filter fa-1x"></i> Set sales period</button>
+                </form>
+
                 </div>
 
                 <div class="panel-body">
@@ -54,7 +64,7 @@
                     <tr>
                     	<td>{{ $product->product_code }}</td>
                         <td>{!! $product->description !!}</td>
-                        <td>{{ $product->recentSales() ? number_format($product->recentSales()/100,0) : '' }}</td>
+                        <td>{{ $product->salestotal ? number_format($product->salestotal/100,0) : '' }}</td>
                         <td>{{ $product->bom->count() ? 'BOM' :'' }}</td>
                         <td>{{ $product->status }}</td>
                     	<td width="20"><a href="{{ route('product.edit', ['id' => $product->id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
