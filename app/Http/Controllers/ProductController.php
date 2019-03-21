@@ -37,7 +37,9 @@ class ProductController extends Controller
         if( session()->has('sales_period')) {
             $salesPeriod = session('sales_period');
             foreach($products as $product) {
-                $product->salestotal = $product->recentSales($salesPeriod);
+                $product->salestotal = $product->recentSales($salesPeriod)->sales;
+                $product->salesunits = $product->recentSales($salesPeriod)->units;
+
             }
         }
 

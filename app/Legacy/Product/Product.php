@@ -81,12 +81,18 @@ class Product extends Model
 
         // sum up the qty * price
 
-        $total = $sales->reduce(function ($total, $item) {
+        $totalSales = $sales->reduce(function ($totalSales, $item) {
 
-            return $total + ($item->qty * $item->price);
+            return $totalSales + ($item->qty * $item->price);
         });
 
-        return $total;
+        $totalUnits = $sales->reduce(function ($totalUnits, $item) {
+
+            return $totalUnits + $item->qty;
+        });
+
+
+        return (object) ['sales'=>$totalSales,'units'=>$totalUnits];
     }
 
     /**
