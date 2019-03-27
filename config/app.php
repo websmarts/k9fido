@@ -39,7 +39,7 @@ return [
     |
      */
 
-    'url' => env('APP_URL', 'http://K9project.dev'),
+    'url' => env('APP_URL', 'http://K9project.test'),
 
     /*
     |--------------------------------------------------------------------------

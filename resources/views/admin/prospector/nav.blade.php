@@ -19,10 +19,9 @@
                 @if (Auth::user())
                 <ul class="nav navbar-nav">
                     <li><a href="{{ route('prospector.accounts.index')}}">Accounts</a></li>
-                    <li><a href="{{ route('category.index') }}">Contacts</a></li>
-                    <li><a href="{{ route('type.index') }}">Products</a></li>
-                    <li><a href="{{ route('product.index') }}">Prospectors</a></li>
-
+                    <li><a href="{{ route('prospector.contacts.index') }}">Contacts</a></li>
+                    <li><a href="#">Tasks</a></li>
+                    
                 </ul>
                 @endif
 
