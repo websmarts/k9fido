@@ -357,7 +357,7 @@ class OrderService
         $order = Order::with('items.product.bom')->find($orderId);
 
         foreach ($order->items as $item) {
-            if ($restock) {
+            if ($restock && $order->status !=='basket') {
                 $this->updateStockQuantity($item->product, $item->qty);
             }
             $item->delete();
