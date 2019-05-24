@@ -47,6 +47,7 @@ Route::post('filter/{name}', 'FilterController@index');
 Route::resource('product', 'ProductController');
 Route::get('product/{id}/orders', 'ProductController@orders');
 Route::post('product/setsalesperiod','ProductController@setSalesPeriod');
+Route::post('products/bulkupdate','ProductController@bulkUpdate');
 
 // BOM ROUTES
 Route::resource('bom', 'BomController');

@@ -47,35 +47,48 @@
 
 
 
+                    <form method="post" action="/products/bulkupdate">
+                    {!! csrf_field() !!}
+                        <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="100">
+                                <button type="submit" >Set status</button><br>
+                                <select name="status">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">In active</option>
+                                        <option value="pending">Pending</option>
 
-                    <table class="table table-striped">
-                    <thead>
+                                    </select>  
+                                    
+                                </th>
+                                <th width="120">Product code</th>
+                                <th>Description</th>
+                                <th>Sales($)<br />[units]</th>
+                                <th></th>
+                                <th>Status</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($products as $product)
                         <tr>
-                            <th width="120">Product code</th>
-                            <th>Description</th>
-                            <th>Sales($)<br />[units]</th>
-                            <th></th>
-                            <th>Status</th>
-                            <th>&nbsp;</th>
+                            <td><input type="checkbox" name=product[{{ $product->product_code }}] /></td>
+                            <td>{{ $product->product_code }}</td>
+                            <td>{!! $product->description !!}</td>
+                            <td>
+                            {{ $product->salestotal ? number_format($product->salestotal/100,0) : '' }}
+                            {{ $product->salesunits ? ' ['.$product->salesunits.']' : '' }}
+                            </td>
+                            <td>{{ $product->bom->count() ? 'BOM' :'' }}</td>
+                            <td>{{ $product->status }}</td>
+                            <td width="20"><a href="{{ route('product.edit', ['id' => $product->id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($products as $product)
-                    <tr>
-                    	<td>{{ $product->product_code }}</td>
-                        <td>{!! $product->description !!}</td>
-                        <td>
-                        {{ $product->salestotal ? number_format($product->salestotal/100,0) : '' }}
-                        {{ $product->salesunits ? ' ['.$product->salesunits.']' : '' }}
-                        </td>
-                        <td>{{ $product->bom->count() ? 'BOM' :'' }}</td>
-                        <td>{{ $product->status }}</td>
-                    	<td width="20"><a href="{{ route('product.edit', ['id' => $product->id] ) }}"><i class="fa fa-pencil-square-o fa-1x" aria-hidden="true"></i></a></td>
-                    </tr>
-                    @endforeach
+                        @endforeach
 
-                    </tbody>
-                    </table>
+                        </tbody>
+                        </table>
+                    </form>
                     {{ $products->links() }}
                 </div>
             </div>

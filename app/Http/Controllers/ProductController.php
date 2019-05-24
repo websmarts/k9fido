@@ -237,6 +237,24 @@ class ProductController extends Controller
         //
     }
 
+    public function bulkUpdate(Request $request)
+    {
+        
+        
+        
+        $productCodes = array_keys( $request->input('product',[]) ) ;
+
+
+        foreach($productCodes as $productCode) {
+            // set product status to inactive
+            $product = Product::where('product_code',$productCode)->first();
+            $product->status = $request->input('status', 'active');
+            $product->save();
+        }
+
+        return redirect()->back();
+    }
+
 /**
  * Get orders where product is on order
  * @method orders
