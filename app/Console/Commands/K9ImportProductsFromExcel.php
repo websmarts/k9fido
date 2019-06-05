@@ -47,7 +47,8 @@ class K9ImportProductsFromExcel extends Command
 
         Excel::load($file, function ($reader) {
 
-            $newTypeids = [];
+            $newTypeids = [];// can be used to change typeids [current_typeid => new_type_id]
+
             foreach ($reader->all() as $row) {
 
                 $category = Category::where('name', $row[0])->get()->first();
@@ -83,7 +84,8 @@ class K9ImportProductsFromExcel extends Command
 
                 }
 
-                // add the product
+                if (! (int) $row->id){
+                     // add the product
                 $pData = [
                     'description' => $row->description,
                     'size' => $row->size,
@@ -106,6 +108,7 @@ class K9ImportProductsFromExcel extends Command
                     'length' => (int) $row->length,
                     'shipping_volume' => (int) $row->shipping_volume,
                     'shipping_weight' => (int) $row->shipping_weight,
+                    'actual_weight' => (int) $row->actual_weight,
                     'shipping_container' => (int) $row->shipping_container,
                     'display_order' => (int) $row->display_order,
                     'barcode' => substr($row->barcode, 0, 12),
@@ -124,6 +127,12 @@ class K9ImportProductsFromExcel extends Command
                 $product = Product::create($pData);
 
                 var_dump($product->id);
+
+                } else {
+                    // update the product because there is an id
+                }
+
+               
 
             }
         });
