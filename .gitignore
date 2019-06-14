@@ -4,5 +4,5 @@
 /public/source
 Homestead.yaml
 Homestead.json
-
+*.xlsx
 .env

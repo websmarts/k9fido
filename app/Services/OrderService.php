@@ -5,11 +5,11 @@ use App\Legacy\Order\Item;
 use App\Legacy\Order\Order;
 use App\Legacy\Product\ClientPrice;
 use App\Legacy\Product\Product;
-use App\Legacy\Traits\CanExportOrder;
+use App\Legacy\Traits\CanExportOrder2;
 
 class OrderService
 {
-    use CanExportOrder;
+    use CanExportOrder2;
 
     protected $order;
 
@@ -81,10 +81,10 @@ class OrderService
                     $strategy = '#s'; //'special_client_price';
                     // $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 1) : '';
                 }
-
             } else if (($item->product->qty_break > 0)
                 && ($item->qty >= $item->product->qty_break)
-                && ($item->price == round(($item->product->price * (1 - ($item->product->qty_discount / 100)))))) {
+                && ($item->price == round(($item->product->price * (1 - ($item->product->qty_discount / 100)))))
+            ) {
 
                 $strategy = '#q'; //'quantity_discount';
 
@@ -142,13 +142,10 @@ class OrderService
         $freight = FreightService::create()->getFreightCode($client->postcode);
         $result->code = $freight[1] == 'local' ? $freight[0] . ' Local' : $freight[0];
         return $result;
-
     }
 
     protected function itemDisplayData($orderId)
-    {
-
-    }
+    { }
 
     public function getOrderById($id)
     {
@@ -186,7 +183,8 @@ class OrderService
         if ($productCode) {
             $query->where('product_code', $productCode);
         }
-        return collect($query->select('product_code', 'client_price')
+        return collect(
+            $query->select('product_code', 'client_price')
                 ->get()
         )->keyBy('product_code');
     }
@@ -227,7 +225,6 @@ class OrderService
                 $item->save();
                 $this->updateStockQuantity($item->product, -$item->qty);
             }
-
         }
     }
 
@@ -267,9 +264,7 @@ class OrderService
             $stockAdjustQuantity = $originalItemQty - $item->qty;
 
             $this->updateStockQuantity($orderItem->product, $stockAdjustQuantity);
-
         }
-
     }
 
     protected function updateStockQuantity($product, $adjust)
@@ -277,14 +272,14 @@ class OrderService
         if (!$product) {
             return;
         }
-        
+
         //dd(['product' => $product->bom, 'adjust' => $adjust]);
         // if product is a BOM then restock each BOM item_qty times the adjustment
         if ($product->bom->count()) {
-           // dd($product->bom->count());
+            // dd($product->bom->count());
             foreach ($product->bom as $bomItem) {
                 //dd($bomItem);
-                $bomItemProduct = Product::where('product_code',$bomItem->item_product_code)->first();
+                $bomItemProduct = Product::where('product_code', $bomItem->item_product_code)->first();
                 //dd($bomItemProduct);
                 $this->updateStockQuantity($bomItemProduct, $bomItem->item_qty * $adjust);
             }
@@ -293,7 +288,6 @@ class OrderService
             //dd($product);
             $product->save();
         }
-
     }
 
     protected function validProductCode($productCode)
@@ -326,7 +320,6 @@ class OrderService
             // dd($clientPrice);
 
             return $clientPrice->client_price;
-
         }
         // dd($product->price);
         return $product->price;
@@ -348,7 +341,7 @@ class OrderService
 
     public function updateOrderFreightCharge($orderId, $freight = 0)
     {
-        $freight = (float) $freight;
+        $freight = (float)$freight;
         return Order::find($orderId)->update(['freight_charge' => $freight]);
     }
 
@@ -357,7 +350,7 @@ class OrderService
         $order = Order::with('items.product.bom')->find($orderId);
 
         foreach ($order->items as $item) {
-            if ($restock && $order->status !=='basket') {
+            if ($restock && $order->status !== 'basket') {
                 $this->updateStockQuantity($item->product, $item->qty);
             }
             $item->delete();
