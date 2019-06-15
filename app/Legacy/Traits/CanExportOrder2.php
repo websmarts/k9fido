@@ -140,6 +140,22 @@ trait CanExportOrder2
         $o .= $this->qc($l['Quantity']) . ','; // Quantity
         $o .= $this->qc($l['Item Description']).','; // Description
 
+        // Check for stdPrice being zero eg /PARTS
+        if(!$l['Stdprice'] > 0){
+            // Strange pricing with stdprice = 0 or less eg /Parts
+            $l['Stdprice'] = $l['Invprice'];
+            $discount = 0;
+            $discountPercent =0;
+        } else {
+            // Normal product pricing
+            $discount = $l['Stdprice'] ? 1-($l['Invprice']/$l['Stdprice']) : '';
+            $discountPercent = (float) number_format($discount * 100,3);
+        }
+        
+        
+        
+
+        
         $discount = $l['Stdprice'] ? 1-($l['Invprice']/$l['Stdprice']) : '';
         $discountPercent = (float) number_format($discount * 100,3);
 
