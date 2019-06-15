@@ -64,6 +64,7 @@ trait CanExportOrder2
             $lines[$n]['Sales Person First Name'] = @$salesrep->firstname;
             $lines[$n]['Sales Person Last Name'] = @$salesrep->lastname;
             $lines[$n]['Item Number'] = $item->product->product_code;
+            $lines[$n]['Item Description'] = $item->product->description . '- '. $item->product->size;// added because MYOB no longer populates blank descriptions
             $lines[$n]['Quantity'] = $item->qty;
             $lines[$n]['Stdprice'] = $item->product->price;
             $lines[$n]['Invprice'] = $item->price;
@@ -90,8 +91,8 @@ trait CanExportOrder2
         // dd($o);
         // mark the order as exported
         // 'update system_orders set `exported`="yes" where id=' . $orderId;
-        $order->exported = "yes";
-        $order->save();
+        // $order->exported = "yes";
+        // $order->save();
 
         return  $o;
 
@@ -126,7 +127,7 @@ trait CanExportOrder2
             $o .= $this->qc($l['Co./Last Name']) . ','; // Addr 1 - line 1
             $o .= $this->qc($l['address1'] . ' ' . $l['address2']) . ','; // Addr 1 - line 2
             $o .= $this->qc($l['city'])  . ' ' . $l['state'] . ' ' . $l['postcode'] . ','; // Addr 1 - line 3
-            $o .= 'Australia,'; // Addr 1 - line 4
+            $o .= $this->qc('Australia').','; // Addr 1 - line 4
         }
 
         $o .= ','; // Inclusive
@@ -137,22 +138,25 @@ trait CanExportOrder2
         $o .= 'P,'; // Delivery Status
         $o .= $this->qc($l['Item Number']) . ','; // Item Number
         $o .= $this->qc($l['Quantity']) . ','; // Quantity
-        $o .= ','; // Description
+        $o .= $this->qc($l['Item Description']).','; // Description
 
         $discount = $l['Stdprice'] ? 1-($l['Invprice']/$l['Stdprice']) : '';
+        $discountPercent = number_format($discount * 100,3);
 
-        $invPrice = (float) number_format($l['Invprice'] / 100, 2);
-        $lineGST = ( $invPrice / 10 ) * $l['Quantity'];
+        $itemPrice = number_format(($l['Stdprice']/100),3); //dollars.cents 00.000
+        $itemGST = number_format( $itemPrice / 10,2 );
+        $lineGST = $itemGST * $l['Quantity'];
 
-        $o .= '$' . number_format($l['Stdprice']/100, 2, '.', '') . ','; // Price in dollars and cents MUST have $ sign eg $23.45 - ex gst
-        $o .= number_format($discount * 100,2) . ','; // Discount
+
+        $o .= '$' . $itemPrice . ','; // Price in dollars and cents MUST have $ sign eg $23.450 - ex gst
+        $o .= $discountPercent . ','; // Discount
 
         // handle qty = zero
         $extprice = 0;
         if ($l['Quantity'] > 0) {
-            $extprice =  ($invPrice * $l['Quantity']) ; // dollars and cents
+            $extprice =  ($itemPrice * $l['Quantity']) ; // dollars and cents
         }
-        $o .= '$' .number_format($extprice , 2, '.', '').','; // line total
+        $o .= '$' .number_format($extprice , 2).','; // line total
 
         $o .= ','; // Job
         $o .= 'Thank you for your order. We appreciate your business.' . ','; // Comment
