@@ -7,14 +7,14 @@ trait CanExportOrder2
     public function export($id)
     {
         $o = '';
-        $header = 'Co./Last Name,First Name,Addr 1 - Line 1,           - Line 2,           - Line 3,           - Line 4,Inclusive,Invoice #,Date,Customer PO,Ship Via,Delivery Status,Item Number,Quantity,Description,Price,Inc-Tax Price,Discount,Total,Inc-Tax Total,Job,Comment,Journal Memo,Salesperson Last Name,Salesperson First Name,Shipping Date,Referral Source,Tax Code,Non-GST Amount,GST Amount,LCT Amount,Freight Amount,Inc-Tax Freight Amount,Freight Tax Code,Freight Non-GST Amount,Freight GST Amount,Freight LCT Amount,Sale Status,Currency Code,Exchange Rate,Terms - Payment is Due,           - Discount Days,           - Balance Due Days,           - % Discount,           - % Monthly Charge,Amount Paid,Payment Method,Payment Notes,Name on Card,Card Number,Expiry Date,Authorisation Code,BSB,Account Number,Drawer/Account Name,Cheque Number,Category,Location ID,Card ID,Record ID' . "\r\n";
+        
         $header = 'Co./Last Name,First Name,Addr 1 - Line 1,Addr 1 - Line 2,Addr 1 - Line 3,Addr 1 - Line 4,Inclusive,Invoice No.,Date,Customer PO,Ship Via,Delivery Status,Item Number,Quantity,Description,Price,Discount,Total,Job,Comment,Journal Memo,Salesperson Last Name,Salesperson First Name,Shipping Date,Referral Source,Tax Code,Tax Amount,Freight Amount,Freight Tax Code,Freight Tax Amount,Sale Status,Currency Code,Exchange Rate,Terms - Payment is Due,           - Discount Days,           - Balance Due Days,           - % Discount,           - % Monthly Charge,Amount Paid,Payment Method,Payment Notes,Name on Card,Card Number,Authorisation Code,BSB,Account Number,Drawer/Account Name,Cheque Number,Category,Location ID,Card ID,Record ID'. "\r\n";
         if (is_array($id)) {
             $n = 0;
             foreach ($id as $orderId) {
                 if ($n > 0) {
                     // insert blank line TODO - adjust to new number of empty fields
-                    $o .= ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\r\n";
+                    $o .= ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\r\n";
                 }
                 $o .= $this->get_order_export_data($this->getOrderById($orderId));
                 $n++;
@@ -27,7 +27,7 @@ trait CanExportOrder2
             $filename = $order->order_id;
         }
 
-        $o = $header . $o;
+        $o = "{}\r\n". $header . $o;
 
         // echo '<pre>CanExportOrder Trait';
         // dd($o);
@@ -90,7 +90,7 @@ trait CanExportOrder2
         $order->exported = "yes";
         $order->save();
 
-        return $o;
+        return  $o;
 
     }
 
@@ -121,9 +121,9 @@ trait CanExportOrder2
             $o .= $this->qc($l['Co./Last Name']) . ','; // Co./Last Name
             $o .= ','; // First Name
             $o .= ','; // Addr 1 - line 1
-            $o .= ','; // Addr 1 - line 2
-            $o .= ','; // Addr 1 - line 3
-            $o .= ','; // Addr 1 - line 4
+            $o .= $this->qc($l['address1'] . ' ' . $l['address2']) . ','; // Addr 1 - line 2
+            $o .= $this->qc($l['city']) . ' ' . $l['postcode'] . ','; // Addr 1 - line 3
+            $o .= 'Australia,'; // Addr 1 - line 4
         }
 
         $o .= ','; // Inclusive
@@ -131,23 +131,25 @@ trait CanExportOrder2
         $o .= ','; // Date - order date dd/mm/yyyy, leave blank and myob put
         $o .= $this->qc($l['order_contact']) . ','; // Customer PO - insert order_contact
         $o .= ','; // Ship
-        $o .= ','; // Delivery Status
+        $o .= 'P,'; // Delivery Status
         $o .= $this->qc($l['Item Number']) . ','; // Item Number
         $o .= $this->qc($l['Quantity']) . ','; // Quantity
         $o .= ','; // Description
 
+        $discount = $l['Stdprice'] ? 1-($l['Invprice']/$l['Stdprice']) : '';
+
         $invPrice = (float) number_format($l['Invprice'] / 100, 2);
         $lineGST = ( $invPrice / 10 ) * $l['Quantity'];
 
-        $o .= '$' . number_format($invPrice, 2, '.', '') . ','; // Price in dollars and cents MUST have $ sign eg $23.45 - ex gst
-        $o .= ','; // Discount
+        $o .= '$' . number_format($l['Stdprice']/100, 2, '.', '') . ','; // Price in dollars and cents MUST have $ sign eg $23.45 - ex gst
+        $o .= $discount . ','; // Discount
 
         // handle qty = zero
         $extprice = 0;
         if ($l['Quantity'] > 0) {
             $extprice =  ($invPrice * $l['Quantity']) ; // dollars and cents
         }
-        $o .= '$' .number_format($extprice , 2, '.', '');
+        $o .= '$' .number_format($extprice , 2, '.', ''); // line total
 
         $o .= ','; // Job
         $o .= 'Thank you for your order. We appreciate your business.' . ','; // Comment
@@ -166,11 +168,12 @@ trait CanExportOrder2
         $o .= number_format((float) $l['freight_charge'] / 10, 2, '.', '') . ','; // Freight GST Amount - set to 10% of Freight Amount field above
         $o .= 'O,'; // Sales Status O for order
         $o .= ','; // Currency Code
-        $o .= ','; // terms
-        $o .= ','; // discount days
-        $o .= ','; // balance due days
-        $o .= ','; // discount %
-        $o .= ','; // monthly charge
+        $o .= ','; // Exchange rate
+        $o .= '2,'; // terms
+        $o .= '0,'; // discount days
+        $o .= '30,'; // balance due days
+        $o .= '0,'; // discount %
+        $o .= '0,'; // monthly charge
         $o .= ','; // amount paid
         $o .= ','; // payment mthod
         $o .= ','; // payment notes
