@@ -21,6 +21,8 @@ class OrderService
     public function __construct(Order $model)
     {
         $this->order = $model;
+
+        
     }
 
     public function index($paginate = 10)

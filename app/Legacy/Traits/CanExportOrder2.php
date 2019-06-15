@@ -16,6 +16,8 @@ trait CanExportOrder2
                     // insert blank line TODO - adjust to new number of empty fields
                     $o .= ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\r\n";
                 }
+                
+
                 $o .= $this->get_order_export_data($this->getOrderById($orderId));
                 $n++;
 
@@ -70,6 +72,7 @@ trait CanExportOrder2
             $lines[$n]['address2'] = $order->client->address2;
             $lines[$n]['address3'] = $order->client->address3;
             $lines[$n]['city'] = $order->client->city;
+            $lines[$n]['state'] = $order->client->state;
             $lines[$n]['postcode'] = $order->client->postcode;
             $lines[$n]['parent_company'] = !is_null($order->client->parentGroup) ? $order->client->parentGroup->name : '';
 
@@ -115,14 +118,14 @@ trait CanExportOrder2
             $o .= ','; // First Name
             $o .= $this->qc($l['Co./Last Name']) . ','; // Addr 1 - line 1
             $o .= $this->qc($l['address1'] . ' ' . $l['address2']) . ','; // Addr 1 - line 2
-            $o .= $this->qc($l['city']) . ' ' . $l['postcode'] . ','; // Addr 1 - line 3
+            $o .= $this->qc($l['city']) . ' ' . $l['state'] . ' ' . $l['postcode'] . ','; // Addr 1 - line 3
             $o .= ','; // Addr 1 - line 4
         } else {
             $o .= $this->qc($l['Co./Last Name']) . ','; // Co./Last Name
             $o .= ','; // First Name
-            $o .= ','; // Addr 1 - line 1
+            $o .= $this->qc($l['Co./Last Name']) . ','; // Addr 1 - line 1
             $o .= $this->qc($l['address1'] . ' ' . $l['address2']) . ','; // Addr 1 - line 2
-            $o .= $this->qc($l['city']) . ' ' . $l['postcode'] . ','; // Addr 1 - line 3
+            $o .= $this->qc($l['city'])  . ' ' . $l['state'] . ' ' . $l['postcode'] . ','; // Addr 1 - line 3
             $o .= 'Australia,'; // Addr 1 - line 4
         }
 
@@ -142,14 +145,14 @@ trait CanExportOrder2
         $lineGST = ( $invPrice / 10 ) * $l['Quantity'];
 
         $o .= '$' . number_format($l['Stdprice']/100, 2, '.', '') . ','; // Price in dollars and cents MUST have $ sign eg $23.45 - ex gst
-        $o .= $discount . ','; // Discount
+        $o .= number_format($discount * 100,2) . ','; // Discount
 
         // handle qty = zero
         $extprice = 0;
         if ($l['Quantity'] > 0) {
             $extprice =  ($invPrice * $l['Quantity']) ; // dollars and cents
         }
-        $o .= '$' .number_format($extprice , 2, '.', ''); // line total
+        $o .= '$' .number_format($extprice , 2, '.', '').','; // line total
 
         $o .= ','; // Job
         $o .= 'Thank you for your order. We appreciate your business.' . ','; // Comment
@@ -180,7 +183,7 @@ trait CanExportOrder2
         $o .= ','; // name on card
         $o .= ','; // card number
         $o .= ','; // Authorization Code
-        $o .= ','; // bsb
+        $o .= ','; // bsbCan
         $o .= ','; // account number
         $o .= ','; // drawer account name
         $o .= ','; // cheque number
