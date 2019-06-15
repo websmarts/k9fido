@@ -64,7 +64,7 @@ trait CanExportOrder2
             $lines[$n]['Sales Person First Name'] = @$salesrep->firstname;
             $lines[$n]['Sales Person Last Name'] = @$salesrep->lastname;
             $lines[$n]['Item Number'] = $item->product->product_code;
-            $lines[$n]['Item Description'] = $item->product->description . '- '. $item->product->size;// added because MYOB no longer populates blank descriptions
+            $lines[$n]['Item Description'] = $item->product->description . '- '. $item->product->size . ' '. $item->product->color_name;// added because MYOB no longer populates blank descriptions
             $lines[$n]['Quantity'] = $item->qty;
             $lines[$n]['Stdprice'] = $item->product->price;
             $lines[$n]['Invprice'] = $item->price;
@@ -91,8 +91,8 @@ trait CanExportOrder2
         // dd($o);
         // mark the order as exported
         // 'update system_orders set `exported`="yes" where id=' . $orderId;
-        // $order->exported = "yes";
-        // $order->save();
+        $order->exported = "yes";
+        $order->save();
 
         return  $o;
 
@@ -141,14 +141,15 @@ trait CanExportOrder2
         $o .= $this->qc($l['Item Description']).','; // Description
 
         $discount = $l['Stdprice'] ? 1-($l['Invprice']/$l['Stdprice']) : '';
-        $discountPercent = number_format($discount * 100,3);
+        $discountPercent = (float) number_format($discount * 100,3);
 
-        $itemPrice = number_format(($l['Stdprice']/100),3); //dollars.cents 00.000
-        $itemGST = number_format( $itemPrice / 10,2 );
+        $stdPrice = number_format(($l['Stdprice']/100),3); //dollars.cents 00.000
+        $itemPrice =  (float) number_format($stdPrice * (1-($discountPercent / 100)),3);
+        $itemGST = (float) number_format( $itemPrice / 10,2 );
         $lineGST = $itemGST * $l['Quantity'];
 
 
-        $o .= '$' . $itemPrice . ','; // Price in dollars and cents MUST have $ sign eg $23.450 - ex gst
+        $o .= '$' . $stdPrice . ','; // Price in dollars and cents MUST have $ sign eg $23.450 - ex gst
         $o .= $discountPercent . ','; // Discount
 
         // handle qty = zero
