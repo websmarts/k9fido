@@ -108,7 +108,7 @@ trait CanExportOrder2
         $str = trim($str); //remove any newlines
         $str = preg_replace('/\s+/', ' ', $str);
         // return str_replace(',','","',$str); // changed 21/09/2015 because commas in addresses were screwing things up on export.
-        return br2nl(str_replace(',', ';', $str));
+        return $this->br2nl(str_replace(',', ';', $str));
     }
 
     protected function format_line($l)
