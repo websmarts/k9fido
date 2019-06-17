@@ -98,8 +98,8 @@ trait CanExportOrder2
 
     }
 
-    function br2nl( $input ) { // remove <br> tags , eg from descriptions
-        return preg_replace('/<br\s?\/?>/ius', "\n", str_replace("\n","",str_replace("\r","", htmlspecialchars_decode($input))));
+    function br2spc( $input ) { // remove <br> tags , eg from descriptions
+        return preg_replace('/<br\s?\/?>/ius', " ", str_replace("\n","",str_replace("\r","", htmlspecialchars_decode($input))));
     }
 
     protected function qc($str)
@@ -107,8 +107,8 @@ trait CanExportOrder2
         // quote commas in csv
         $str = trim($str); //remove any newlines
         $str = preg_replace('/\s+/', ' ', $str);
-        // return str_replace(',','","',$str); // changed 21/09/2015 because commas in addresses were screwing things up on export.
-        return $this->br2nl(str_replace(',', ';', $str));
+        //$str = str_replace(',','","',$str); // changed 21/09/2015 because commas in addresses were screwing things up on export.
+        return $this->br2spc(str_replace(',', ';', $str));
     }
 
     protected function format_line($l)
