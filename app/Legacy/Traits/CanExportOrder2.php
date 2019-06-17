@@ -165,8 +165,8 @@ trait CanExportOrder2
 
         $stdPrice = number_format(($l['Stdprice']/100),3); //dollars.cents 00.000
         $itemPrice =  (float) number_format($stdPrice * (1-($discountPercent / 100)),3);
-        $itemGST = (float) number_format( $itemPrice / 10,2 );
-        $lineGST = $itemGST * $l['Quantity'];
+        $itemGST =  $itemPrice / 10;
+        $lineGST = number_format($itemGST * $l['Quantity'],2);
 
 
         $o .= '$' . $stdPrice . ','; // Price in dollars and cents MUST have $ sign eg $23.450 - ex gst
@@ -190,7 +190,7 @@ trait CanExportOrder2
         $o .= ','; // Referral Source
         $o .= 'GST' . ','; // Tax code
        
-        $o .= '$' .number_format($lineGST, 2, '.', '') . ','; // Gst amount for line
+        $o .= '$' .$lineGST . ','; // Gst amount for line
         $o .= number_format($l['freight_charge'], 2, '.', '') . ','; // Freight Amount
         $o .= 'GST,'; // Freight Tax Code
         $o .= number_format((float) $l['freight_charge'] / 10, 2, '.', '') . ','; // Freight GST Amount - set to 10% of Freight Amount field above
