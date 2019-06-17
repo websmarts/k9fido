@@ -104,12 +104,18 @@ trait CanExportOrder2
 
     protected function qc($str)
     {
+        $str = $this->clean($str);
         // quote commas in csv
         $str = trim($str); //remove any newlines
         $str = preg_replace('/\s+/', ' ', $str);
         //$str = str_replace(',','","',$str); // changed 21/09/2015 because commas in addresses were screwing things up on export.
         return $this->br2spc(str_replace(',', ';', $str));
     }
+
+    function clean($string) {
+     
+        return preg_replace('/[^A-Za-z0-9\-]/', ' ', $string); // Removes special chars.
+     }
 
     protected function format_line($l)
     {
@@ -124,7 +130,7 @@ trait CanExportOrder2
             $o .= $this->qc($l['Co./Last Name']) . ','; // Addr 1 - line 1
             $o .= $this->qc($l['address1'] . ' ' . $l['address2']) . ','; // Addr 1 - line 2
             $o .= $this->qc($l['city']) . ' ' . $l['state'] . ' ' . $l['postcode'] . ','; // Addr 1 - line 3
-            $o .= ','; // Addr 1 - line 4
+            $o .= $this->qc('Australia').','; // Addr 1 - line 4
         } else {
             $o .= $this->qc($l['Co./Last Name']) . ','; // Co./Last Name
             $o .= ','; // First Name
