@@ -104,7 +104,7 @@ trait CanExportOrder2
 
     protected function qc($str)
     {
-        $str = $this->clean($str);
+        //$str = $this->clean($str);
         // quote commas in csv
         $str = trim($str); //remove any newlines
         $str = preg_replace('/\s+/', ' ', $str);
@@ -148,7 +148,7 @@ trait CanExportOrder2
         $o .= 'P,'; // Delivery Status
         $o .= $this->qc($l['Item Number']) . ','; // Item Number
         $o .= $this->qc($l['Quantity']) . ','; // Quantity
-        $o .= $this->qc($l['Item Description']).','; // Description
+        $o .= $this->qc($this->clean($l['Item Description'])).','; // Description
 
         // Check for stdPrice being zero eg /PARTS
         if(!$l['Stdprice'] > 0){
