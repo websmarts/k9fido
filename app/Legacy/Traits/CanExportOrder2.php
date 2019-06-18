@@ -142,7 +142,7 @@ trait CanExportOrder2
 
         $o .= ','; // Inclusive
         $o .= ','; // Invoice #
-        $o .= ','; // Date - order date dd/mm/yyyy, leave blank and myob put
+        $o .= date('d/m/Y').','; // Date - order date dd/mm/yyyy, leave blank and myob put
         $o .= $this->qc($l['order_contact']) . ','; // Customer PO - insert order_contact
         $o .= ','; // Ship
         $o .= 'P,'; // Delivery Status
