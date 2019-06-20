@@ -558,6 +558,29 @@ $customFreightOptions = [
                         @endif
                         </div>
                     </div>
+                    
+
+                    <?php
+
+$invoiceDeliveryOptions = [
+    '' => 'Select option ...',
+    'P' => 'Print',
+    'E' => 'Email',
+    'B' => 'B option'
+]
+?>
+                    <div class="form-group{{ $errors->has('email_delivery_method') ? ' has-error' : '' }}">
+                        {!! Form::label('invoice_delivery_method', 'Invoice delivery method', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::select('invoice_delivery_method', $invoiceDeliveryOptions, old('invoice_delivery_method', $client->invoice_delivery_method),  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('invoice_delivery_method'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('invoice_delivery_method') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
 
                     <!-- Delete Client support -->
                     @if($client->id)

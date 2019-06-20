@@ -73,6 +73,7 @@ class Client extends Model
         'custom_freight',
         'freight_notes',
         'client_note',
+        'invoice_delivery_method'
 
     ];
 
