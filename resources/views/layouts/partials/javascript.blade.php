@@ -14,5 +14,5 @@
     <script src="{{ elixir('js/main.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script src="{{ elixir('js/all.js') }}"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/1.4.1/index.js"></script>
     <script src="/dist/vuejs-datatable.js"></script>
