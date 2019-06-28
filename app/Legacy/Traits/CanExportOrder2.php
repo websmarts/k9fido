@@ -9,12 +9,17 @@ trait CanExportOrder2
         $o = '';
         
         $header = 'Co./Last Name,First Name,Addr 1 - Line 1,Addr 1 - Line 2,Addr 1 - Line 3,Addr 1 - Line 4,Inclusive,Invoice No.,Date,Customer PO,Ship Via,Delivery Status,Item Number,Quantity,Description,Price,Discount,Total,Job,Comment,Journal Memo,Salesperson Last Name,Salesperson First Name,Shipping Date,Referral Source,Tax Code,Tax Amount,Freight Amount,Freight Tax Code,Freight Tax Amount,Sale Status,Currency Code,Exchange Rate,Terms - Payment is Due,           - Discount Days,           - Balance Due Days,           - % Discount,           - % Monthly Charge,Amount Paid,Payment Method,Payment Notes,Name on Card,Card Number,Authorisation Code,BSB,Account Number,Drawer/Account Name,Cheque Number,Category,Location ID,Card ID,Record ID'. "\r\n";
+        
+        $header = 'Co./Last Name,Addr 1 - Line 1,Addr 1 - Line 2,Addr 1 - Line 3,Addr 1 - Line 4,Date,Customer PO,Ship Via,Item Number,Quantity,Description,Price,Discount,Total,Salesperson Last Name,Salesperson First Name,Tax Code,Tax Amount,Freight Amount,Freight Tax Code,Freight Tax Amount,Sale Status'. "\r\n";
+        
+        
         if (is_array($id)) {
             $n = 0;
             foreach ($id as $orderId) {
                 if ($n > 0) {
                     // insert blank line TODO - adjust to new number of empty fields
-                    $o .= ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\r\n";
+                   // $o .= ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\r\n";
+                   $o .= ",,,,,,,,,,,,,,,,,,,,\r\n";
                 }
                 
 
@@ -79,6 +84,7 @@ trait CanExportOrder2
 
             $lines[$n]['order_contact'] = !is_null($order->order_contact) ? $order->order_contact : '';
             $lines[$n]['freight_charge'] = $order->freight_charge;
+            // TO DO add invoice_delivery_method 
 
             $n++;
         }
@@ -126,7 +132,7 @@ trait CanExportOrder2
 
         if (!empty($l['parent_company'])) {
             $o .= $this->qc($l['parent_company']) . ','; // Co./Last Name
-            $o .= ','; // First Name
+            //$o .= ','; // First Name
             $o .= $this->qc($l['Co./Last Name']) . ','; // Addr 1 - line 1
             $o .= $this->qc($l['address1'] . ' ' . $l['address2']) . ','; // Addr 1 - line 2
             $o .= $this->qc($l['city']) . ' ' . $l['state'] . ' ' . $l['postcode'] . ','; // Addr 1 - line 3
@@ -140,12 +146,12 @@ trait CanExportOrder2
             $o .= $this->qc('Australia').','; // Addr 1 - line 4
         }
 
-        $o .= ','; // Inclusive
-        $o .= ','; // Invoice #
+        // $o .= ','; // Inclusive
+        // $o .= ','; // Invoice #
         $o .= date('d/m/Y').','; // Date - order date dd/mm/yyyy, leave blank and myob put
         $o .= $this->qc($l['order_contact']) . ','; // Customer PO - insert order_contact
-        $o .= ','; // Ship
-        $o .= 'P,'; // Delivery Status
+        // $o .= ','; // Ship
+        // $o .= 'P,'; // Delivery Status
         $o .= $this->qc($l['Item Number']) . ','; // Item Number
         $o .= $this->qc($l['Quantity']) . ','; // Quantity
         $o .= $this->qc($this->clean($l['Item Description'])).','; // Description
@@ -169,10 +175,10 @@ trait CanExportOrder2
         $discount = $l['Stdprice'] ? 1-($l['Invprice']/$l['Stdprice']) : '';
         $discountPercent = (float) number_format($discount * 100,3);
 
-        $stdPrice = number_format(($l['Stdprice']/100),3); //dollars.cents 00.000
+        $stdPrice = number_format(($l['Stdprice']/100),3,".",""); //dollars.cents 00.000
         $itemPrice =  (float) number_format($stdPrice * (1-($discountPercent / 100)),3);
         $itemGST =  $itemPrice / 10;
-        $lineGST = number_format($itemGST * $l['Quantity'],2);
+        $lineGST = number_format($itemGST * $l['Quantity'],2,".","");
 
 
         $o .= '$' . $stdPrice . ','; // Price in dollars and cents MUST have $ sign eg $23.450 - ex gst
@@ -183,17 +189,17 @@ trait CanExportOrder2
         if ($l['Quantity'] > 0) {
             $extprice =  ($itemPrice * $l['Quantity']) ; // dollars and cents
         }
-        $o .= '$' .number_format($extprice , 2).','; // line total
+        $o .= '$' .number_format($extprice , 2,".","").','; // line total
 
-        $o .= ','; // Job
-        $o .= 'Thank you for your order. We appreciate your business.' . ','; // Comment
-        $o .= '' . ','; // journal memo
+        // $o .= ','; // Job
+        // $o .= 'Thank you for your order. We appreciate your business.' . ','; // Comment
+        // $o .= '' . ','; // journal memo
 
          
         $o .= $this->qc($l['Sales Person Last Name']) . ','; // Sales Person Last Name
         $o .= $this->qc($l['Sales Person First Name']) . ','; // Sales Person first Name
-        $o .= ','; // Shipping Date
-        $o .= ','; // Referral Source
+        // $o .= ','; // Shipping Date
+        // $o .= ','; // Referral Source
         $o .= 'GST' . ','; // Tax code
        
         $o .= '$' .$lineGST . ','; // Gst amount for line
@@ -201,27 +207,27 @@ trait CanExportOrder2
         $o .= 'GST,'; // Freight Tax Code
         $o .= number_format((float) $l['freight_charge'] / 10, 2, '.', '') . ','; // Freight GST Amount - set to 10% of Freight Amount field above
         $o .= 'O,'; // Sales Status O for order
-        $o .= ','; // Currency Code
-        $o .= ','; // Exchange rate
-        $o .= '2,'; // terms
-        $o .= '0,'; // discount days
-        $o .= '30,'; // balance due days
-        $o .= '0,'; // discount %
-        $o .= '0,'; // monthly charge
-        $o .= ','; // amount paid
-        $o .= ','; // payment mthod
-        $o .= ','; // payment notes
-        $o .= ','; // name on card
-        $o .= ','; // card number
-        $o .= ','; // Authorization Code
-        $o .= ','; // bsbCan
-        $o .= ','; // account number
-        $o .= ','; // drawer account name
-        $o .= ','; // cheque number
-        $o .= ','; // category
-        $o .= ','; // location id
-        $o .= ','; // card id
-        $o .= ','; // record id
+        // $o .= ','; // Currency Code
+        // $o .= ','; // Exchange rate
+        // $o .= '2,'; // terms
+        // $o .= '0,'; // discount days
+        // $o .= '30,'; // balance due days
+        // $o .= '0,'; // discount %
+        // $o .= '0,'; // monthly charge
+        // $o .= ','; // amount paid
+        // $o .= ','; // payment mthod
+        // $o .= ','; // payment notes
+        // $o .= ','; // name on card
+        // $o .= ','; // card number
+        // $o .= ','; // Authorization Code
+        // $o .= ','; // bsbCan
+        // $o .= ','; // account number
+        // $o .= ','; // drawer account name
+        // $o .= ','; // cheque number
+        // $o .= ','; // category
+        // $o .= ','; // location id
+        // $o .= ','; // card id
+        // $o .= ','; // record id
 
 
         

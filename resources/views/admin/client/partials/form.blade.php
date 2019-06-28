@@ -566,7 +566,7 @@ $invoiceDeliveryOptions = [
     '' => 'Select option ...',
     'P' => 'Print',
     'E' => 'Email',
-    'B' => 'B option'
+    'B' => 'Print and Email'
 ]
 ?>
                     <div class="form-group{{ $errors->has('email_delivery_method') ? ' has-error' : '' }}">
