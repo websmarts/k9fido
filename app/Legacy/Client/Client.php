@@ -77,6 +77,19 @@ class Client extends Model
 
     ];
 
+    public function getAddressLineAttribute()
+    {
+        $result =  $this->address1;
+
+        $result .= !empty($this->address2) ? ','.$this->address2 :'' ;
+
+        $result .= !empty($this->address3) ? ','.$this->address3 : '';
+
+        return $result;
+
+    }
+
+
     /**
      * Scope a query to only include filtered results.
      *

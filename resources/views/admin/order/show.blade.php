@@ -30,7 +30,7 @@
 
                     <div class="col-xs-2">Customer</div>
                     <p class="col-xs-9"><strong>{{ $order->client->name }}</strong><br />
-                    {{ $order->client->address1 }}, {{ $order->client->city }}, {{ $order->client->postcode }} Ph {{ $order->client->phone }}</p>
+                    {{ $order->client->addressline }}, {{ $order->client->city }}, {{ $order->client->postcode }} Ph {{ $order->client->phone }}</p>
                 </div>
                 <div class="row">
                     <div class="col-xs-2">Customer parent</div>

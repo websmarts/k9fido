@@ -59,6 +59,7 @@ class Order extends Model
         return $this->applyFilter($query, $this->table);
     }
 
+
     public function client()
     {
         return $this->belongsTo('App\Legacy\Client\Client', 'client_id', 'client_id')
