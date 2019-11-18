@@ -80,6 +80,8 @@ trait CanExportOrder2
             $lines[$n]['order_contact'] = !is_null($order->order_contact) ? $order->order_contact : '';
             $lines[$n]['freight_charge'] = $order->freight_charge;
 
+            $lines[$n]['invoice_delivery_method'] = !is_null($order->client->invoice_delivery_method) ? $order->client->invoice_delivery_method : 'P';
+
             $n++;
         }
 
@@ -145,7 +147,8 @@ trait CanExportOrder2
         $o .= date('d/m/Y').','; // Date - order date dd/mm/yyyy, leave blank and myob put
         $o .= $this->qc($l['order_contact']) . ','; // Customer PO - insert order_contact
         $o .= ','; // Ship
-        $o .= 'P,'; // Delivery Status
+        // $o .= 'P,'; // Invoice Delivery Method (Email, Print or Both)
+        $o .= $l['invoice_delivery_method'] . ','; // Invoice delivery method E,P or B
         $o .= $this->qc($l['Item Number']) . ','; // Item Number
         $o .= $this->qc($l['Quantity']) . ','; // Quantity
         $o .= $this->qc($this->clean($l['Item Description'])).','; // Description
