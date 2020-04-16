@@ -49,6 +49,15 @@ Route::get('product/{id}/orders', 'ProductController@orders');
 Route::post('product/setsalesperiod','ProductController@setSalesPeriod');
 Route::post('products/bulkupdate','ProductController@bulkUpdate');
 
+Route::get('shopify/export',[
+    'as' => 'shopify.export',
+    'uses' =>'ShopifyExportController@initialExport'
+]);
+
+Route::get('shopify', 'ShopifyImportController@index');
+
+Route::post('shopify/import','ShopifyImportController@import');
+
 // BOM ROUTES
 Route::resource('bom', 'BomController');
 

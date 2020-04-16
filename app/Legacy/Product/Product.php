@@ -70,6 +70,16 @@ class Product extends Model
         'low_stock_level',
         'rrp',
         'product_note',
+        'shopify_id',
+        'shopify_published',
+        'shopify_handle',
+        'shopify_option1_name',
+        'shopify_option1_value',
+        'shopify_option2_name',
+        'shopify_option2_value',
+        'shopify_option3_name',
+        'shopify_option3_value',
+        'shopify_image_src'
     ];
 
     public function recentSales($period = -1)
@@ -102,7 +112,7 @@ class Product extends Model
      */
     public function scopeApplyUserFilter($query)
     {
-        return $this->applyFilter($query, $this->table);
+       return $this->applyFilter($query, $this->table);
 
     }
 

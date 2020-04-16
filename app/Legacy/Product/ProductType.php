@@ -38,6 +38,7 @@ class ProductType extends Model
         'type_description',
         'display_order',
         'aus_made',
+        'shopify_tags'
 
     ];
 
