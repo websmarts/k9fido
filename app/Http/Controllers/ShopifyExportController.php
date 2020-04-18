@@ -164,7 +164,8 @@ class ShopifyExportController extends Controller
             break;
             
             case 'Type':
-                $value = $this->pTypeName;
+                // $value = $this->pTypeName;// only used for initial export when shopify_type not yet established
+                $value = $this->product->shopify_type;
             break;
 
             case 'Tags':
@@ -287,6 +288,10 @@ class ShopifyExportController extends Controller
        
        //dd($data);
 
+       if(!count($this->exportRows)){
+           dd ('Oops, looks like we have no rows to export!');
+       }
+
        
 
         Excel::create('K9ExportForShopify', function($excel) {
@@ -307,7 +312,8 @@ class ShopifyExportController extends Controller
         
             });
     
-           })->download('xlsx');;
+           })->download('xlsx');
+           exit;
            
     }
 

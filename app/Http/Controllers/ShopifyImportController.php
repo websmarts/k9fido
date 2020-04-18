@@ -92,8 +92,8 @@ class ShopifyImportController extends Controller
 
                         // Update product info and save
                         $product->shopify_id = $value->id;
-                        $product->shopify_published = $value->shopify == 'N' ? 0 :1; // only use initially - dont update down track
-                        //$product->shopify_published = $value->published;
+                        //$product->shopify_published = $value->shopify == 'N' ? 0 :1; // only use initially - dont update down track
+                        $product->shopify_published = $value->published;
                         $product->shopify_handle = $value->handle;
                         $product->shopify_type = $value->type;
                         $product->shopify_tags = $value->tags;
