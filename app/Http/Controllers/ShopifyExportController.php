@@ -83,7 +83,7 @@ class ShopifyExportController extends Controller
          $this->pTypes = ProductType::where('typeid',">",0)
             ->with(['products' => function($q) {
                 $q->where([
-                    ['status','=', 'active'],
+                    // ['status','=', 'active'],
                     ['shopify_published', '>', 0], 
                 ]);
             
