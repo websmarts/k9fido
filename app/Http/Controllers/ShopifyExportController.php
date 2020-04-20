@@ -313,7 +313,7 @@ class ShopifyExportController extends Controller
             });
     
            });//
-           ->download('xlsx');
+           //->download('xlsx');
            dd('done');
            exit;
            
