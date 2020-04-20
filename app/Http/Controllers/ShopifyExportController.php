@@ -286,7 +286,7 @@ class ShopifyExportController extends Controller
     public function exportXLS()
     {
        
-       //dd($data);
+       dd('now ready to export');
 
        if(!count($this->exportRows)){
            dd ('Oops, looks like we have no rows to export!');
