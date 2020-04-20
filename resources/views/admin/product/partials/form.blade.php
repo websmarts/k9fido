@@ -459,3 +459,16 @@
                         @endif
                         </div>
                     </div>
+
+                    <div class="form-group{{ $errors->has('shopify_published') ? ' has-error' : '' }}">
+                        {!! Form::label('shopify_published', 'Publish to Shopify:', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::select('shopify_published', [''=>'Select option ...', '1'=>'Yes','0'=>'No'], null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('shopify_published'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('shopify_published') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
