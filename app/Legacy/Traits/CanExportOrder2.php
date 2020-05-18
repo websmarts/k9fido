@@ -77,7 +77,7 @@ trait CanExportOrder2
             $lines[$n]['postcode'] = (int) $order->client->postcode;
             $lines[$n]['parent_company'] = !is_null($order->client->parentGroup) ? $order->client->parentGroup->name : '';
 
-            $lines[$n]['order_contact'] = !is_null($order->order_contact) ? $order->order_contact : '';
+            $lines[$n]['order_contact'] = !is_null($order->order_contact) ? $order->order_contact : ''; 
             $lines[$n]['freight_charge'] = $order->freight_charge;
 
             $lines[$n]['invoice_delivery_method'] = !is_null($order->client->invoice_delivery_method) ? $order->client->invoice_delivery_method : 'P';
@@ -145,7 +145,7 @@ trait CanExportOrder2
         $o .= ','; // Inclusive
         $o .= ','; // Invoice #
         $o .= date('d/m/Y').','; // Date - order date dd/mm/yyyy, leave blank and myob put
-        $o .= $this->qc($l['order_contact']) . ','; // Customer PO - insert order_contact
+        $o .= $this->qc(substr($l['order_contact'],0,15)) . ','; // Customer PO - insert order_contact
         $o .= ','; // Ship
         // $o .= 'P,'; // Invoice Delivery Method (Email, Print or Both)
         $o .= $l['invoice_delivery_method'] . ','; // Invoice delivery method E,P or B
