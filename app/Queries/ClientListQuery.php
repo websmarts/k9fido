@@ -16,6 +16,9 @@ class ClientListQuery
             ->select('clients.client_id', 'clients.name', 'clients.city')
             ->orderBy('clients.name', 'asc');
 
+            // $query = Client::select('clients.client_id', 'clients.name', 'clients.city')
+            // ->orderBy('clients.name', 'asc');
+
         return $query->paginate($rowsPerPage);
 
     }
