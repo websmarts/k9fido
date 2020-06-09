@@ -110,7 +110,7 @@ class OrderService
             $i->price = $item->price;
             $i->product = $item->product;
             $i->pricing_strategy = $strategy;
-            $i->ext_price = $item->qty * $item->price;
+            $i->ext_price = $item->qty * $item->price; // NOTE - MAy need to convert to 2 dec places at some pont to keep MYOB happy??
             $i->markup = $markup;
             $i->custom_discount = $customDiscount;
             //dd($i);
@@ -162,7 +162,7 @@ class OrderService
         }
 
         return $order->items->sum(function ($item) {
-            return $item['qty'] * ($item['price'] / 100);
+            return $item['qty'] * ($item['price'] / 100);// NOTE MAY NEED TO ROUND TO 2 DEC PLACES AS PER DARRENS EMAIL
         });
     }
 
