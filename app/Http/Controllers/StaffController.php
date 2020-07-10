@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Legacy\Staff\User as Staff;
+use App\User;
 use Illuminate\Http\Request;
 
 class StaffController extends Controller
@@ -65,7 +66,19 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Staff::find($id);
+
+        $fidoUser = User::where('name',$user->name)->first();
+        if($fidoUser){
+            $user->email = $fidoUser->email;
+            $user->user_id = $fidoUser->id;
+
+        } else {
+            $user->email = '';
+        }
+       
+
+        return view('admin.staff.edit')->with('user',$user);
     }
 
     /**
@@ -77,7 +90,34 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $data = $request->all();
+        $staff = Staff::find($id);
+
+        $fidoUser = User::find($data['user_id']);
+
+        if ( !empty($data['set_password']) ){
+            // password is being updated
+            $staff['pass'] = md5($data['set_password']);// ecat password update
+            $fidoUser->password = bcrypt($data['set_password']);// fido user password update
+        }
+
+        unset($data['set_password']);
+
+        // Update eCat user table
+        $staff->update($data);
+
+
+        // Update fido user table
+        $fidoUser->email = $data['email'];
+        $fidoUser->name = $data['name'];
+        $fidoUser->save();
+
+
+
+        return redirect(route('staff.index'));
+
+
     }
 
     /**

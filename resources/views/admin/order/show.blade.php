@@ -118,12 +118,12 @@ usort($items, function ($a, $b) {
                     <td class="c3">{{ $i->product->color_name }}</td>
                     <td class="c4">{{ $i->product->size }}</td>
                     <td class="c5">{{ $i->qty_supplied }}/{{ $i->qty }}</td>
-                    <td class="c6">{{ number_format($i->price/100,2) }}</td>
+                    <td class="c6">{{ number_format($i->price/100,7) }}</td>
                     <td class="c7">{{ number_format($i->ext_price/100,2) }}</td>
                     <td>{{ $i->pricing_strategy }}</td>
 
                     <td class="c8">{{ $i->markup != 0 ? number_format($i->markup * 100,1).'%' : '' }}</td>
-                    <td class="c9">{{ $i->custom_discount != 0 ? $i->custom_discount :'' }}</td>
+                    <td class="c9">{{ $i->custom_discount != 0 ? number_format($i->custom_discount,1) :'' }}</td>
 
                 </tr>
                 @endforeach

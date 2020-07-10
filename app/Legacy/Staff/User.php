@@ -34,7 +34,7 @@ class User extends Model
         'privileges',
         'firstname',
         'lastname',
-        'record_milage',
+        'record_mileage',
         'user_id',
     ];
 
