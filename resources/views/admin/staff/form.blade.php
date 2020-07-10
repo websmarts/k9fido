@@ -106,16 +106,9 @@
     </div>
 
     <div class="form-group{{ $errors->has('user_id') ? ' has-error' : '' }}">
-        {!! Form::label('user_id', 'Fido User ID', array('class' => 'col-md-4 control-label')) !!}
 
         <div class="col-md-6">
-            {!! Form::text('user_id', null,  array('class' => 'form-control')) !!}
-
-            @if ($errors->has('user_id'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('user_id') }}</strong>
-                </span>
-            @endif
+            {!! Form::hidden('user_id', null,  array('class' => 'form-control')) !!}      
         </div>
     </div>
 
