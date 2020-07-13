@@ -118,7 +118,7 @@ usort($items, function ($a, $b) {
                     <td class="c3">{{ $i->product->color_name }}</td>
                     <td class="c4">{{ $i->product->size }}</td>
                     <td class="c5">{{ $i->qty_supplied }}/{{ $i->qty }}</td>
-                    <td class="c6">{{ number_format($i->price/100,7) }}</td>
+                    <td class="c6">{{ number_format($i->price/100,2) }}</td>
                     <td class="c7">{{ number_format($i->ext_price/100,2) }}</td>
                     <td>{{ $i->pricing_strategy }}</td>
 
