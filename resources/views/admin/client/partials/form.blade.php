@@ -207,7 +207,7 @@ $states = [
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('contacts_3') ? ' has-error' : '' }}">
-                        {!! Form::label('contacts_3', 'Contacts - ordering', array('class' => 'col-md-4 control-label')) !!}
+                        {!! Form::label('contacts_3', 'Contacts - marketing', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
                         {!! Form::text('contacts_3', null,  array('class' => 'form-control')) !!}
 
@@ -218,6 +218,20 @@ $states = [
                         @endif
                         </div>
                     </div>
+                    <div class="form-group{{ $errors->has('email_3') ? ' has-error' : '' }}">
+                        {!! Form::label('email_3', 'Email (3) contact marketing', array('class' => 'col-md-4 control-label')) !!}
+                        <div class="col-md-6">
+                        {!! Form::text('email_3', null,  array('class' => 'form-control')) !!}
+
+                        @if ($errors->has('email_3'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email_3') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+
+
 
                     <!-- <div class="form-group{{ $errors->has('call_interval') ? ' has-error' : '' }}">
                         {!! Form::label('call_interval', 'Call interval', array('class' => 'col-md-4 control-label')) !!}
@@ -460,18 +474,7 @@ $onlineStatusOptions = [
                         @endif
                         </div>
                     </div>
-                    <div class="form-group{{ $errors->has('email_3') ? ' has-error' : '' }}">
-                        {!! Form::label('email_3', 'Email (3) contact', array('class' => 'col-md-4 control-label')) !!}
-                        <div class="col-md-6">
-                        {!! Form::text('email_3', null,  array('class' => 'form-control')) !!}
-
-                        @if ($errors->has('email_3'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('email_3') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
+                   
 
 <?php
 $levelOptions = [

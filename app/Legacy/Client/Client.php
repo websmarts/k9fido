@@ -90,6 +90,36 @@ class Client extends Model
     }
 
 
+    // convert all emails to lowercase
+    public function getEmail1Attribute($value)
+    {
+        return strtolower($value);
+    }
+    public function getEmail2Attribute($value)
+    {
+        return strtolower($value);
+    }
+    public function getEmail3Attribute($value)
+    {
+        return strtolower($value);
+    }
+    public function setEmail1Attribute($value)
+    {
+        $this->attributes['email_1'] = strtolower($value);
+    }
+    public function setEmail2Attribute($value)
+    {
+        $this->attributes['email_2'] = strtolower($value);
+    }
+    public function setEmail3Attribute($value)
+    {
+        $this->attributes['email_3'] = strtolower($value);
+    }
+
+
+
+
+
     /**
      * Scope a query to only include filtered results.
      *
