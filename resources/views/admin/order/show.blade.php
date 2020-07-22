@@ -109,7 +109,7 @@ usort($items, function ($a, $b) {
 
 ?>
 
-@if(count($items > 0))
+@if(  count($items > 0))
                 @foreach($items as $i)
                 <?php $customDiscount = '';?>
                 <tr>

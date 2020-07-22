@@ -97,7 +97,7 @@ class OrderService
 
             }
 
-            $customDiscount = $item->product->price > 0 ? number_format(100 * ($item->product->price - $item->price) / $item->product->price, 3) : '';
+            $customDiscount = $item->product->price > 0 ? round(100 * ($item->product->price - $item->price) / $item->product->price, 3) : '';// 
             // Markup
             $markup = '';
             if ($item->price > 0) {
