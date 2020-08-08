@@ -21,6 +21,6 @@
     startTime: new Date().getTime()
   }
 </script>
-<script src="{{ elixir('js/orderpicker.js') }}"></script>
+<script src="{{ url(elixir('js/orderpicker.js')) }}"></script>
 
 @endsection

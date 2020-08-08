@@ -1,10 +1,10 @@
 {
-  "css/app.css": "css/app-ec61cb76da.css",
-  "js/all.js": "js/all-b1832d2ec9.js",
-  "js/call_planner.js": "js/call_planner-5cf99085d2.js",
-  "js/clientprices.js": "js/clientprices-a51757200e.js",
-  "js/freightcalc.js": "js/freightcalc-665708ad24.js",
-  "js/main.js": "js/main-95cfd91865.js",
-  "js/orderpicker.js": "js/orderpicker-be8cd5dd35.js",
-  "js/stockadjuster.js": "js/stockadjuster-2876a86070.js"
+  "css/app.css": "css/app-b109fe07b6.css",
+  "js/all.js": "js/all-074ca1f6f3.js",
+  "js/call_planner.js": "js/call_planner-5598e870b1.js",
+  "js/clientprices.js": "js/clientprices-731f43713c.js",
+  "js/freightcalc.js": "js/freightcalc-ffce203247.js",
+  "js/main.js": "js/main-f91d1982d9.js",
+  "js/orderpicker.js": "js/orderpicker-2d7771fa5b.js",
+  "js/stockadjuster.js": "js/stockadjuster-b8f4ce8dca.js"
 }
