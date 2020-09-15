@@ -7,18 +7,20 @@
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
     "gulp": "^3.9.1",
-    "jquery": "^3.1.0",
+    "jquery": "^3.5.1",
     "laravel-elixir": "^6.0.0-9",
     "laravel-elixir-vue-2": "^0.2.0",
     "laravel-elixir-webpack-official": "^1.0.2",
-    "lodash": "^4.16.2",
+    "lodash": "^4.17.20",
     "vue": "^2.0.1",
     "vue-resource": "^1.0.3"
   },
   "dependencies": {
     "jquery-ui": "^1.12.1",
+    "node-sass": "^4.14.1",
     "vue-router": "^2.0.0",
     "vuejs-datatable": "^1.7.0",
-    "vuex": "^2.0.0"
+    "vuex": "^2.0.0",
+    "webpack": "^4.44.1"
   }
 }

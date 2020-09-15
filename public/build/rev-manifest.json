@@ -2,9 +2,9 @@
   "css/app.css": "css/app-b109fe07b6.css",
   "js/all.js": "js/all-074ca1f6f3.js",
   "js/call_planner.js": "js/call_planner-5598e870b1.js",
-  "js/clientprices.js": "js/clientprices-731f43713c.js",
+  "js/clientprices.js": "js/clientprices-691c44fea4.js",
   "js/freightcalc.js": "js/freightcalc-ffce203247.js",
-  "js/main.js": "js/main-f91d1982d9.js",
-  "js/orderpicker.js": "js/orderpicker-2d7771fa5b.js",
-  "js/stockadjuster.js": "js/stockadjuster-b8f4ce8dca.js"
+  "js/main.js": "js/main-6ba2009ca2.js",
+  "js/orderpicker.js": "js/orderpicker-9e9fe5d351.js",
+  "js/stockadjuster.js": "js/stockadjuster-ceb20f9ce1.js"
 }

@@ -201,8 +201,14 @@ class ProductController extends Controller
         $data['qty_ordered'] = 0;
 
         // set the shipping_volume and shipping_weight
-        $data['shipping_volume'] = $data['length'] * $data['width'] * $data['height'] / 1000000;
-        $data['shipping_weight'] = $data['shipping_volume'] * 250;
+
+        $length = isSet($data['length']) ? (float) $data['length'] : 0;
+        $width = isSet($data['width']) ? (float) $data['width'] : 0;
+        $height = isSet($data['height']) ? (float) $data['height'] : 0;
+        $shipping_volume = isSet($data['shipping_volume']) ? (float) $data['shipping_volume'] : 0;
+
+        $data['shipping_volume'] = $length * $width * $height / 1000000;
+        $data['shipping_weight'] = $shipping_volume * 250;
 
         
 
