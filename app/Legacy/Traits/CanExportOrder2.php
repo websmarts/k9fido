@@ -169,7 +169,7 @@ trait CanExportOrder2
         
 
         
-        $discount = $l['Stdprice'] ? 1-($l['Invprice']/$l['Stdprice']) : '';
+        $discount = $l['Stdprice'] ? 1-($l['Invprice']/$l['Stdprice']) : 0;
         $discountPercent = (float) number_format($discount * 100,3, '.', '');
 
         $stdPrice = number_format(($l['Stdprice']/100),3, '.', ''); //dollars.cents 00.000
