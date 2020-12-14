@@ -22,8 +22,8 @@ class FreightController extends Controller
         // $this->loadTollRates();
         // $this->loadEparcelRates();
         // $this->loadAuspostRates();
-        $this->loadIFRates();
-        $this->loadTmccRates();
+       // $this->loadIFRates();
+       // $this->loadTmccRates();
         dd('done');
     }
 
@@ -230,20 +230,20 @@ class FreightController extends Controller
         // The figures below are manually populated from Toll spreadsheet
 
         // Basic
-        $MEL1[0] = [591, 1181, 1769, 2358];
-        $MEL2[0] = [791, 1573, 2358, 3139];
-        $IVIC[0] = [983, 1966, 2942, 3923];
-        $OVIC[0] = [1376, 2748, 4118, 5488];
+        $MEL1[0] = [993, 1986, 2779, 3972];
+        $MEL2[0] = [1278, 2556, 3834, 5112];
+        $IVIC[0] = [1432, 2864, 4296, 5728];
+        $OVIC[0] = [3170, 6340, 9510, 12680];
         // With Fuel levy
-        $MEL1[1] = [665, 1329, 1990, 2653];
-        $MEL2[1] = [890, 1770, 2653, 3531];
-        $IVIC[1] = [1106, 2212, 3310, 4413];
-        $OVIC[1] = [1548, 3092, 4633, 6174];
+        $MEL1[1] = [1117, 2234, 3351, 4469];
+        $MEL2[1] = [1438, 2876, 4313, 5751];
+        $IVIC[1] = [1611, 3222, 4833, 6444];
+        $OVIC[1] = [3566, 7133, 10699, 14265];
         // With Fuel and GST
-        $MEL1[2] = [731, 1461, 2189, 2918];
-        $MEL2[2] = [979, 1947, 2918, 3885];
-        $IVIC[2] = [1216, 2433, 3641, 4855];
-        $OVIC[2] = [1703, 3401, 5096, 6791];
+        $MEL1[2] = [1229, 2458, 3687, 4915];
+        $MEL2[2] = [1582, 3163, 4745, 6326];
+        $IVIC[2] = [1772, 3544, 5316, 7088];
+        $OVIC[2] = [3923, 7846, 11769, 15692];
 
         $zones = ['MEL1', 'MEL2', 'IVIC', 'OVIC'];
         $table = "freight_rates_toll";
