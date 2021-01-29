@@ -136,7 +136,7 @@ Route::get('prospector/accounts', [
 Route::get('clientlookup/', [
     'as' => 'clientlookup', 'uses' => 'ClientLookupController@index']); // ajax data for client lookup autocomplete
 
-// test route for freight testing
+// Load freight data from spreadsheets
 Route::get('freight/{postcode?}', 'FreightController@index');
 
 // Stock Adjuster

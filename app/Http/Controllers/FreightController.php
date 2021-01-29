@@ -19,12 +19,45 @@ class FreightController extends Controller
 
     public function index($postcode = "3000")
     {
-        // $this->loadTollRates();
+        //$this->loadTollRates();
         // $this->loadEparcelRates();
         // $this->loadAuspostRates();
-       // $this->loadIFRates();
-       // $this->loadTmccRates();
+       $this->loadIFRates();
+       // $this->loadTmccRates();// TMC no longer used 29012021
+        // $this->loadHunterZoneGuide();
         dd('done');
+    }
+
+    protected function loadHunterZoneGuide()
+    {
+        $filePath = storage_path("imports/freight/hunter/zone_guide.xlsx");
+        $zonesdata = Excel::load($filePath, function ($reader) {
+        })->get();
+
+        //dd($zonesdata);
+        $table = "freight_rates_hunter";
+        \DB::delete('delete from ' . $table);
+        $rows =[];
+        if (!empty($zonesdata) && $zonesdata->count()) {
+            foreach ($zonesdata as $key => $value) {
+
+                
+                $postcode = (string) (int) $value->postcode; // strip trailing .0  ??
+                if (!isset($this->postcodes[$postcode])) {
+                    //\Log::info('Skipping:' . $postcode);
+                    continue;
+                }
+                if ($value->zone > 0 ) {
+                    
+                    $rows[$postcode] = (string) (int) $value->zone;
+                }
+            }
+        }
+        // dd($rows);
+        foreach($rows as $postcode=>$zone){
+            \DB::insert('insert into ' . $table . ' (postcode,zone) values (?,?)',[$postcode,$zonesdata]);
+        }
+       
     }
 
     protected function loadTmccRates()
@@ -77,14 +110,19 @@ class FreightController extends Controller
         if (!empty($ratesdata) && $ratesdata->count()) {
             foreach ($ratesdata as $key => $value) {
                 $postcode = (string) (int) $value->postcode; // strip trailing .0  ??
+               
                 if (!isset($this->postcodes[$postcode])) {
                     //\Log::info('Skipping:' . $postcode);
                     continue;
                 }
+
+                $city = !empty($value->suburb) ? strtolower($value->suburb) : null;
+                
                 if ($value->rate1 > 0 || $value->rate2 > 0 || $value->rate3 > 0) {
-                    \DB::insert('insert into ' . $table . ' (postcode,rate1,rate2,rate3) values (?,?,?,?)',
+                    \DB::insert('insert into ' . $table . ' (postcode,city,rate1,rate2,rate3) values (?,?,?,?,?)',
                         [
                             $postcode,
+                            $city,
                             $value->rate1 * 100,
                             $value->rate2 * 100,
                             $value->rate3 * 100,

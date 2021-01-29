@@ -125,7 +125,7 @@ class OrderService
     protected function newGetFreightInformation($client)
     {
 
-        $freight = FreightService::create()->getFreightRates($client->postcode);
+        $freight = FreightService::create()->getFreightRates($client->postcode,$client->city);
 
         if ($client->custom_freight > 0) {
             $freight['notes'] = $client->freight_notes;

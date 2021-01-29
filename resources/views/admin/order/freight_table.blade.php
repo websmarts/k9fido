@@ -1,4 +1,4 @@
- {{--dump($freight)--}}
+ {{-- dump($freight) --}}
                     @if(!empty($freight['toll']))
 
 

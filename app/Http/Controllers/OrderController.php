@@ -43,7 +43,7 @@ class OrderController extends Controller
     public function show($id)
     {
         // Get the order and order items
-        // $data = $this->orderService->fetchOrderDisplayData($id);
+        //  $data = $this->orderService->fetchOrderDisplayData($id);
         // dd($data);
         return view('admin.order.show', $this->orderService->fetchOrderDisplayData($id));
     }
