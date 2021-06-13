@@ -20,7 +20,7 @@ class ExportProductsController extends Controller
         $rows = DB::connection('k9homes')->table('products')->get();
         // dd($rows);
 
-        // dd(count($rows));
+        dd(count($rows));
 
         $data =[];
         $records = 0;
