@@ -50,6 +50,6 @@ class ExportProductsController extends Controller
             {
                 $sheet->fromArray($data);
             });
-        })->download($type);
+        })->export($type);
     }
 }
