@@ -43,13 +43,13 @@ class ExportProductsController extends Controller
 
         //dd($data);
         
-        $type='csv';
+        $type='xls';
 
         return Excel::create('product_table_export_'.date('dmY_His'), function($excel) use ($data) {
             $excel->sheet('mySheet', function($sheet) use ($data)
             {
                 $sheet->fromArray($data);
             });
-        })->export($type);
+        })->download($type);
     }
 }
