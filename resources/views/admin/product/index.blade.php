@@ -46,6 +46,7 @@
                         <div class="col-md-12" style="padding-bottom: 4px">
 
                             <a href="{{ route('product.create') }}"><button class="btn btn-primary pull-right"><i class="fa fa-plus-square-o fa-1x"></i> Create a new product</button></a>
+                           
                             
                         </div>
                     </div>

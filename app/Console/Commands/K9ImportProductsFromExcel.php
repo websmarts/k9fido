@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Maatwebsite\Excel\Facades\Excel;
 
 class K9ImportProductsFromExcel extends Command
 {

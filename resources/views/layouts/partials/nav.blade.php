@@ -28,7 +28,7 @@
                     <li><a href="{{ route('order.index') }}">Orders</a></li>
                     <li><a href="{{ route('client.index')}}">Clients</a></li>
                     <li><a href="{{ route('staff.index')}}">Staff</a></li>
-                    <li><a href="{{ route('analytics.index')}}">Analytics</a></li>
+                    <li><a href="{{ route('analytics.index')}}">Utilities</a></li>
                     <!-- <li><a href="{{-- route('prospector.index')--}}">Prospector</a></li> -->
                 </ul>
                 @endif

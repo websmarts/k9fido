@@ -1,0 +1,628 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>Ian Maclagan</Author>
+  <LastAuthor>Ian Maclagan</LastAuthor>
+  <Created>2021-06-03T05:34:43Z</Created>
+  <LastSaved>2021-06-03T05:43:25Z</LastSaved>
+  <Version>12.00</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>8925</WindowHeight>
+  <WindowWidth>16920</WindowWidth>
+  <WindowTopX>480</WindowTopX>
+  <WindowTopY>368</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s57">
+   <NumberFormat ss:Format="Short Date"/>
+  </Style>
+  <Style ss:ID="s58">
+   <NumberFormat ss:Format="0"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Dachshund Coats Data Info.xls">
+  <Table ss:ExpandedColumnCount="52" ss:ExpandedRowCount="16" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="51" ss:DefaultRowHeight="14.25">
+   <Column ss:AutoFitWidth="0" ss:Width="141.375"/>
+   <Column ss:Index="26" ss:StyleID="s58" ss:AutoFitWidth="0" ss:Width="128.25"/>
+   <Row>
+    <Cell><Data ss:Type="String">description</Data></Cell>
+    <Cell><Data ss:Type="String">size</Data></Cell>
+    <Cell><Data ss:Type="String">price</Data></Cell>
+    <Cell><Data ss:Type="String">product_code</Data></Cell>
+    <Cell><Data ss:Type="String">typeid</Data></Cell>
+    <Cell><Data ss:Type="String">qty_break</Data></Cell>
+    <Cell><Data ss:Type="String">qty_discount</Data></Cell>
+    <Cell><Data ss:Type="String">qty_instock</Data></Cell>
+    <Cell><Data ss:Type="String">qty_ordered</Data></Cell>
+    <Cell><Data ss:Type="String">special</Data></Cell>
+    <Cell><Data ss:Type="String">clearance</Data></Cell>
+    <Cell><Data ss:Type="String">can_backorder</Data></Cell>
+    <Cell><Data ss:Type="String">status</Data></Cell>
+    <Cell><Data ss:Type="String">modified</Data></Cell>
+    <Cell><Data ss:Type="String">cost</Data></Cell>
+    <Cell><Data ss:Type="String">last_costed_date</Data></Cell>
+    <Cell><Data ss:Type="String">supplier</Data></Cell>
+    <Cell><Data ss:Type="String">width</Data></Cell>
+    <Cell><Data ss:Type="String">height</Data></Cell>
+    <Cell><Data ss:Type="String">length</Data></Cell>
+    <Cell><Data ss:Type="String">shipping_volume</Data></Cell>
+    <Cell><Data ss:Type="String">shipping_weight</Data></Cell>
+    <Cell><Data ss:Type="String">actual_weight</Data></Cell>
+    <Cell><Data ss:Type="String">shipping_container</Data></Cell>
+    <Cell><Data ss:Type="String">display_order</Data></Cell>
+    <Cell><Data ss:Type="String">barcode</Data></Cell>
+    <Cell><Data ss:Type="String">color_name</Data></Cell>
+    <Cell><Data ss:Type="String">color_background_color</Data></Cell>
+    <Cell><Data ss:Type="String">color_background_image</Data></Cell>
+    <Cell><Data ss:Type="String">notify_when_instock</Data></Cell>
+    <Cell><Data ss:Type="String">source</Data></Cell>
+    <Cell><Data ss:Type="String">new_product</Data></Cell>
+    <Cell><Data ss:Type="String">core_product</Data></Cell>
+    <Cell><Data ss:Type="String">low_stock_level</Data></Cell>
+    <Cell><Data ss:Type="String">rrp</Data></Cell>
+    <Cell><Data ss:Type="String">product_note</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_id</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_variant_id</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_published</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_handle</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_type</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_tags</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_option1_name</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_option1_value</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_option2_name</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_option2_value</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_option3_name</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_option3_value</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_image_src</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_image_alt_text</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_variant_weight</Data></Cell>
+    <Cell><Data ss:Type="String">shopify_variant_weight_unit</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">30cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2685</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH30-blu</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">300</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902343</Data></Cell>
+    <Cell><Data ss:Type="String">Blue</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5370</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">30cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2685</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH30-gry</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">280</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902344</Data></Cell>
+    <Cell><Data ss:Type="String">Grey</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5370</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">30cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2685</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH30-pur</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">260</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902345</Data></Cell>
+    <Cell><Data ss:Type="String">Purple</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5370</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">30cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2685</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH30-red</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">240</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902346</Data></Cell>
+    <Cell><Data ss:Type="String">Red</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5370</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">30cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2685</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH30-tqb</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">220</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902347</Data></Cell>
+    <Cell><Data ss:Type="String">Turquoise Blue</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5370</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">35cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2716</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH35-blu</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">200</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902348</Data></Cell>
+    <Cell><Data ss:Type="String">Blue</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5432</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">35cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2716</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH35-gry</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">180</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902349</Data></Cell>
+    <Cell><Data ss:Type="String">Grey</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5432</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">35cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2716</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH35-pur</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">160</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902350</Data></Cell>
+    <Cell><Data ss:Type="String">Purple</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5432</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">35cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2716</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH35-red</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">140</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902351</Data></Cell>
+    <Cell><Data ss:Type="String">Red</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5432</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">35cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2716</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH35-tqb</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">120</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902352</Data></Cell>
+    <Cell><Data ss:Type="String">Turquoise Blue</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5432</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">40cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2748</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH40-blu</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">100</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902353</Data></Cell>
+    <Cell><Data ss:Type="String">Blue</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5496</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">40cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2748</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH40-gry</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">80</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902354</Data></Cell>
+    <Cell><Data ss:Type="String">Grey</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5496</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">40cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2748</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH40-pur</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">60</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902355</Data></Cell>
+    <Cell><Data ss:Type="String">Purple</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5496</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">40cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2748</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH40-red</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">40</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902356</Data></Cell>
+    <Cell><Data ss:Type="String">Red</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5496</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Long Neck Dachshund Style</Data></Cell>
+    <Cell><Data ss:Type="String">40cm</Data></Cell>
+    <Cell><Data ss:Type="Number">2748</Data></Cell>
+    <Cell><Data ss:Type="String">DCDH40-tqb</Data></Cell>
+    <Cell><Data ss:Type="Number">956</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="String">y</Data></Cell>
+    <Cell><Data ss:Type="String">active</Data></Cell>
+    <Cell ss:Index="15"><Data ss:Type="Number">1357</Data></Cell>
+    <Cell ss:StyleID="s57"><Data ss:Type="DateTime">2021-06-03T00:00:00.000</Data></Cell>
+    <Cell><Data ss:Type="String">K9 Homes Pet Products</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:Index="25"><Data ss:Type="Number">20</Data></Cell>
+    <Cell><Data ss:Type="Number">932222902357</Data></Cell>
+    <Cell><Data ss:Type="String">Turquoise Blue</Data></Cell>
+    <Cell ss:Index="30"><Data ss:Type="String">n</Data></Cell>
+    <Cell><Data ss:Type="String">B</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">0</Data></Cell>
+    <Cell><Data ss:Type="Number">5496</Data></Cell>
+    <Cell ss:Index="39"><Data ss:Type="Number">1</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
+   </PageSetup>
+   <Selected/>
+   <LeftColumnVisible>45</LeftColumnVisible>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveCol>52</ActiveCol>
+     <RangeSelection>C53:C55</RangeSelection>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

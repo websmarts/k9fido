@@ -17,7 +17,7 @@
     <div class="form-group{{ $errors->has('display_format') ? ' has-error' : '' }}">
         {!! Form::label('display_format', 'Display format', array('class' => 'col-md-4 control-label')) !!}
         <div class="col-md-6">
-        {!! Form::select('display_format', array('h'=>'Horizontal','v'=>'Vertical'), null,  array('class' => 'form-control')) !!}
+        {!! Form::select('display_format', array('v'=>'Vertical (most common)','h'=>'Horizontal (rarely used)'), null,  array('class' => 'form-control')) !!}
 
         @if ($errors->has('display_format'))
             <span class="help-block">

@@ -48,6 +48,7 @@ class Product extends Model
         'clearance',
         'can_backorder',
         'status',
+        'modified',
         'cost',
         'last_costed_date',
         'supplier',
@@ -81,6 +82,11 @@ class Product extends Model
         'shopify_option3_value',
         'shopify_image_src'
     ];
+
+    public function hasField($name=null)
+    {
+        return in_array($name,$this->fillable);
+    }
 
     public function recentSales($period = -1)
     {
