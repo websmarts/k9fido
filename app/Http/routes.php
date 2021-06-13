@@ -71,6 +71,7 @@ Route::post('import/products',['uses' => 'ImportProductsController@import']);
 // Route for exporting full product list
 Route::get('export/products',['uses'=>'ExportProductsController@export']);
 
+
 Route::resource('typeoption', 'ProductTypeOptionController');
 Route::get('typeoption/{typeid}/{opt}', [
     'as' => 'typeoption.edit', 'uses' => 'ProductTypeOptionController@edit']);
