@@ -41,7 +41,7 @@ class ExportProductsController extends Controller
 
         }
 
-        dd($data);
+        //dd($data);
         
         $type='xls';
 
