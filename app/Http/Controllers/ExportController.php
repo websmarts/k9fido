@@ -39,6 +39,8 @@ class ExportController extends Controller
                 $item->product->color_name . "\r\n";
 
             }
+            
+
         }
         //dd($o);
         // output as csv file.
