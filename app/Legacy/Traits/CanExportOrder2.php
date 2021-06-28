@@ -60,7 +60,7 @@ trait CanExportOrder2
         $lines[$n]['Sales Person First Name'] = @$salesrep->firstname;
         $lines[$n]['Sales Person Last Name'] = @$salesrep->lastname;
         $lines[$n]['Item Number'] = '/FRST';
-        $lines[$n]['Item Description'] = 'Total Items/Cartons Shipped x Time to time freight companies may not deliver your cartons altogether. Check, cartons shipped against what you have received, discrepancies contact us within 7 days so we can follow up where the balance is!';
+        $lines[$n]['Item Description'] = 'Total Items/Cartons Shipped x  Sometimes freight companies may not deliver all your cartons together. Check cartons shipped against what you have received and contact us within 7 days if any discrepancies so we can follow up where the balance is!';
         $lines[$n]['Quantity'] = 1;
         $lines[$n]['Stdprice'] = 0;
         $lines[$n]['Invprice'] = 0;
@@ -150,7 +150,7 @@ trait CanExportOrder2
 
     function clean($string) {
      
-        return preg_replace('/[^A-Za-z0-9\-]/', ' ', $string); // Removes special chars.
+        return preg_replace('/[^A-Za-z0-9\-\!\.]/', ' ', $string); // Removes special chars.
      }
 
     protected function format_line($l)
