@@ -91,8 +91,11 @@ class ImportProductsController extends Controller
 
                     if(!$product->typeid){
                         echo '* Warning:: Row ' . $n . ' is missing product typeid <br>';
-                    }
-                    //$product->save();
+                    } 
+                        
+                    $product->save();
+                    
+                    
 
                 }
             }
