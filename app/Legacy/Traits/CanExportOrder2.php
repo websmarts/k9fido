@@ -116,6 +116,35 @@ trait CanExportOrder2
 
            
         }
+
+        // Start /FRDL Hack to add Freight product code for MYOB
+        $n++;
+        $lines[$n]['order_id'] = $order->order_id;
+        $lines[$n]['order_date'] = $order->modified->format('d-m-Y');
+
+        // Update to get Client->salesrep info not order->salesrep
+        $lines[$n]['Sales Person First Name'] = @$salesrep->firstname;
+        $lines[$n]['Sales Person Last Name'] = @$salesrep->lastname;
+        $lines[$n]['Item Number'] = '/FRDL';
+        $lines[$n]['Item Description'] = 'Delayed Freight: Our freight partners are experiencing extremely high demand due to Covid-19, as a result, you may experience delivery delays. We apologise for any inconvenience caused.';
+        $lines[$n]['Quantity'] = 1;
+        $lines[$n]['Stdprice'] = 0;
+        $lines[$n]['Invprice'] = 0;
+        $lines[$n]['Co./Last Name'] = $order->client->name;
+        $lines[$n]['address1'] = $order->client->address1;
+        $lines[$n]['address2'] = $order->client->address2;
+        $lines[$n]['address3'] = $order->client->address3;
+        $lines[$n]['city'] = $order->client->city;
+        $lines[$n]['state'] = $order->client->state;
+        $lines[$n]['postcode'] = (int) $order->client->postcode;
+        $lines[$n]['parent_company'] = !is_null($order->client->parentGroup) ? $order->client->parentGroup->name : '';
+
+        $lines[$n]['order_contact'] = !is_null($order->order_contact) ? $order->order_contact : ''; 
+        $lines[$n]['freight_charge'] = $order->freight_charge;
+
+        $lines[$n]['invoice_delivery_method'] = !is_null($order->client->invoice_delivery_method) ? $order->client->invoice_delivery_method : 'P';
+
+        // End of /FRDL hack
         
 
 
