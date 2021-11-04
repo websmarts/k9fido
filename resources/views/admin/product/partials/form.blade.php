@@ -123,6 +123,8 @@
                         @endif
                         </div>
                     </div>
+                    @else 
+                    <div> Shelf qty not shown because product is a BOM</div>
                     @endif
                     
 
