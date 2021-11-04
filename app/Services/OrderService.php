@@ -357,7 +357,7 @@ class OrderService
             }
             $item->delete();
         }
-        //$order->delete();
+        $order->delete();
     }
 
     /**
