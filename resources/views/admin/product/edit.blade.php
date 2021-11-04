@@ -50,7 +50,7 @@
                         </head>
 
                         <tbody>
-                        @if($product->bom->count())
+                        @if($product->bom->count() > 0)
                         @foreach($product->bom as $item)
                         <tr>
                         <td>{{ $item->item_product_code }}</td>

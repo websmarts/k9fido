@@ -110,6 +110,7 @@
                         </div>
                     </div>
 
+                    @if($product->bom->count() == 0)
                     <div class="form-group{{ $errors->has('qty_onshelf') ? ' has-error' : '' }}">
                         {!! Form::label('qty_onshelf', 'Qty shelf', array('class' => 'col-md-4 control-label')) !!}
                         <div class="col-md-6">
@@ -122,6 +123,8 @@
                         @endif
                         </div>
                     </div>
+                    @endif
+                    
 
 
 
