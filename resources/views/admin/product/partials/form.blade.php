@@ -124,7 +124,7 @@
                         </div>
                     </div>
                     @else 
-                    <div> Shelf qty not shown because product is a BOM</div>
+                    <div class="form-group"> Shelf qty not shown because product is a BOM</div>
                     @endif
                     
 
