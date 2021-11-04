@@ -193,9 +193,14 @@ class ProductController extends Controller
         $data = $request->all();
         //dd($data);
 
-        // recalc instock figure by subtracting the qty ordered from the onshelf value
-        $data['qty_instock'] = (int) $data['qty_onshelf'] - (int) $data['qty_ordered'];
-        unset($data['qty_onshelf']);
+        // recalc instock figure by subtracting the qty ordered from the onshelf value, unless it is a bom product
+        if(isSet($data['qty_onshelf'])){
+            
+            $data['qty_instock'] = (int) $data['qty_onshelf'] - (int) $data['qty_ordered'];
+            unset($data['qty_onshelf']);
+
+        }
+       
 
         // Reset the calculated displayed value of qty_ordered to zero
         $data['qty_ordered'] = 0;
