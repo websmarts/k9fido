@@ -69,11 +69,11 @@ class ProductTypeImageController extends Controller
         //delete the file
         $filename = public_path() . '/source/' . $item->filename;
 
-        unlink($filename); // the image
+        @unlink($filename); // the image
 
         $filename = public_path() . '/source/tn/' . $item->filename;
 
-        unlink($filename); // the image
+        @unlink($filename); // the image
 
         $item->delete();
 
