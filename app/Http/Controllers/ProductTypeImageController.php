@@ -58,6 +58,7 @@ class ProductTypeImageController extends Controller
         foreach ($images as $i) {
             $list[] = $i->id;
         }
+        // Add the first image 
         $list[] = (int) $imageId;
         //return $list;
 
@@ -188,15 +189,15 @@ class ProductTypeImageController extends Controller
         $thumbFolder = $folder . 'tn/';
 
         foreach ($image as $i) {
-            rename($folder . $i->filename, $folder . $i->filename . 'X');
-            rename($thumbFolder . $i->filename, $thumbFolder . $i->filename . 'X');
+            @rename($folder . $i->filename, $folder . $i->filename . 'X');
+            @rename($thumbFolder . $i->filename, $thumbFolder . $i->filename . 'X');
         }
         foreach ($image as $i) {
 
             $newFilename = $this->makeFilename($i->typeid, $i->order);
 
-            rename($folder . $i->filename . 'X', $folder . $newFilename);
-            rename($thumbFolder . $i->filename . 'X', $thumbFolder . $newFilename);
+            @rename($folder . $i->filename . 'X', $folder . $newFilename);
+            @rename($thumbFolder . $i->filename . 'X', $thumbFolder . $newFilename);
 
             $i->filename = $newFilename;
             $i->save();
