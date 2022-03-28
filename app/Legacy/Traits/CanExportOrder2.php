@@ -225,7 +225,7 @@ trait CanExportOrder2
         } else {
             // Normal product pricing
             $discount = $l['Stdprice'] ? 1-($l['Invprice']/$l['Stdprice']) : '';
-            $discountPercent = (float) number_format($discount * 100,3, '.', '');
+            $discountPercent = (float) number_format($discount * 100,4, '.', '');
         }
         
         
