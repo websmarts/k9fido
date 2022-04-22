@@ -27,9 +27,12 @@ class ProductTypeController extends Controller
     public function index()
     {
 
+        
         $types = ProductType::applyUserFilter()
             ->orderBy('typeid', 'desc')
             ->paginate(15);
+       
+        
 
         $filterKey = 'type'; // must mactch a key in FilterController
 
