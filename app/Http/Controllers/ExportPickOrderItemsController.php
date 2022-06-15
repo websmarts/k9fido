@@ -25,22 +25,25 @@ class ExportPickOrderItemsController extends Controller
 
 
         $data = [];
+        $descriptions =[];
 
         foreach($pickOrders as $order){
             foreach($order->items as $item){
+                
                 if( array_key_exists($item->product_code,$data) ){
                     $data[$item->product_code] += $item->qty;
                 } else {
                     $data[$item->product_code] = $item->qty;
                 }
+                $descriptions[$item->product_code] = $item->product->description;
             }
 
         }
         //dd($data);
 
-        $exportData[]= ['Product code','Pick quantity'];
+        $exportData[]= ['Product code','Description','Pick quantity'];
         foreach($data as $code=>$qty){
-            $exportData[] = [$code,$qty];
+            $exportData[] = [$code,$descriptions[$code],$qty];
         }
         
 
