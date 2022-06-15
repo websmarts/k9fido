@@ -24,6 +24,10 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 |
  */
 
+ // Route to export list of all items needing to be picked for pickOrders
+Route::get('export/items/picklist',['uses'=>'ExportPickOrderItemsController@export', 'as'=>'picklist']);
+
+
  Route::get('updatedb/','DBUpdateController@index');
 
 Route::get('testy/', 'ClientPricingController@add_product');
@@ -75,6 +79,8 @@ Route::get('import/products',['uses' =>'ImportProductsController@index']);
 Route::post('import/products',['uses' => 'ImportProductsController@import']);
 // Route for exporting full product list
 Route::get('export/products',['uses'=>'ExportProductsController@export']);
+
+
 
 
 Route::resource('typeoption', 'ProductTypeOptionController');

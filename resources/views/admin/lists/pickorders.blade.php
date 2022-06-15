@@ -1,4 +1,5 @@
 <h3>{{ $title }}</h3>
+<p><a href="{{ route('picklist') }}" class="btn">Export Items Pick List</a></p>
                     <table class="table table-striped">
                     <thead>
                     <tr>
