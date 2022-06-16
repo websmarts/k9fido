@@ -25,7 +25,8 @@ class ExportPickOrderItemsController extends Controller
 
 
         $data = [];
-        $descriptions =[];
+        $descriptions = [];
+        $instock = [];
 
         foreach($pickOrders as $order){
             foreach($order->items as $item){
@@ -36,14 +37,15 @@ class ExportPickOrderItemsController extends Controller
                     $data[$item->product_code] = $item->qty;
                 }
                 $descriptions[$item->product_code] = $item->product->description;
+                $instock[$item->product_code] = $item->product->qty_instock;
             }
 
         }
         //dd($data);
 
-        $exportData[]= ['Product code','Description','Pick quantity'];
+        $exportData[]= ['Product code','Description','Pick quantity','Instock'];
         foreach($data as $code=>$qty){
-            $exportData[] = [$code,$descriptions[$code],$qty];
+            $exportData[] = [$code,$descriptions[$code],$qty,$instock[$code]];
         }
         
 
