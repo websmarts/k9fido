@@ -322,16 +322,16 @@ class ProductController extends Controller
             
              foreach($product->clientPrices as $clientPrice){
         //         //dd([$product->product_code, $clientPrice->std_price]);
-                echo $product->product_code .'STD Price:'.$product->price .'Client price:'.$clientPrice->std_price.'<br>';
+               // echo $product->product_code .'STD Price:'.$product->price .'Client price:'.$clientPrice->std_price.'<br>';
                  if($product->price != $clientPrice->std_price) {
             
-                    echo 'updating '.$product->product_code. ' for client ID '.$clientPrice->client_id .'<br>';
+                   // echo 'updating '.$product->product_code. ' for client ID '.$clientPrice->client_id .'<br>';
                     // now add the std_price and the calculated client_price and then save
                     $clientPrice->std_price = $product->price;
                     $clientPrice->client_price = $product->price * (1 - $clientPrice->discount);
                     
                     $clientPrice->save();
-                    echo $product->product_code .':' .$clientPrice->client_id .'<br>';
+                   // echo $product->product_code .':' .$clientPrice->client_id .'<br>';
 
                     //dd('done done');
                 }
