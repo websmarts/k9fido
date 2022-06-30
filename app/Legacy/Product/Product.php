@@ -4,12 +4,14 @@ namespace App\Legacy\Product;
 
 use Carbon\Carbon;
 use App\Legacy\Order\Item;
+use App\Events\ProductSaved;
 use App\Legacy\Traits\UsersQueryFilter;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
     use UsersQueryFilter;
+    
 
     /**
      * The connection name for the model.
@@ -82,6 +84,28 @@ class Product extends Model
         'shopify_option3_value',
         'shopify_image_src'
     ];
+
+    static function boot()
+    {
+        Product::saved(function ($product) {
+            
+
+            $product->clientPrices->each(function($clientPrice,$key) use($product) {
+                if($product->status !== 'inactive' && ($product->price != $clientPrice->std_price)){
+                    // now add the std_price and the calculated client_price and then save
+                    $clientPrice->std_price = $product->price;
+                    $clientPrice->client_price = $product->price * (1 - $clientPrice->discount);
+                    
+                    $clientPrice->save();
+                    
+                    //dd($clientPrice);
+                }
+            });
+            
+        });
+
+        
+    }
 
     public function hasField($name=null)
     {

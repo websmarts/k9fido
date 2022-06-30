@@ -99,6 +99,9 @@ class ImportProductsController extends Controller
 
                 }
             }
+
+            // TODO Now check and update all client prices if the product price has changed
+
             echo '<hr>';
             echo $inserts. ' Records inserted <br>';
             echo $updates. ' Records updated <br>';

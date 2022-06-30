@@ -219,7 +219,7 @@ class ProductController extends Controller
 
 
         $product->update($data);
-
+/** 
         // TODO Check if pricing has changed and if so update all special pricing for product
         $clientPrices = $product->clientprices()->get();
         //dd($clientPrices);
@@ -229,11 +229,13 @@ class ProductController extends Controller
                 // now add the std_price and the calculated client_price and then save
                 $clientPrice->std_price = $clientPrice->product->price;
                 $clientPrice->client_price = $clientPrice->product->price * (1 - $clientPrice->discount);
+                
 
                 $clientPrice->save();
                 //dd($clientPrice);
             }
         });
+*/
 
         flash('Product updated ...', 'success');
 
