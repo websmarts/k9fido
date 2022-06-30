@@ -311,4 +311,18 @@ class ProductController extends Controller
         
         
     }
+
+    public function regenClientPrices()
+    {
+        $products = Product::where('status','!=', 'active')->get();
+        
+        $products->each(function($product,$key){
+            $product->save();
+            echo '.';
+            
+
+        });
+        echo '<br> active products prices have been synced with client prices ';
+        exit;
+    }
 }
