@@ -321,7 +321,7 @@ class ProductController extends Controller
             
              foreach($product->clientPrices as $clientPrice){
         //         //dd([$product->product_code, $clientPrice->std_price]);
-                echo $product->product_code .'<br>';
+                echo $product->product_code .'STD Price:'.$product->price .'Client price:'.$clientPrice->std_price.'<br>';
                  if($product->price != $clientPrice->std_price) {
             
                     echo 'updating '.$product->product_code. ' for client ID '.$clientPrice->client_id .'<br>';
