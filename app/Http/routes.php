@@ -25,7 +25,7 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
  */
 
  // RegenClientPrices
- Route::get('regenclientprices','productController@regenClientPrices');
+ Route::get('regenclientprices','ProductController@regenClientPrices');
 
  // Route to export list of all items needing to be picked for pickOrders
 Route::get('export/items/picklist',['uses'=>'ExportPickOrderItemsController@export', 'as'=>'picklist']);
