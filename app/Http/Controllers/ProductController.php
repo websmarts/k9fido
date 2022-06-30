@@ -314,7 +314,7 @@ class ProductController extends Controller
 
     public function regenClientPrices()
     {
-        $products = Product::where('status','!=', 'active')->get();
+        $products = Product::where('status','=', 'active')->get();
         echo ' Starting ....<br>';
         echo'Product:Client ID<br>';
          $products->each(function($product,$key){
