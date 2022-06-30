@@ -314,7 +314,8 @@ class ProductController extends Controller
 
     public function regenClientPrices()
     {
-        $products = Product::where('status','=', 'active')->get();
+        $products = Product::where('status', 'active')->get();
+        //dd($products);
         echo ' Starting ....<br>';
         echo'Product:Client ID<br>';
          $products->each(function($product,$key){
@@ -332,7 +333,7 @@ class ProductController extends Controller
                     $clientPrice->save();
                     echo $product->product_code .':' .$clientPrice->client_id .'<br>';
 
-                    dd('done done');
+                    //dd('done done');
                 }
                 
              
