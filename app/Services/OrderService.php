@@ -18,11 +18,26 @@ class OrderService
      */
     protected $orders = [];
 
+    /*
+     * Extra descriptive lines added to myob export
+     * using Product codes /FRST and /FRDL
+     */
+    protected $frst = ''; // Delivery comment line added to exported order
+    protected $frdl = ''; // Freight comment line in exported order
+
     public function __construct(Order $model)
     {
         $this->order = $model;
 
-        
+        // Get the extra comment lines Darren wants to put into orders when they are exported to MYOB
+        if($productFrst = Product::where('product_code','/FRST')->first()) {
+            $this->frst = $productFrst->description; // Note maybe convert emebdded charaters to new lines here??
+        }       
+
+        if($productFrdl = Product::where('product_code','/FRDL')->first()) {
+             $this->frdl = $productFrdl->description; // Note maybe convert emebdded charaters to new lines here??
+        }
+           
     }
 
     public function index($paginate = 10)
