@@ -47,9 +47,12 @@ class K9ImportProductImages extends Command
         // Delete all staff
         DB::connection('mysql')->delete('delete from producttypeimages');
 
-        $sourceFolder = app_path() . '/../../k9catalog/catalog/source/';
+        $sourceFolder = app_path() . '/../../catalog/source/';
 
         $newFolder = app_path() . '/../public/source/';
+        
+        // $sourceFolder = app_path() . '/../../k9catalog/catalog/source/';
+        // $newFolder = app_path() . '/../public/source/';
 
         $thumbFolder = $newFolder . 'tn/';
 

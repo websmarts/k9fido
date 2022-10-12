@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Orders</h3>
 
-                <form method="POST" action="/filter/{{ $filterKey }}" class="form-inline">
+                <form method="POST" action="filter/{{ $filterKey }}" class="form-inline">
                     <div class="form-group">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').$filterKey),true)['fkey']['or'] }}" />

@@ -6,11 +6,11 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Clients</h3>
-                <form method="POST" action="/filter/clients" class="form-inline">
+                <form method="POST" action="filter/clients" class="form-inline">
                     <div class="form-group">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <label>Search key</label>
-                        <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').'_client'),true)['fkey']['or'] }}" />
+                        <input class="form-control" type="text" name="fkey[or]" value="{{ json_decode( session( env('USER_FILTER_KEY').'clients'),true)['fkey']['or'] }}" />
 
                         <label>Status</label>
                         {!! Form::select('fkey[and]', [''=>'Any', 'active'=>'Active','inactive'=>'Inactive'],json_decode( session( env('USER_FILTER_KEY').'_client'),true)['fkey']['and'],['class'=>'form-control']) !!}

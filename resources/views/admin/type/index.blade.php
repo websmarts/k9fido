@@ -6,7 +6,7 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Product Types</h3>
-                <form method="POST" action="/filter/{{ $filterKey }}" class="form-inline">
+                <form method="POST" action="filter/{{ $filterKey }}" class="form-inline">
                     <div class="form-group">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 

@@ -9,7 +9,7 @@
                     <h3>Products</h3>
 
 
-                    <form method="POST" action="/filter/{{ $filterKey }}" class="form-inline">
+                    <form method="POST" action="filter/{{ $filterKey }}" class="form-inline">
                         <div class="form-group">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                             <label>Search key</label>
@@ -28,7 +28,7 @@
                         </div>
                     </form>
 
-                    <form method="POST" action="/product/setsalesperiod" class="form-inline">
+                    <form method="POST" action="product/setsalesperiod" class="form-inline">
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
@@ -53,7 +53,7 @@
 
 
 
-                    <form method="post" action="/products/bulkupdate">
+                    <form method="post" action="products/bulkupdate">
                         {!! csrf_field() !!}
                         <table class="table table-striped">
                             <thead>
