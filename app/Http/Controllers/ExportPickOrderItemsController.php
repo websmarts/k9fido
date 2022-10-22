@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ExportPickOrderItemsController extends Controller
 {
-    public function export()
+    public function export(Request $request)
     {
        
          
@@ -20,8 +20,13 @@ class ExportPickOrderItemsController extends Controller
             ->where('exported', '!=', 'yes')
             ->orderBy('id', 'desc')
             ->get();
-
-        $pickOrders = $orders->where('status', 'printed');
+            
+        if($request->status == 'parked'){
+            $pickOrders = $orders->where('status', 'parked');
+        } else {
+            $pickOrders = $orders->where('status', 'printed');
+        }
+        
 
 
         $data = [];

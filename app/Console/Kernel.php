@@ -15,9 +15,10 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         // Commands\Inspire::class,
         // Commands\K9MergeUsers::class,
+        Commands\K9MergeRescueData::class,
         // Commands\K9ArchiveData::class,
         // Commands\K9ImportProductImages::class,
-        // Commands\K9UpdateProductImages::class,
+        Commands\K9UpdateProductImages::class,
         Commands\K9UpdateProductsFromExcel::class,
         Commands\K9ImportProductsFromExcel::class,
     ];

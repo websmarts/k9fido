@@ -23,7 +23,7 @@
                         @include('admin.lists.pickorders',['title'=>'Orders ready to be picked now', 'data'=>$pickOrders])
                     @endif
                     @if(isSet($parkOrders) )
-                        @include('admin.lists.pickorders',['title'=>'Parked orders - to be picked later', 'data'=>$parkOrders])
+                        @include('admin.lists.pickparkedorders',['title'=>'Parked orders - to be picked later', 'data'=>$parkOrders])
                     @endif
 
                     @if(isSet($exportOrders) )
