@@ -13,7 +13,7 @@ window.onload = function() {
       msgBox = document.getElementById('msgBox');
   var uploader = new ss.SimpleUpload({
         button: btn,
-        url: '/ajax/image/upload/'+typeid,
+        url: 'ajax/image/upload/'+typeid,
         name: 'uploadfile',
         customHeaders: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         multipart: true,
