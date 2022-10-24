@@ -24,7 +24,7 @@ $( function() {
 	        console.log(data);
 
 	        // POST to server using $.post or $.ajax
-	        $.post('/ajax/image/sort', data);
+	        $.post('ajax/image/sort', data);
 	    }
 
     });
@@ -34,7 +34,7 @@ $( function() {
     	var imageId = $(e.target).closest('li').attr('id').substring(5,20) 
     	
 
-    	$.post('/ajax/image/delete/' + imageId, function(data) {
+    	$.post('ajax/image/delete/' + imageId, function(data) {
     		if (data > 0){
     			//$('#item-'+ data).remove(); // remove the deleted item
     			location.reload();
