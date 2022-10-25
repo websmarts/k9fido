@@ -97,7 +97,7 @@
 
                         {{ $product->qty_ordered }}
                         @if($product->qty_ordered > 0)
-                           &nbsp;&nbsp; <a href="/product/{{ $product->id }}/orders">Show orders</a>
+                           &nbsp;&nbsp; <a href="product/{{ $product->id }}/orders">Show orders</a>
                         @endif
                         </div>
                     </div>
