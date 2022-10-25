@@ -26,7 +26,9 @@
                     <tbody>
                     @foreach($orders as $order)
                     <tr>
-                    	<td> {{ $order->order_id }} &nbsp; <a href="/order/{{str_replace('T0_','',$order->order_id)}}">view order</a></td>
+                    	<td> {{ $order->order_id }} &nbsp; 
+                            <a href="{{ route('order.show',['order' => str_replace('T0_','',$order->order_id)]) }}">view order</a>
+                        </td>
 
                     </tr>
                     @endforeach

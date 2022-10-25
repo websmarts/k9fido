@@ -57,7 +57,7 @@ Route::post('filter/{name}', 'FilterController@index');
 
 // PRODUCT ROUTES
 Route::resource('product', 'ProductController');
-Route::get('product/{id}/orders', 'ProductController@orders');
+Route::get('product/{id}/orders',['as'=>'productorders', 'uses'=>'ProductController@orders'] );
 Route::post('product/setsalesperiod','ProductController@setSalesPeriod');
 Route::post('products/bulkupdate','ProductController@bulkUpdate');
 
