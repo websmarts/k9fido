@@ -19,7 +19,7 @@
 
 @section('script')
 
-<script src="{{ elixir('js/clientprices.js') }}"></script>
+<script src="{{ url(elixir('js/clientprices.js')) }}"></script>
 
 
 @endsection
