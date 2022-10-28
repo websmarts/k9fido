@@ -22,10 +22,10 @@
 
 
                     <div class="col-md-12">
-                        <input type="submit"  name ="b" value="Save" class="btn btn-primary pull-right" />xx
+                        <input type="submit"  name ="b" value="Save" class="btn btn-primary pull-right" />&nbsp;
 
                         <input type="submit"  name ="b" value="Delete" class="btn btn-warning pull-left" />
-                        &nbsp;Delete key: <input type="text" name="delete_key" value="" />
+                        &nbsp;Delete key: <input type="text" name="delete_key" value="" placeholder="...enter fido"/>
                     </div>
 
 

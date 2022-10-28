@@ -20,6 +20,6 @@
   }
 </script>
 
-<script src="{{ elixir('js/stockadjuster.js') }}"></script>
+<script src="{{ url(elixir('js/stockadjuster.js')) }}"></script>
 
 @endsection
