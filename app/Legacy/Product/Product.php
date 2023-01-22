@@ -88,8 +88,9 @@ class Product extends Model
     static function boot()
     {
         Product::saved(function ($product) {
-            
 
+            
+            // Update any client prices for the product
             $product->clientPrices->each(function($clientPrice,$key) use($product) {
                 if($product->status !== 'inactive' && ($product->price != $clientPrice->std_price)){
                     // now add the std_price and the calculated client_price and then save
@@ -98,7 +99,6 @@ class Product extends Model
                     
                     $clientPrice->save();
                     
-                    //dd($clientPrice);
                 }
             });
             

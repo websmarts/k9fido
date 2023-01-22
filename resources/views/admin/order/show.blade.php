@@ -41,12 +41,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-2">Freight info</div>
+                    <div class="col-xs-2">Freight notes</div>
                     <p class="col-xs-9">{{ empty($oldfreight->code) ? ' - ' : $oldfreight->code }}
                     @if(isSet($oldfreight->notes))
                     <br /> {{ $oldfreight->notes }}
                     @endif
                     </p>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-2">Client notes</div>
+                    <p class="col-xs-9">{{ $order->client->client_note }} </p>
                 </div>
 
 
