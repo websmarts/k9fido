@@ -1,10 +1,11 @@
 <?php
 namespace App\Services;
 
+
 use App\Legacy\Order\Item;
 use App\Legacy\Order\Order;
-use App\Legacy\Product\ClientPrice;
 use App\Legacy\Product\Product;
+use App\Legacy\Product\ClientPrice;
 use App\Legacy\Traits\CanExportOrder2;
 
 class OrderService
@@ -81,7 +82,7 @@ class OrderService
         $order = $this->getOrderById($orderId);
         $orderItems = $this->getOrderItemsWithProduct($orderId);
         $clientprices = $this->clientPrices($order->client->client_id);
-        $freight = $this->newGetFreightInformation($order->client);
+        $freight = $this->newGetFreightInformation($order->client); // used for freight table
         $oldfreight = $this->getFreightInformation($order->client);
         $totalItemsCost = 0;
         $totalItemsPrice = 0;
@@ -158,6 +159,9 @@ class OrderService
 
         $freight = FreightService::create()->getFreightCode($client->postcode);
         $result->code = $freight[1] == 'local' ? $freight[0] . ' Local' : $freight[0];
+        $result->notes = $client->freight_notes;
+
+        
         return $result;
     }
 
