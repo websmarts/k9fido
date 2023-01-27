@@ -52,6 +52,10 @@
 @endsection
 
 @section('script')
-<script> var typeid = {{ $typeid }};</script>
+<script>
+var typeid = {{ $typeid }};
+
+
+</script>
 <script src="{{ url(elixir('js/imageuploader.js')) }}"></script>
 @endsection

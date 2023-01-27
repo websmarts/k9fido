@@ -24,6 +24,20 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 |
  */
 
+// Mini CMS includes pages controller
+// and pages admin controller
+Route::get('/page/{slug}','PagesController@index')->name('page');
+
+// Manager for CMS - pages and resources management
+Route::group(['middleware'=>'auth'], function() {
+
+    Route::get('/content/manager','ContentManagementController@index')->name('content.manager');
+
+});
+
+
+
+
  // RegenClientPrices
  Route::get('regenclientprices','ProductController@regenClientPrices');
 
@@ -93,10 +107,21 @@ Route::post('typeoption/{typeid}/{opt}', [
     'as' => 'typeoption.update', 'uses' => 'ProductTypeOptionController@update']);
 // PRODUCT TYPE IMAGE ROUTES
 Route::resource('producttypeimage', 'ProductTypeImageController');
+
+
+
 // ajax handlers for sort, upload and deleting of product images
 Route::post('ajax/image/sort', 'ProductTypeImageController@sort');
 Route::post('ajax/image/upload/{typeid}', 'ProductTypeImageController@upload');
 Route::post('ajax/image/delete/{imageid}', 'ProductTypeImageController@delete');
+
+// Product Type Files
+Route::get('producttypefile','ProductTypeFileController@index')->name('producttypefile.index');
+
+// ajax handlers for sort, upload and deleting of product type files
+Route::post('ajax/file/sort', 'ProductTypeFileController@sort');
+Route::post('ajax/file/upload/{typeid}', 'ProductTypeFileController@upload')->name('producttype.file.upload');
+Route::post('ajax/file/delete/{id}', 'ProductTypeFileController@delete');
 
 // CATEGORY ROUTES
 Route::resource('category', 'CategoryController');

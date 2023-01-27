@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Legacy\Product\ProductType;
-use App\ProductTypeImage;
 use DB;
+use App\ProductTypeFile;
+use App\ProductTypeImage;
 use Illuminate\Http\Request;
+use App\Legacy\Product\ProductType;
 
 class ProductTypeController extends Controller
 {
@@ -102,7 +103,9 @@ class ProductTypeController extends Controller
 
         $images = $this->getProductImages($id);
 
-        return view('admin.type.edit', compact('type', 'images'));
+        $files = ProductTypeFile::where('typeid',$id)->get();
+
+        return view('admin.type.edit', compact('type', 'images', 'files'));
 
     }
 
