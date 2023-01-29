@@ -24,6 +24,12 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 |
  */
 
+ Route::get('session', function(){
+    dd($_COOKIE);
+    dd(session()->all());
+
+ });
+
 // Mini CMS includes pages controller
 // and pages admin controller
 Route::get('/page/{slug}','PagesController@index')->name('page');
