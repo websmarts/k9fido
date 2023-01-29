@@ -136,7 +136,7 @@ $( "#sortable" ).disableSelection();
         }
 
         if (file.size >= 6000000 ) {
-            statusDiv.innerHTML = 'You cannot upload this file because its size exceeds the maximum limit of 6 MB.';
+            statusDiv.innerHTML = 'You cannot upload this file because its size exceeds the maximum limit of  6 MB.';
             return;
         }
 
